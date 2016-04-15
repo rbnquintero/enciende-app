@@ -18,7 +18,7 @@ class Card extends Component {
     return (
       <View style={styles.newscontainer} ref={component => this._root = component} {...this.props}>
         <View style={styles.newscontainerImageContainer}>
-          <Image source={ require("image!empty") } style={styles.newscontainerImage}/>
+          <Image source={{uri: evento.urlImagen}} style={styles.newscontainerImage}/>
         </View>
         <Text style={styles.newscontainerTitulo}>{evento.titulo}</Text>
         <Text style={styles.newscontainerDate}>{fecha}</Text>

@@ -11,11 +11,18 @@ import React, {
 
 var Lobby = require('./FacebookLoginTest');
 var Home = require('./views/common/Home');
+var FacebookLogin = require('./views/common/FacebookLogin');
+var Perfil = require('./views/common/Perfil');
+
+var LocalDBUtil = require('./views/utils/LocalDBUtil');
 
 var myRoute;
+var myNavigator;
+var myAppNavigator;
 
 var NavBarRouteMapper = {
   LeftButton: function(route, navigator, index, navState) {
+    myNavigator = navigator;
     var previousRoute = navState.routeStack[index];
     console.log("routeStack", navState.routeStack);
     console.log(previousRoute);
@@ -61,19 +68,29 @@ var NavBarRouteMapper = {
   },
 
   RightButton: function(route, navigator, index, navState) {
+    var image;
+    if(myAppNavigator.state.myuser == null) {
+      image = (
+        <Image style={[styles.account, { backgroundColor: 'white' }]} source={ require('image!profile') } />
+      );
+    } else {
+      image = (
+        <Image style={styles.account} source={{ uri: myAppNavigator.state.myuser.fbData.picture.data.url }} />
+      );
+    }
     if(Platform.OS === 'ios') {
       return (
-        <TouchableHighlight>
+        <TouchableHighlight onPress={() => myAppNavigator.profilePressed()}>
           <View style={styles.accountContainer}>
-            <Image style={styles.account} source={{ uri: 'https://scontent.xx.fbcdn.net/v/t1.0-1/p200x200/12495144_1249559848391461_6669135379859786016_n.jpg?oh=cc6504b8118a652c0ce7eb97b37acabf&oe=57AD94A0'}} />
+            {image}
           </View>
         </TouchableHighlight>
       );
     } else {
       return(
-        <TouchableHighlight style={{marginTop:7}}>
+        <TouchableHighlight onPress={() => myAppNavigator.profilePressed()} style={{marginTop:7}}>
           <View style={styles.accountContainer}>
-            <Image style={styles.account} source={{ uri: 'https://scontent.xx.fbcdn.net/v/t1.0-1/p200x200/12495144_1249559848391461_6669135379859786016_n.jpg?oh=cc6504b8118a652c0ce7eb97b37acabf&oe=57AD94A0'}} />
+            {image}
           </View>
         </TouchableHighlight>
       );
@@ -97,12 +114,23 @@ var NavBarRouteMapper = {
 };
 
 class AppNavigator extends Component {
+  constructor(props) {
+    super(props);
+    myAppNavigator = this;
+    this.state = {
+      localDBUtil: new LocalDBUtil(),
+      myuser: null
+    };
+    this.state.localDBUtil.getPerfilData(this);
+    //this.state.localDBUtil.deleteAll();
+  }
+
   sceneConfig(route, routeStack) {
     return Navigator.SceneConfigs.PushFromRight
   }
   routeMapper(route, navigator) {
-    if(route.name=="Lobby"){
-      return (<Lobby navigator={navigator} />);
+    if(route.name=="Lobby" || route.name=="Facebook Login"){
+      return (<route.component navigator={navigator} {...route.passProps}/>);
     } else {
       console.log(route);
       myRoute = route;
@@ -121,12 +149,31 @@ class AppNavigator extends Component {
     }
   }
 
+  profilePressed() {
+    if (this.state.myuser.userData == null){
+      myNavigator.push({
+        title: "Facebook Login",
+        name: 'Facebook Login',
+        component: FacebookLogin,
+        passProps: { navBar: myAppNavigator }
+      });
+    } else {
+      myNavigator.push({
+        title: "Perfil",
+        name: 'Perfil',
+        component: Perfil,
+        passProps: { navBar: myAppNavigator }
+      });
+    }
+  }
+
   render() {
+    //initialRoute={{ name:'Facebook Login', title:'Inicio', component: FacebookLogin }}
     return (
       <Navigator
         style={{ flex:1 }}
         configureScene={ this.sceneConfig }
-        initialRoute={{ name:'Home', title:'Inicio', component: Home }}
+        initialRoute={{ name:'Inicio', title:'Inicio', component: Home, passProps: { navBar: myAppNavigator } }}
         renderScene={ this.routeMapper } />
     );
   }

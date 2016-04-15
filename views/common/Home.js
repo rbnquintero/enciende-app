@@ -21,6 +21,7 @@ class Home extends Component {
     this.state = {
       dataSource: null,
       errorLoading: false,
+      myuser: null,
       some: "some",
       localDBUtil: new LocalDBUtil()
     };
@@ -32,13 +33,13 @@ class Home extends Component {
       title: "Noticia",
       name: 'NoticiaDetalle',
       component: NoticiaDetalle,
-      passProps: {noticia: noticia}
+      passProps: {noticia: noticia, navBar: this.props.myAppNavigator }
     });
   }
 
   _fetchNews() {
     var _this = this;
-    var query = "http://10.25.29.26:8080/noticias/";
+    var query = "http://localhost:8080/noticias/";
     fetch(query)
       .then(response => response.json())
       .then(json => {
@@ -46,7 +47,7 @@ class Home extends Component {
         var dataSource = new ListView.DataSource({
           rowHasChanged: (r1, r2) => r1.id !== r2.id
         });
-        _this.state.localDBUtil.someTest();
+        _this.state.localDBUtil.saveNoticias(json.noticias);
         _this.setState({
           dataSource: dataSource.cloneWithRows(json.noticias)
         });
