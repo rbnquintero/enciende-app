@@ -2,9 +2,13 @@ import React, {
   Component,
   Image,
   Text,
+  Time,
   StyleSheet,
   View
 } from 'react-native';
+
+var moment = require('moment');
+var esLocale = require('moment/locale/es');
 
 class Card extends Component {
   setNativeProps(nativeProps) {
@@ -14,14 +18,16 @@ class Card extends Component {
 
   render() {
     var evento = this.props.data;
-    var fecha = evento.fechaNoticia;
+    var fecha = new Date(evento.fechaNoticia);
+    var fechaStr = moment(fecha).locale("es", esLocale).format('LL');
+    console.log(fechaStr);
     return (
       <View style={styles.newscontainer} ref={component => this._root = component} {...this.props}>
         <View style={styles.newscontainerImageContainer}>
           <Image source={{uri: evento.urlImagen}} style={styles.newscontainerImage}/>
         </View>
         <Text style={styles.newscontainerTitulo}>{evento.titulo}</Text>
-        <Text style={styles.newscontainerDate}>{fecha}</Text>
+        <Text style={styles.newscontainerDate}>{fechaStr}</Text>
       </View>
     );
   }

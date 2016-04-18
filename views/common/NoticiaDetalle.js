@@ -8,10 +8,15 @@ import React, {
   View
 } from 'react-native';
 
+var moment = require('moment');
+var esLocale = require('moment/locale/es');
+
 class NoticiaDetalle extends Component {
 
   render() {
     var noticia = this.props.noticia;
+    var fecha = new Date(noticia.fechaNoticia);
+    var fechaStr = moment(fecha).locale("es", esLocale).format('LL');
     return (
       <View style={{ flex: 1, marginTop: 64 }}>
         <ScrollView>
@@ -19,7 +24,7 @@ class NoticiaDetalle extends Component {
             <Image style={ styles.imagen } source={{ uri: noticia.urlImagen }} />
           </View>
           <Text style={styles.newscontainerTitulo}>{noticia.titulo}</Text>
-          <Text style={styles.newscontainerDate}>{noticia.fechaNoticia}</Text>
+          <Text style={styles.newscontainerDate}>{fechaStr}</Text>
           <Text style={styles.newscontainerResumen}>{noticia.resumen}</Text>
           <Text style={styles.newscontainerTexto}>{noticia.noticia}</Text>
         </ScrollView>

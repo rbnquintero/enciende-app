@@ -68,32 +68,37 @@ var NavBarRouteMapper = {
   },
 
   RightButton: function(route, navigator, index, navState) {
-    var image;
-    if(myAppNavigator.state.myuser == null) {
-      image = (
-        <Image style={[styles.account, { backgroundColor: 'white' }]} source={ require('image!profile') } />
-      );
+    console.log(route.name === 'Perfil');
+    if(route.name === 'Perfil') {
+      return null;
     } else {
-      image = (
-        <Image style={styles.account} source={{ uri: myAppNavigator.state.myuser.fbData.picture.data.url }} />
-      );
-    }
-    if(Platform.OS === 'ios') {
-      return (
-        <TouchableHighlight onPress={() => myAppNavigator.profilePressed()}>
-          <View style={styles.accountContainer}>
-            {image}
-          </View>
-        </TouchableHighlight>
-      );
-    } else {
-      return(
-        <TouchableHighlight onPress={() => myAppNavigator.profilePressed()} style={{marginTop:7}}>
-          <View style={styles.accountContainer}>
-            {image}
-          </View>
-        </TouchableHighlight>
-      );
+      var image;
+      if(myAppNavigator.state.myuser == null) {
+        image = (
+          <Image style={[styles.account, { backgroundColor: 'white' }]} source={ require('image!profile') } />
+        );
+      } else {
+        image = (
+          <Image style={styles.account} source={{ uri: myAppNavigator.state.myuser.fbData.picture.data.url }} />
+        );
+      }
+      if(Platform.OS === 'ios') {
+        return (
+          <TouchableHighlight onPress={() => myAppNavigator.profilePressed()}>
+            <View style={styles.accountContainer}>
+              {image}
+            </View>
+          </TouchableHighlight>
+        );
+      } else {
+        return(
+          <TouchableHighlight onPress={() => myAppNavigator.profilePressed()} style={{marginTop:7}}>
+            <View style={styles.accountContainer}>
+              {image}
+            </View>
+          </TouchableHighlight>
+        );
+      }
     }
   },
 
@@ -150,7 +155,7 @@ class AppNavigator extends Component {
   }
 
   profilePressed() {
-    if (this.state.myuser.userData == null){
+    if (this.state.myuser == null || this.state.myuser.userData == null){
       myNavigator.push({
         title: "Facebook Login",
         name: 'Facebook Login',
@@ -182,7 +187,6 @@ class AppNavigator extends Component {
 const styles = StyleSheet.create({
   header: {
     marginTop: 25,
-    //borderWidth: 2,
     borderColor: '#333333',
     flexDirection: 'row',
     alignItems: 'center'
