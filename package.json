@@ -9,6 +9,8 @@
     "moment": "^2.13.0",
     "react": "^0.14.8",
     "react-native": "^0.22.2",
-    "react-native-facebook-login": "^1.0.3"
+    "react-native-facebook-login": "^1.0.3",
+    "react-redux": "^4.4.5",
+    "redux": "^3.4.0"
   }
 }

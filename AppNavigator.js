@@ -14,18 +14,30 @@ var Home = require('./views/common/Home');
 var FacebookLogin = require('./views/common/FacebookLogin');
 var Perfil = require('./views/common/Perfil');
 
-var LocalDBUtil = require('./views/utils/LocalDBUtil');
+/* REDUX */
+import type {State as User} from './reducers/user';
+var { connect } = require('react-redux');
+var {
+  fetchProfile,
+  logOut,
+} = require('./actions');
 
 var myRoute;
 var myNavigator;
 var myAppNavigator;
 
+type Props = {
+  user: User;
+  updateProfile: () => void;
+  logOut: () => void;
+};
+
 var NavBarRouteMapper = {
   LeftButton: function(route, navigator, index, navState) {
     myNavigator = navigator;
     var previousRoute = navState.routeStack[index];
-    console.log("routeStack", navState.routeStack);
-    console.log(previousRoute);
+    //console.log("routeStack", navState.routeStack);
+    //console.log(previousRoute);
     if(navState.routeStack.length > 1) {
       if(Platform.OS === 'ios') {
         return (
@@ -68,18 +80,18 @@ var NavBarRouteMapper = {
   },
 
   RightButton: function(route, navigator, index, navState) {
-    console.log(route.name === 'Perfil');
+    //console.log(route.name === 'Perfil');
     if(route.name === 'Perfil') {
       return null;
     } else {
       var image;
-      if(myAppNavigator.state.myuser == null) {
+      if(!myAppNavigator.props.user.isLoggedIn) {
         image = (
           <Image style={[styles.account, { backgroundColor: 'white' }]} source={ require('image!profile') } />
         );
       } else {
         image = (
-          <Image style={styles.account} source={{ uri: myAppNavigator.state.myuser.fbData.picture.data.url }} />
+          <Image style={styles.account} source={{ uri: myAppNavigator.props.user.fbData.picture.data.url }} />
         );
       }
       if(Platform.OS === 'ios') {
@@ -119,15 +131,13 @@ var NavBarRouteMapper = {
 };
 
 class AppNavigator extends Component {
+  props: Props;
+
   constructor(props) {
     super(props);
     myAppNavigator = this;
-    this.state = {
-      localDBUtil: new LocalDBUtil(),
-      myuser: null
-    };
-    this.state.localDBUtil.getPerfilData(this);
-    //this.state.localDBUtil.deleteAll();
+    this.props.updateProfile();
+    //this.props.logOut();
   }
 
   sceneConfig(route, routeStack) {
@@ -137,7 +147,7 @@ class AppNavigator extends Component {
     if(route.name=="Lobby" || route.name=="Facebook Login"){
       return (<route.component navigator={navigator} {...route.passProps}/>);
     } else {
-      console.log(route);
+      //console.log(route);
       myRoute = route;
       return (
       <View style={{flex: 1, backgroundColor: '#e6e6e6'}}>
@@ -149,25 +159,23 @@ class AppNavigator extends Component {
         </View>
         <route.component
           style={{flex: 1}}
-          navigator={navigator} {...route.passProps} />
+          navigator={navigator} {...route.passProps}/>
       </View>);
     }
   }
 
   profilePressed() {
-    if (this.state.myuser == null || this.state.myuser.userData == null){
+    if (!this.props.user.isRegistered){
       myNavigator.push({
         title: "Facebook Login",
         name: 'Facebook Login',
         component: FacebookLogin,
-        passProps: { navBar: myAppNavigator }
       });
     } else {
       myNavigator.push({
         title: "Perfil",
         name: 'Perfil',
         component: Perfil,
-        passProps: { navBar: myAppNavigator }
       });
     }
   }
@@ -285,4 +293,17 @@ const styles = StyleSheet.create({
   }
 });
 
-module.exports = AppNavigator;
+function select(store) {
+  return {
+    user: store.user,
+  };
+}
+
+function actions(dispatch) {
+  return {
+    updateProfile: () => dispatch(fetchProfile()),
+    logOut: () => dispatch(logOut()),
+  };
+}
+
+module.exports = connect(select, actions)(AppNavigator);

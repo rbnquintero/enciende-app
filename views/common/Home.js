@@ -12,19 +12,28 @@ import React, {
 var Card = require('./home/Card');
 var Loader = require('./../helpers/Loader');
 var NoticiaDetalle = require('./NoticiaDetalle');
-var LocalDBUtil = require('./../utils/LocalDBUtil');
+
+var env = require('../../env');
+
+/* REDUX */
+import type {State as Noticias} from '../../reducers/noticia';
+var { connect } = require('react-redux');
+var {
+  loadNews,
+} = require('../../actions');
+type Props = {
+  news: Noticias;
+  loadNews: () => void;
+};
 
 class Home extends Component {
   constructor(props) {
     super(props);
-    this._fetchNews();
     this.state = {
       dataSource: null,
-      errorLoading: false,
-      myuser: null,
-      some: "some",
-      localDBUtil: new LocalDBUtil()
+      loadedNews: false,
     };
+    this._fetchNews();
   }
 
   _rowPressed(noticia) {
@@ -33,13 +42,13 @@ class Home extends Component {
       title: "Noticia",
       name: 'NoticiaDetalle',
       component: NoticiaDetalle,
-      passProps: {noticia: noticia, navBar: this.props.myAppNavigator }
+      passProps: {noticia: noticia}
     });
   }
 
   _fetchNews() {
     var _this = this;
-    var query = "http://localhost:8080/noticias/";
+    var query = env.serverURL + "/noticias/lista/10/10";
     fetch(query)
       .then(response => response.json())
       .then(json => {
@@ -47,7 +56,6 @@ class Home extends Component {
         var dataSource = new ListView.DataSource({
           rowHasChanged: (r1, r2) => r1.id !== r2.id
         });
-        _this.state.localDBUtil.saveNoticias(json.noticias);
         _this.setState({
           dataSource: dataSource.cloneWithRows(json.noticias)
         });
@@ -67,6 +75,10 @@ class Home extends Component {
     );
   }
 
+  componentDidUpdate() {
+
+  }
+
   render() {
     var list;
     console.log("datasource", this.state.dataSource);
@@ -77,14 +89,11 @@ class Home extends Component {
           renderRow={this.renderRow.bind(this)} />
       );
     } else {
-      if(this.state.errorLoading) {
+      if(!this.props.news.isFetching && this.props.news.error != null) {
         list = (
           <View style={{flex: 1, alignItems: 'center', flexDirection: 'row'}}>
             <TouchableHighlight style={{flex: 1}} onPress={() => {
-              this.setState({
-                errorLoading: false
-              });
-              this._fetchNews();
+              this.props.loadNews();
             }} >
               <View style={{flex:1, alignItems: 'center'}}>
                 <Text style={{ textAlign: 'center', flex: 1 }}>Ocurrió un error al cargar las noticias.</Text>
@@ -133,4 +142,16 @@ const styles = StyleSheet.create({
   }
 });
 
-module.exports = Home;
+function select(store) {
+  return {
+    news: store.news,
+  };
+}
+
+function actions(dispatch) {
+  return {
+    loadNews: () => dispatch(loadNews()),
+  };
+}
+
+module.exports = connect(select, actions)(Home);

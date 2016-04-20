@@ -11,13 +11,24 @@ import React, {
 var moment = require('moment');
 var esLocale = require('moment/locale/es');
 
+/* REDUX */
+import type {State as User} from '../../reducers/user';
+var { connect } = require('react-redux');
+var {
+  fetchProfile,
+  logOut,
+} = require('../../actions');
+type Props = {
+  user: User;
+  updateProfile: () => void;
+  logOut: () => void;
+};
+
 class Perfil extends Component {
   constructor(props){
     super(props);
-    console.log(this.props.navBar);
     this.state = {
-      localDBUtil : this.props.navBar.state.localDBUtil,
-      myuser : this.props.navBar.state.myuser,
+      localDBUtil : null,
     };
   }
 
@@ -29,32 +40,32 @@ class Perfil extends Component {
   }
 
   render() {
-    if(this.state.myuser != null) {
+    if(this.props.user.isRegistered) {
       return (
         <View style={{ flex: 1, marginTop: 64 }}>
           <View style={{ flex: 1, alignItems: 'center', overflow: 'hidden',  }}>
             <View style={{flex: 1, alignItems: 'center', flexDirection: 'row', }}>
-              <Image source={{ uri: this.state.myuser.fbData.picture.data.url }} style={{ resizeMode: Image.resizeMode.contain, width: 200, height: 150 }}/>
+              <Image source={{ uri: this.props.user.fbData.picture.data.url }} style={{ resizeMode: Image.resizeMode.contain, width: 200, height: 150 }}/>
             </View>
             <Text style={{ fontWeight: 'bold', fontSize: 25 }}>
-              {this.state.myuser.userData.nombre}
+              {this.props.user.userData.nombre}
             </Text>
             <Text style={{ fontWeight: '600', marginVertical: 5, color: 'gray' }}>
-              {this.state.myuser.currentRally.grupo.rally.nombre}
+              {this.props.user.currentRally.grupo.rally.nombre}
             </Text>
             <View style={{flexDirection: 'row'}}>
               <Text style={{ paddingRight: 30, fontWeight: '600', marginVertical: 5, color: 'gray' }}>
-                {this.state.myuser.currentRally.grupo.nombre}
+                {this.props.user.currentRally.grupo.nombre}
               </Text>
               <Text style={{ fontWeight: '600', marginVertical: 5, color: 'gray' }}>
-                Talla camiseta: {this.state.myuser.userData.tallaPlayera}
+                Talla camiseta: {this.props.user.userData.tallaPlayera}
               </Text>
             </View>
           </View>
           <View style={{ flex: 1, alignItems: 'stretch', marginTop: 10, marginHorizontal: 30 }}>
             <View style={{ borderTopWidth: 2, }}>
               <Text style={{ fontWeight:'bold', marginTop: 10 }}>Próximos eventos</Text>
-              {this.state.myuser.userData.grupoUsuarios.map(function(result, id){
+              {this.props.user.userData.grupoUsuarios.map(function(result, id){
                 var fecha = new Date(result.grupo.rally.fechaInicio);
                 var fechaStr = moment(fecha).locale("es", esLocale).format('LL');
                 return (
@@ -77,7 +88,7 @@ class Perfil extends Component {
                 '¿Estas seguro de cerrar sesión?',
                 [
                   {text: 'Cancel', onPress: () => console.log('Cancel Pressed!')},
-                  {text: 'OK', onPress: () => {this._cerrarSesion()}},
+                  {text: 'OK', onPress: () => {this.props.logOut(this.props.navigator)}},
                 ]
               )}>
               <View style={{ borderTopWidth: 2, borderBottomWidth: 2 }}>
@@ -97,4 +108,17 @@ const styles = StyleSheet.create({
 
 });
 
-module.exports = Perfil;
+function select(store) {
+  return {
+    user: store.user,
+  };
+}
+
+function actions(dispatch) {
+  return {
+    updateProfile: () => dispatch(fetchProfile()),
+    logOut: (navigator)=> {dispatch(logOut()), navigator.pop();},
+  };
+}
+
+module.exports = connect(select, actions)(Perfil);

@@ -3,19 +3,10 @@
  * https://github.com/facebook/react-native
  */
 
-import React, {
-  AppRegistry,
-  Component
-} from 'react-native';
+ import React, {
+   AppRegistry
+ } from 'react-native';
 
-var AppNavigator = require('./AppNavigator');
+ const setup = require('./setup');
 
-class enciendeApp extends Component {
-  render() {
-    return (
-      <AppNavigator />
-    );
-  }
-}
-
-AppRegistry.registerComponent('enciendeApp', () => enciendeApp);
+ AppRegistry.registerComponent('enciendeApp', setup);

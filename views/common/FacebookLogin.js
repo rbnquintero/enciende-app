@@ -12,20 +12,26 @@ import React, {
 var FBLogin = require('react-native-facebook-login');
 var FBLoginManager = require('NativeModules').FBLoginManager;
 
-var LocalDBUtil = require('./../utils/LocalDBUtil');
+/* REDUX */
+import type {State as User} from '../../reducers/user';
+var { connect } = require('react-redux');
+var {
+  logIn,
+  registerUser,
+} = require('../../actions');
+type Props = {
+  user: User;
+  logIn: () => void;
+  registerUser: () => void;
+};
 
 class FacebookLogin extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      myuser: null,
-      loading: true,
-      error: false,
       userCode: '',
-      localDBUtil: new LocalDBUtil(),
     };
     //this.state.localDBUtil.deleteAll();
-    this.state.localDBUtil.getFacebookProfile(this);
   }
 
   _logIn(){
@@ -46,15 +52,21 @@ class FacebookLogin extends Component {
     this.setState({ userCode: event.nativeEvent.text });
   }
 
+  componentDidUpdate() {
+    if(this.props.user.isLoggedIn && this.props.user.isRegistered && !this.props.user.isFetching) {
+      this.props.navigator.pop();
+    }
+  }
+
   render() {
     var loginSection;
-    if(this.state.myuser == null && !this.state.loading) {
+    if(!this.props.user.isLoggedIn && !this.props.user.isFetching) {
       loginSection = (
       <View style={ styles.centerAlign }>
         <Text style={ styles.text }>
           Lorem ipsum dolor sit amet, maiores ornare ac fermentum, imperdiet ut vivamus a, nam lectus at nunc.
         </Text>
-        <TouchableHighlight style={ styles.button } onPress={() => this._logIn()}
+        <TouchableHighlight style={ styles.button } onPress={() => this.props.logIn()}
           underlayColor='#99d9f4'>
           <View style={{flexDirection: 'row'}}>
             <Image source={ require("image!flogo")} style={{width: 40, height: 20, marginLeft: 5, marginTop: 5, resizeMode: Image.resizeMode.contain,}}/>
@@ -70,8 +82,8 @@ class FacebookLogin extends Component {
             </Text>
         </TouchableHighlight>
       </View>);
-    } else if (this.state.myuser != null && !this.state.loading){
-      if(this.state.myuser.userData == null) {
+    } else if (this.props.user.isLoggedIn && !this.props.user.isFetching) {
+      if(!this.props.user.isRegistered) {
         loginSection = (
           <View style={[ styles.centerAlign ]}>
             <Text style={ styles.text }>
@@ -81,7 +93,7 @@ class FacebookLogin extends Component {
               <TextInput placeholder='ID' onChange={this._onInputTextChanged.bind(this)} autoCapitalize='characters'
                 style={{height: 30, width: 80}}/>
             </View>
-            <TouchableHighlight style={ styles.button } onPress={() => this._register()}
+            <TouchableHighlight style={ styles.button } onPress={() => this.props.registerUser(this.props.user, this.state.userCode)}
               underlayColor='#99d9f4'>
               <View style={{flexDirection: 'row'}}>
                 <Text style={[ styles.buttonText, { fontSize: 18, } ]}>
@@ -160,4 +172,18 @@ const styles = StyleSheet.create({
   },
 });
 
-module.exports = FacebookLogin;
+
+function select(store) {
+  return {
+    user: store.user,
+  };
+}
+
+function actions(dispatch) {
+  return {
+    logIn: () => dispatch(logIn()),
+    registerUser: (user, appToken) => dispatch(registerUser(user, appToken)),
+  };
+}
+
+module.exports = connect(select, actions)(FacebookLogin);

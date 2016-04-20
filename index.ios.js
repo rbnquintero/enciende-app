@@ -4,18 +4,9 @@
  */
 
 import React, {
-  AppRegistry,
-  Component
+  AppRegistry
 } from 'react-native';
 
-var AppNavigator = require('./AppNavigator');
+const setup = require('./setup');
 
-class enciendeApp extends Component {
-  render() {
-    return (
-      <AppNavigator />
-    );
-  }
-}
-
-AppRegistry.registerComponent('enciendeApp', () => enciendeApp);
+AppRegistry.registerComponent('enciendeApp', setup);

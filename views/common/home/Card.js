@@ -20,7 +20,6 @@ class Card extends Component {
     var evento = this.props.data;
     var fecha = new Date(evento.fechaNoticia);
     var fechaStr = moment(fecha).locale("es", esLocale).format('LL');
-    console.log(fechaStr);
     return (
       <View style={styles.newscontainer} ref={component => this._root = component} {...this.props}>
         <View style={styles.newscontainerImageContainer}>
