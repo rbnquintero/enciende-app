@@ -125,7 +125,6 @@ class RegistroGrupos extends Component {
             </Text>
             <ScrollView>
               {this.state.grupos.map(function(result, id){
-                console.log(result);
                 return (
                   <View key={id} style={{marginBottom: 7}}>
                     <Text style={{fontSize: 17, fontWeight: '200'}}>
