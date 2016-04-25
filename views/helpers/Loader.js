@@ -14,14 +14,28 @@ class Loader extends Component {
   render() {
     var spinner;
     if(Platform.OS === 'ios') {
-        spinner = ( <ActivityIndicatorIOS
-          style={styles.spinner}
-          hidden='true'
-          size='large'/> );
+        spinner = (
+          <View style={styles.spinnerContainerAndroid}>
+            <View style={styles.spinnerContainer}>
+              <ActivityIndicatorIOS
+              style={styles.spinnerr}
+              hidden='true'
+              size='large'/>
+              <Text style={{ fontSize: 17, fontWeight: '200', marginTop: 10 }}>
+                {this.props.caption}
+              </Text>
+            </View>
+          </View>
+        );
     } else {
       spinner = (
         <View style={styles.spinnerContainerAndroid}>
-          <ProgressBarAndroid/>
+          <View style={styles.spinnerContainer}>
+            <ProgressBarAndroid/>
+            <Text style={{ fontSize: 17, fontWeight: '200', marginTop: 10 }}>
+              {this.props.caption}
+            </Text>
+          </View>
         </View>
       );
     }

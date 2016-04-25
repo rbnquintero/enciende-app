@@ -53,6 +53,9 @@ function logIn() {
     return FBLoginManager.loginWithPermissions(["public_profile","email"], function(error, data) {
       if (!error) {
         var user = data.credentials;
+        if(user == null) {
+          user = data;
+        }
         dispatch(loadFbData(user, true));
       } else {
         dispatch(logInError('error al loguear usuario'));
@@ -64,7 +67,7 @@ function logIn() {
 function registerUser(user, appToken) {
   return function(dispatch) {
     dispatch(loadingUser(user));
-    var query = env.serverURL + '/servicios/usuario/registrarFacebook/' + appToken + '/' + user.user.token;
+    var query = env.serverURL + '/usuario/registrarFacebook/' + appToken + '/' + user.user.token;
     return fetch(query)
       .then(response => response.json())
       .then(json => {
@@ -121,8 +124,8 @@ function loadingUser(user) {
 function loadFbData(user, loadUserDataFlag) {
   return function(dispatch) {
     dispatch(logInStart());
-
     var query = env.facebookURL + env.facebookURI + user.token;
+    console.log("fbqueyr", query);
     return fetch(query)
       .then(response => response.json())
       .then(json => {
@@ -143,8 +146,9 @@ function loadFbData(user, loadUserDataFlag) {
 function loadUserData(user) {
   return function(dispatch) {
     dispatch(loadingUser(user));
-
-    var query = env.serverURL + '/servicios/usuario/get/' + user.token;
+    console.log(user);
+    var query = env.serverURL + '/usuario/get/' + user.token;
+    console.log("userquery", query);
     return fetch(query)
       .then(response => response.json())
       .then(json => {

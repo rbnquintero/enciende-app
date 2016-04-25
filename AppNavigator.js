@@ -141,10 +141,19 @@ class AppNavigator extends Component {
   }
 
   sceneConfig(route, routeStack) {
-    return Navigator.SceneConfigs.PushFromRight
+    console.log(route);
+    if(route.fromBottom!=null){
+      if(Platform.OS === 'ios') {
+        return Navigator.SceneConfigs.FloatFromBottom;
+      } else {
+        return Navigator.SceneConfigs.FloatFromBottomAndroid;
+      }
+    } else {
+      return Navigator.SceneConfigs.PushFromRight;
+    }
   }
   routeMapper(route, navigator) {
-    if(route.name=="Lobby" || route.name=="Facebook Login"){
+    if(route.name=="Lobby" || route.name=="Facebook Login" || route.fromBottom!=null){
       return (<route.component navigator={navigator} {...route.passProps}/>);
     } else {
       //console.log(route);

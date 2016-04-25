@@ -2,6 +2,7 @@ import React, {
   Component,
   TouchableHighlight,
   Text,
+  StatusBar,
   View
 } from 'react-native';
 
@@ -9,7 +10,7 @@ import thunkMiddleware from 'redux-thunk';
 //import createLogger from 'redux-logger'
 import enciendeReducers from './reducers';
 
-var AppNavigator = require('./AppNavigator');
+var EnciendeApp = require('./EnciendeApp');
 
 var { Provider } = require('react-redux');
 var { createStore, applyMiddleware } = require('redux');
@@ -22,7 +23,7 @@ function setup(): Component {
     render() {
       return (
         <Provider store={store}>
-          <AppNavigator />
+          <EnciendeApp />
         </Provider>
       );
     }
