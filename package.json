@@ -11,6 +11,7 @@
     "react-native": "^0.22.2",
     "react-native-facebook-login": "^1.0.3",
     "react-redux": "^4.4.5",
+    "react-timer-mixin": "^0.13.3",
     "redux": "^3.4.0"
   }
 }

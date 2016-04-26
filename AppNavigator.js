@@ -141,7 +141,6 @@ class AppNavigator extends Component {
   }
 
   sceneConfig(route, routeStack) {
-    console.log(route);
     if(route.fromBottom!=null){
       if(Platform.OS === 'ios') {
         return Navigator.SceneConfigs.FloatFromBottom;

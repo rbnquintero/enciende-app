@@ -17,13 +17,17 @@ var env = require('../../env');
 
 /* REDUX */
 import type {State as Noticias} from '../../reducers/noticia';
+import type {State as User} from '../../reducers/user';
 var { connect } = require('react-redux');
 var {
   loadNews,
+  newsRendered,
 } = require('../../actions');
 type Props = {
   news: Noticias;
+  user: User;
   loadNews: () => void;
+  newsRendered: () => void;
 };
 
 class Home extends Component {
@@ -33,7 +37,7 @@ class Home extends Component {
       dataSource: null,
       loadedNews: false,
     };
-    this._fetchNews();
+    this.props.loadNews();
   }
 
   _rowPressed(noticia) {
@@ -46,27 +50,6 @@ class Home extends Component {
     });
   }
 
-  _fetchNews() {
-    var _this = this;
-    var query = env.serverURL + "/noticias/lista/10/10";
-    fetch(query)
-      .then(response => response.json())
-      .then(json => {
-        console.log("data", json);
-        var dataSource = new ListView.DataSource({
-          rowHasChanged: (r1, r2) => r1.id !== r2.id
-        });
-        _this.setState({
-          dataSource: dataSource.cloneWithRows(json.noticias)
-        });
-      }).catch(error => {
-        console.log(error);
-        _this.setState({
-          errorLoading: true
-        });
-      });
-  }
-
   renderRow(rowData, sectionID, rowID) {
     return (
       <TouchableHighlight onPress={() => this._rowPressed(rowData)}>
@@ -76,12 +59,19 @@ class Home extends Component {
   }
 
   componentDidUpdate() {
-
+    if(!this.props.news.isLoading && this.props.news.pendingRendering) {
+      var dataSource = new ListView.DataSource({
+        rowHasChanged: (r1, r2) => r1.id !== r2.id
+      });
+      this.setState({
+        dataSource: dataSource.cloneWithRows(this.props.news.news)
+      });
+      this.props.newsRendered();
+    }
   }
 
   render() {
     var list;
-    console.log("datasource", this.state.dataSource);
     if(this.state.dataSource != null) {
       list = (
         <ListView
@@ -112,45 +102,22 @@ class Home extends Component {
     return (
       <View style={{ flex: 1, marginTop: 64 }}>
         {list}
-        <View style={styles.timercontainer}>
-          <View style={styles.timercontainerContainer}>
-            <Text style={styles.timercontainerText}>Faltan 23:12:18 días</Text>
-          </View>
-        </View>
       </View>
     );
   }
 }
 
-const styles = StyleSheet.create({
-  timercontainer: {
-    backgroundColor: '#404040',
-    height: 33,
-    alignItems: 'center',
-  },
-  timercontainerContainer: {
-    flex: 1,
-    flexDirection: 'row',
-    alignItems: 'center'
-  },
-  timercontainerText: {
-    color: 'white',
-    fontWeight: '100',
-    fontSize: 22,
-    fontFamily: 'Helvetica',
-    textAlign: 'center',
-  }
-});
-
 function select(store) {
   return {
     news: store.news,
+    user: store.user,
   };
 }
 
 function actions(dispatch) {
   return {
     loadNews: () => dispatch(loadNews()),
+    newsRendered: () => dispatch(newsRendered()),
   };
 }
 

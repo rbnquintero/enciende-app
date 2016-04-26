@@ -9,6 +9,7 @@ var env = require('../env');
 const NEWS_LOADING = 'NEWS_LOADING';
 const NEWS_LOADED = 'NEWS_LOADED';
 const NEWS_LOADING_ERROR = 'NEWS_LOADING_ERROR';
+const NEWS_RENDERED = 'NEWS_RENDERED';
 
 /*
  * action creators
@@ -16,6 +17,12 @@ const NEWS_LOADING_ERROR = 'NEWS_LOADING_ERROR';
 function newsLoading() {
   return {
     type: NEWS_LOADING,
+  };
+}
+
+function newsRendered() {
+  return {
+    type: NEWS_RENDERED,
   };
 }
 
@@ -56,7 +63,6 @@ function fetchNews(showLoading) {
     return fetch(query)
       .then(response => response.json())
       .then(json => {
-        console.log("fetched news", json);
         if(json.success == true){
           localRepository.saveNews(json.noticias);
           dispatch(newsLoaded(json.noticias));
@@ -70,4 +76,4 @@ function fetchNews(showLoading) {
   }
 }
 
-module.exports = {loadNews, fetchNews, newsLoading, newsLoaded, newsLoadingError};
+module.exports = {loadNews, fetchNews, newsLoading, newsLoaded, newsLoadingError, newsRendered};

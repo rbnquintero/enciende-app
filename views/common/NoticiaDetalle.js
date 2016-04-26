@@ -28,11 +28,6 @@ class NoticiaDetalle extends Component {
           <Text style={styles.newscontainerResumen}>{noticia.resumen}</Text>
           <Text style={styles.newscontainerTexto}>{noticia.noticia}</Text>
         </ScrollView>
-        <View style={styles.timercontainer}>
-          <View style={styles.timercontainerContainer}>
-            <Text style={styles.timercontainerText}>Faltan 23:12:18 días</Text>
-          </View>
-        </View>
       </View>
     );
   }
@@ -80,22 +75,6 @@ const styles = StyleSheet.create({
     color: 'gray',
     //textAlign: 'justify',
   },
-  timercontainer: {
-    backgroundColor: '#404040',
-    height: 33,
-    alignItems: 'center',
-  },
-  timercontainerContainer: {
-    flex: 1,
-    flexDirection: 'row',
-    alignItems: 'center'
-  },
-  timercontainerText: {
-    color: 'white',
-    fontWeight: '100',
-    fontSize: 22,
-    fontFamily: 'Helvetica',
-  }
 });
 
 module.exports = NoticiaDetalle;
