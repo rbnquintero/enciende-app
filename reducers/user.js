@@ -89,17 +89,7 @@ function user(state: State = initialState, action: Action): State {
       name: name
     }
   } else if (action.type === 'LOG_OUT') {
-    return {
-      isLoggedIn: true,
-      isRegistered: false,
-      isFetching: true,
-      error: action.error,
-      user: action.user,
-      fbData: user.fbData,
-      userData: user.userData,
-      currentRally: user.currentRally,
-      name: name
-    }
+    return initialState;
   } else if (action.type === 'INITIAL_STATE') {
     return initialState;
   }

@@ -36,6 +36,9 @@ class Perfil extends Component {
   render() {
     var extraOptions = <View/>
     //TODO CAMBIAR para el staff / admin
+    if (!this.props.user.isLoggedIn || !this.props.user.isRegistered || !this.props.user.currentRally== null) {
+      return null;
+    }
     if(this.props.user.currentRally.rol === 'PARTICIPANTE') {
       // Usuario es admin
       extraOptions = (
@@ -137,7 +140,7 @@ function select(store) {
 function actions(dispatch) {
   return {
     updateProfile: () => dispatch(fetchProfile()),
-    logOut: (navigator)=> {dispatch(logOut()), navigator.pop();},
+    logOut: (navigator)=> {dispatch(logOut()); navigator.pop();},
   };
 }
 

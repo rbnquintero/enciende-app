@@ -41,7 +41,6 @@ class Home extends Component {
   }
 
   _rowPressed(noticia) {
-    console.log(noticia);
     this.props.navigator.push({
       title: "Noticia",
       name: 'NoticiaDetalle',

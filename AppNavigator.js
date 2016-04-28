@@ -21,16 +21,15 @@ var {
   fetchProfile,
   logOut,
 } = require('./actions');
-
-var myRoute;
-var myNavigator;
-var myAppNavigator;
-
 type Props = {
   user: User;
   updateProfile: () => void;
   logOut: () => void;
 };
+
+var myRoute;
+var myNavigator;
+var myAppNavigator;
 
 var NavBarRouteMapper = {
   LeftButton: function(route, navigator, index, navState) {
@@ -136,8 +135,10 @@ class AppNavigator extends Component {
   constructor(props) {
     super(props);
     myAppNavigator = this;
-    this.props.updateProfile();
     //this.props.logOut();
+    if (!this.props.user.isLoggedIn || !this.props.user.isRegistered || !this.props.user.currentRally== null) {
+      this.props.updateProfile();
+    }
   }
 
   sceneConfig(route, routeStack) {
@@ -194,7 +195,7 @@ class AppNavigator extends Component {
       <Navigator
         style={{ flex:1 }}
         configureScene={ this.sceneConfig }
-        initialRoute={{ name:'Inicio', title:'Inicio', component: Home, passProps: { navBar: myAppNavigator } }}
+        initialRoute={{ name:'Inicio', title:'Inicio', component: Home }}
         renderScene={ this.routeMapper } />
     );
   }

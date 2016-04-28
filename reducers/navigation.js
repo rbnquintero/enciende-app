@@ -15,7 +15,9 @@ function navigation(state: State = initialState, action): State {
       flujoNormal: false,
     }
   } else if (action.type === 'PANTALLA_NOTICIAS') {
-    return initialState;
+    return {
+      flujoNormal: true,
+    }
   }
 
   return state;

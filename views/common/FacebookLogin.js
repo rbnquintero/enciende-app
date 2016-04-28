@@ -12,6 +12,8 @@ import React, {
 var FBLogin = require('react-native-facebook-login');
 var FBLoginManager = require('NativeModules').FBLoginManager;
 
+var AppLogo = require('../segments/AppLogo');
+
 /* REDUX */
 import type {State as User} from '../../reducers/user';
 var { connect } = require('react-redux');
@@ -126,14 +128,7 @@ class FacebookLogin extends Component {
     return (
       <View style={ styles.mainContainer }>
         <View style={[ styles.centerAlignLogo ]}>
-          <View style={{flexDirection: 'row', flex: 1, alignItems: 'flex-end'}}>
-            <View>
-              <Image source={ require('image!logo') } />
-              <Text style={ styles.title} >
-                enciende app
-              </Text>
-            </View>
-          </View>
+          <AppLogo/>
         </View>
         {loginSection}
       </View>
@@ -153,9 +148,6 @@ const styles = StyleSheet.create({
   },
   text: {
     color: '#FFFFFF', marginVertical: 25, marginHorizontal: 35, textAlign: 'center', alignSelf: 'stretch'
-  },
-  title: {
-    color:'#FFFFFF', fontWeight: 'bold', fontSize: 25, textAlign: 'center'
   },
   buttonText: {
     color:'#0059b3', textAlign: 'center', marginHorizontal: 10, marginVertical: 5
