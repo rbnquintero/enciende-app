@@ -9,7 +9,6 @@ import React, {
 class ActivitySegment extends Component {
 
   render() {
-    console.log(this.props);
     var image = (
       <Image
         style={{ resizeMode: Image.resizeMode.contain, width: 30, height: 30 }}

@@ -42,6 +42,7 @@ function actUserLoaded(actUser) {
 
 function loadActUser() {
   return function(dispatch) {
+    dispatch(actUserLoading());
     return localRepository.getSavedActUser().then((actUser) => {
       if(actUser != null) {
         dispatch(actUserLoaded(actUser));
@@ -51,8 +52,11 @@ function loadActUser() {
   }
 }
 
-function fetchActUser() {
+function fetchActUser(showLoading) {
   return function(dispatch) {
+    if(showLoading) {
+      dispatch(actUserLoading());
+    }
     var query = env.serverURL + '/rally/actividades/2/';
     return fetch(query)
       .then(response => response.json())

@@ -9,21 +9,29 @@ var Actividades = require('./RallyActividades');
 
 /* REDUX */
 import type {State as User} from '../../reducers/user';
+import type {State as ActividadesUser} from '../../reducers/actividadesUser';
 var { connect } = require('react-redux');
 var {
   fetchProfile,
+  loadActUser,
+  fetchActUser,
 } = require('../../actions');
 type Props = {
   user: User;
+  actividadesUser: ActividadesUser;
   fetchProfile: () => void;
+  loadUserActividades: () => void;
+  refreshUserActividades: () => void;
 };
 
+var _this;
 class RallyNavigator extends Component {
   constructor(props) {
     super(props);
     if (!this.props.user.isLoggedIn || !this.props.user.isRegistered || !this.props.user.currentRally== null) {
       this.props.updateProfile();
     }
+    _this = this;
   }
   sceneConfig(route, routeStack) {
     if(route.fromBottom!=null){
@@ -53,10 +61,19 @@ class RallyNavigator extends Component {
       <Navigator
         style={{ flex:1 }}
         configureScene={ this.sceneConfig }
+        onDidFocus={ this.didFocus }
         initialRoute={{ name:'Inicio', title:'Inicio', component: component, }}
         renderScene={this.renderScene}
       />
     );
+  }
+
+  didFocus(route) {
+    if(_this.props.actividadesUser.actividades.length > 0) {
+      _this.props.refreshUserActividades();
+    } else {
+      _this.props.loadUserActividades();
+    }
   }
 
   renderScene(route, navigator) {
@@ -74,12 +91,15 @@ class RallyNavigator extends Component {
 function select(store) {
   return {
     user: store.user,
+    actividadesUser: store.actividadesUser,
   };
 }
 
 function actions(dispatch) {
   return {
     updateProfile: () => dispatch(fetchProfile()),
+    loadUserActividades: () => dispatch(loadActUser()),
+    refreshUserActividades: () => dispatch(fetchActUser()),
   };
 }
 

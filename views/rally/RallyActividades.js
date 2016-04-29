@@ -34,7 +34,7 @@ class RallyActividades extends Component {
 
   constructor(props) {
     super(props);
-    this.props.loadUserActividades();
+    //this.props.loadUserActividades();
   }
 
   toActividadDetalle(actividad) {
