@@ -15,6 +15,7 @@ var {
   fetchProfile,
   loadActUser,
   fetchActUser,
+  logOut,
 } = require('../../actions');
 type Props = {
   user: User;
@@ -22,12 +23,14 @@ type Props = {
   fetchProfile: () => void;
   loadUserActividades: () => void;
   refreshUserActividades: () => void;
+  logOut: () => void;
 };
 
 var _this;
 class RallyNavigator extends Component {
   constructor(props) {
     super(props);
+    //this.props.logOut();
     if (!this.props.user.isLoggedIn || !this.props.user.isRegistered || !this.props.user.currentRally== null) {
       this.props.updateProfile();
     }
@@ -64,6 +67,7 @@ class RallyNavigator extends Component {
         onDidFocus={ this.didFocus }
         initialRoute={{ name:'Inicio', title:'Inicio', component: component, }}
         renderScene={this.renderScene}
+        openDrawer={this.props.openDrawer}
       />
     );
   }
@@ -78,7 +82,7 @@ class RallyNavigator extends Component {
 
   renderScene(route, navigator) {
     return (
-      <View style={{flex: 1, backgroundColor: '#cccccc'}}>
+      <View style={{flex: 1, backgroundColor: '#FFFFFF'}}>
         <route.component
           navigator={navigator}
           {...route.passProps}
@@ -100,6 +104,7 @@ function actions(dispatch) {
     updateProfile: () => dispatch(fetchProfile()),
     loadUserActividades: () => dispatch(loadActUser()),
     refreshUserActividades: () => dispatch(fetchActUser()),
+    logOut: () => dispatch(logOut()),
   };
 }
 

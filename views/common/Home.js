@@ -12,6 +12,7 @@ import React, {
 var Card = require('./home/Card');
 var Loader = require('./../helpers/Loader');
 var NoticiaDetalle = require('./NoticiaDetalle');
+var Header = require('../../js/common/HeaderHome');
 
 var env = require('../../env');
 
@@ -97,10 +98,21 @@ class Home extends Component {
         );
       }
     }
+    console.log(this.props);
 
     return (
-      <View style={{ flex: 1, marginTop: 64 }}>
-        {list}
+      <View style={{ flex: 1 }}>
+        <Header
+          title="Noticias enciende"
+          leftItem={{
+            layout: 'icon',
+            title: 'Menu',
+            icon: require('../../js/common/img/hamburger.png'),
+            onPress: this.props.navigator.props.openDrawer,
+          }}/>
+        <View style={{ flex: 1 }}>
+          {list}
+        </View>
       </View>
     );
   }

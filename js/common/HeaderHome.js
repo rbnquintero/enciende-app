@@ -175,13 +175,13 @@ var HEADER_HEIGHT = Platform.OS === 'ios' ? 44 + STATUS_BAR_HEIGHT : 56 + STATUS
 var styles = StyleSheet.create({
   toolbarContainer: {
     paddingTop: STATUS_BAR_HEIGHT,
-    backgroundColor: '#cc4400',
+    backgroundColor: '#6600cc',
   },
   toolbar: {
     height: HEADER_HEIGHT - STATUS_BAR_HEIGHT,
   },
   header: {
-    backgroundColor: '#cc4400',
+    backgroundColor: '#6600cc',
     paddingTop: STATUS_BAR_HEIGHT,
     height: HEADER_HEIGHT,
     flexDirection: 'row',

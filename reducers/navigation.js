@@ -2,21 +2,25 @@
 
 //Declaramos el type State
 export type State = {
-  flujoNormal: boolean;
+  pantalla: ?string;
 };
 
 const initialState = {
-  flujoNormal: true,
+  pantalla: 'noticias',
 };
 
 function navigation(state: State = initialState, action): State {
   if (action.type === 'PANTALLA_RALLY') {
     return {
-      flujoNormal: false,
+      pantalla: 'rally',
+    }
+  } else if (action.type === 'PANTALLA_CONTACTO') {
+    return {
+      pantalla: 'contacto',
     }
   } else if (action.type === 'PANTALLA_NOTICIAS') {
     return {
-      flujoNormal: true,
+      pantalla: 'noticias',
     }
   }
 

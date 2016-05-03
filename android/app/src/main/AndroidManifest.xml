@@ -2,6 +2,7 @@
     package="com.enciendeapp">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
 
     <application
       android:allowBackup="true"
@@ -28,6 +29,10 @@
       <meta-data
         android:name="com.facebook.sdk.ApplicationId"
         android:value="@string/fb_app_id"/>
+
+      <meta-data
+        android:name="com.google.android.geo.API_KEY"
+        android:value="AIzaSyDr0EBeDo6gY5tu0EQKYo8oz3TjtjV-2yw"/>
     </application>
 
 </manifest>

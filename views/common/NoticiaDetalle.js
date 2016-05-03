@@ -11,6 +11,8 @@ import React, {
 var moment = require('moment');
 var esLocale = require('moment/locale/es');
 
+var Header = require('../../js/common/HeaderHome');
+
 class NoticiaDetalle extends Component {
 
   render() {
@@ -18,7 +20,15 @@ class NoticiaDetalle extends Component {
     var fecha = new Date(noticia.fechaNoticia);
     var fechaStr = moment(fecha).locale("es", esLocale).format('LL');
     return (
-      <View style={{ flex: 1, marginTop: 64 }}>
+      <View style={{ flex: 1 }}>
+        <Header
+          title="Noticias enciende"
+          leftItem={{
+            layout: 'icon',
+            title: 'Close',
+            icon: require('../../js/common/BackButtonIcon'),
+            onPress: this.props.navigator.pop,
+          }}/>
         <ScrollView>
           <View style={styles.imagenContainer}>
             <Image style={ styles.imagen } source={{ uri: noticia.urlImagen }} />

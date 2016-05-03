@@ -124,7 +124,6 @@ function loadFbData(user, loadUserDataFlag) {
   return function(dispatch) {
     dispatch(logInStart());
     var query = env.facebookURL + env.facebookURI + user.token;
-    console.log("fbqueyr", query);
     return fetch(query)
       .then(response => response.json())
       .then(json => {
@@ -185,7 +184,7 @@ function loadCurrentRally(user) {
 }
 
 /* FUNCIONES DE SOPORTE */
-/* rally managemeng */
+/* rally management */
 function _calculateDefaultRally(userData) {
   return userData.grupoUsuarios[0];
 }

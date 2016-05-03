@@ -7,6 +7,7 @@ var env = require('../env');
  * action types
  */
 const PANTALLA_RALLY = 'PANTALLA_RALLY';
+const PANTALLA_CONTACTO = 'PANTALLA_CONTACTO';
 const PANTALLA_NOTICIAS = 'PANTALLA_NOTICIAS';
 
 /*
@@ -24,4 +25,11 @@ function toRallyHome() {
   };
 }
 
-module.exports = {toMainHome, toRallyHome, };
+function toContacto() {
+  return {
+    type: PANTALLA_CONTACTO,
+  };
+}
+
+
+module.exports = {toMainHome, toRallyHome, toContacto, };

@@ -77,9 +77,9 @@ class RallyActividades extends Component {
           title={this.props.user.currentRally.grupo.nombre}
           leftItem={{
             layout: 'icon',
-            title: 'Close',
-            icon: require('../../js/common/BackButtonIcon'),
-            onPress: this.props.toMainHome,
+            title: 'Menu',
+            icon: require('../../js/common/img/hamburger.png'),
+            onPress: this.props.navigator.props.openDrawer,
           }}/>
         <View style={{ flex: 1 }}>
           {actividades}
