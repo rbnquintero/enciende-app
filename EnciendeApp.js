@@ -4,13 +4,14 @@ import React, {
   Component,
   StatusBar,
   StyleSheet,
+  Navigator,
   TouchableOpacity,
   View
 } from 'react-native';
 import Drawer from 'react-native-drawer';
 var SideMenu = require('./views/common/SideMenu');
 
-var AppNavigator = require('./AppNavigator');
+var NoticiasNavigator = require('./views/common/NoticiasNavigator');
 var RallyNavigator = require('./views/rally/RallyNavigator');
 var RallyBar = require('./views/segments/RallyBar');
 
@@ -55,7 +56,7 @@ class EnciendeApp extends Component {
     if(this.props.navigation.pantalla === 'noticias') {
       component = (
         <View style={ styles.container }>
-          <AppNavigator openDrawer={this.openDrawer}/>
+          <NoticiasNavigator openDrawer={this.openDrawer}/>
           {bar}
         </View>
       );
