@@ -56,7 +56,7 @@ class FacebookLogin extends Component {
 
   componentDidUpdate() {
     if(this.props.user.isLoggedIn && this.props.user.isRegistered && !this.props.user.isFetching) {
-      this.props.navigator.pop();
+      this.props.appnavigator.pop();
     }
   }
 
@@ -77,7 +77,7 @@ class FacebookLogin extends Component {
             </Text>
           </View>
         </TouchableHighlight>
-        <TouchableHighlight style={ styles.button } onPress={() => this.props.navigator.pop()}
+        <TouchableHighlight style={ styles.button } onPress={() => this.props.appnavigator.pop()}
           underlayColor='#99d9f4'>
             <Text style={ styles.buttonText }>
               Cancelar
@@ -109,7 +109,7 @@ class FacebookLogin extends Component {
         loginSection = (
           <View style={[ styles.centerAlign ]}>
             <Text>Logged in</Text>
-            <TouchableHighlight onPress={ () => this.props.navigator.pop() }>
+            <TouchableHighlight onPress={ () => this.props.appnavigator.pop() }>
               <Text>
                 Back
               </Text>

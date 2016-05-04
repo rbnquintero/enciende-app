@@ -11,6 +11,7 @@ import React, {
 var STATUS_BAR_HEIGHT = Platform.OS === 'ios' ? 20 : 25;
 
 var SideMenuItem = require('./home/SideMenuItem');
+var FacebookLogin = require('./FacebookLogin');
 
 /* REDUX */
 import type {State as Navigation} from '../../reducers/navigation';
@@ -32,6 +33,15 @@ type Props = {
 class SideMenu extends Component {
   constructor(props) {
     super(props);
+  }
+
+  goToLogIn() {
+    this.props.appnavigator.push({
+      title: "Inicio de Sesión",
+      name: 'LogIn',
+      component: FacebookLogin,
+      fromBottom: true,
+    });
   }
 
   render() {
@@ -68,7 +78,7 @@ class SideMenu extends Component {
                       '¿Estas seguro de cerrar sesión?',
                       [
                         {text: 'Cancel', onPress: () => console.log('Cancel Pressed!')},
-                        {text: 'OK', onPress: () => {this.props.logOut(this.props.navigator)}},
+                        {text: 'OK', onPress: () => {this.props.toMainHome(); this.props.logOut(this.props.navigator);}},
                       ]
                     )
                   }}
@@ -77,7 +87,7 @@ class SideMenu extends Component {
 
     /* User info */
     var userinfo = (
-      <TouchableOpacity>
+      <TouchableOpacity onPress={() => this.goToLogIn()}>
         <View
           style={{ paddingTop: STATUS_BAR_HEIGHT, height: 140, backgroundColor: '#6600cc' }}>
           <Image source={ require('image!profile')} style={{ resizeMode: Image.resizeMode.contain, height: 60, width: 60, margin: 10 }}/>

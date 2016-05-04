@@ -29,7 +29,6 @@ class NoticiasNavigator extends Component {
     if (!this.props.user.isLoggedIn || !this.props.user.isRegistered || !this.props.user.currentRally== null) {
       this.props.updateProfile();
     }
-    console.log(this);
   }
 
   sceneConfig(route, routeStack) {
