@@ -9,6 +9,8 @@ var env = require('../env');
 const PANTALLA_RALLY = 'PANTALLA_RALLY';
 const PANTALLA_CONTACTO = 'PANTALLA_CONTACTO';
 const PANTALLA_NOTICIAS = 'PANTALLA_NOTICIAS';
+const PANTALLA_REGISTRO_USR = 'PANTALLA_REGISTRO_USR';
+const PANTALLA_REGISTRO_GRP = 'PANTALLA_REGISTRO_GRP';
 
 /*
  * action creators
@@ -31,5 +33,16 @@ function toContacto() {
   };
 }
 
+function toPantallaRegistroUsr() {
+  return {
+    type: PANTALLA_REGISTRO_USR,
+  };
+}
 
-module.exports = {toMainHome, toRallyHome, toContacto, };
+function toPantallaRegistroGrp() {
+  return {
+    type: PANTALLA_REGISTRO_GRP,
+  };
+}
+
+module.exports = {toMainHome, toRallyHome, toContacto, toPantallaRegistroGrp, toPantallaRegistroUsr, };

@@ -18,7 +18,7 @@ import type {State as Navigation} from '../../reducers/navigation';
 import type {State as User} from '../../reducers/user';
 var { connect } = require('react-redux');
 var {
-  toMainHome, toRallyHome, toContacto,
+  toMainHome, toRallyHome, toContacto, toPantallaRegistroUsr, toPantallaRegistroGrp,
   logOut,
 } = require('../../actions');
 type Props = {
@@ -28,6 +28,8 @@ type Props = {
   toMainHome: () => void;
   toRallyHome: () => void;
   toContacto: () => void;
+  toPantallaRegistroUsr: () => void;
+  toPantallaRegistroGrp: () => void;
 };
 
 class SideMenu extends Component {
@@ -63,14 +65,44 @@ class SideMenu extends Component {
     );
 
     var rally = null;
-    var cerrar = null;
-    selected = false;
-    if(this.props.navigation.pantalla === 'rally') {
-      selected = true;
-    }
     if(this.props.user.isRegistered) {
+      selected = false;
+      if(this.props.navigation.pantalla === 'rally') {
+        selected = true;
+      }
       var tituloRally = 'Rally ' + this.props.user.currentRally.grupo.rally.nombre;
-      rally  = (<SideMenuItem titulo={tituloRally} selected={selected} action={() => {this.props.closeMenu(); this.props.toRallyHome();}}/>);
+      rally  = (<SideMenuItem titulo={tituloRally} selected={selected} rally={true} action={() => {this.props.closeMenu(); this.props.toRallyHome();}}/>);
+    }
+
+    /* Admin opts */
+    var registroparticipantes = null;
+    var registrogrupos = null;
+    var admin = null;
+    if(this.props.user.isRegistered) {
+      if(this.props.user.currentRally.rol === 'PARTICIPANTE') {
+        // Usuario es admin
+        admin = (
+          <View style={{ flexDirection: 'row', alignItems: 'center', borderTopWidth: 1, marginTop: 10, borderColor: 'gray', paddingHorizontal: 10, height: 35 }}>
+            <Text style={{ color: 'gray', fontSize: 13, fontWeight: '400' }}>Admin</Text>
+          </View>);
+        selected = false;
+        if(this.props.navigation.pantalla === 'registrousuarios') {
+          selected = true;
+        }
+        var registroparticipantes = (
+          <SideMenuItem titulo="Registro de Usuarios" selected={selected} action={() => {this.props.closeMenu(); this.props.toPantallaRegistroUsr();}}/>
+        );
+
+        selected = false;
+        if(this.props.navigation.pantalla === 'registrogrupos') {
+          selected = true;
+        }
+        var registrogrupos = (
+          <SideMenuItem titulo="Registro de Grupos" selected={selected} action={() => {this.props.closeMenu(); this.props.toPantallaRegistroGrp();}}/>
+        );
+      }
+
+      var cerrar = null;
       cerrar = (<SideMenuItem titulo="Cerrar sesión"
                   action={() => {
                     Alert.alert(
@@ -96,9 +128,13 @@ class SideMenu extends Component {
       </TouchableOpacity>
     );
     if(this.props.user.isRegistered) {
+      var backgroundColor = '#6600cc';
+      if(this.props.navigation.pantalla === 'rally') {
+        backgroundColor = '#800000';
+      }
       userinfo = (
         <View
-          style={{ paddingTop: STATUS_BAR_HEIGHT, height: 140, backgroundColor: '#6600cc', flexDirection: 'row', alignItems: 'center' }}>
+          style={{ paddingTop: STATUS_BAR_HEIGHT, height: 140, backgroundColor: backgroundColor, flexDirection: 'row', alignItems: 'center' }}>
           <Image source={{ uri: this.props.user.fbData.picture.data.url }}
             style={{ resizeMode: Image.resizeMode.contain, height: 60, width: 60, margin: 10 }}/>
             <View>
@@ -125,6 +161,9 @@ class SideMenu extends Component {
         <View style={{ marginVertical: 10 }}>
           {noticias}
           {rally}
+          {admin}
+          {registroparticipantes}
+          {registrogrupos}
           <View style={{ flexDirection: 'row', alignItems: 'center', borderTopWidth: 1, marginTop: 10, borderColor: 'gray', paddingHorizontal: 10, height: 35 }}>
             <Text style={{ color: 'gray', fontSize: 13, fontWeight: '400' }}>Información</Text>
           </View>
@@ -147,6 +186,8 @@ function actions(dispatch) {
     toMainHome: () => dispatch(toMainHome()),
     toRallyHome: () => dispatch(toRallyHome()),
     toContacto: () => dispatch(toContacto()),
+    toPantallaRegistroUsr: () => dispatch(toPantallaRegistroUsr()),
+    toPantallaRegistroGrp: () => dispatch(toPantallaRegistroGrp()),
     logOut: () => dispatch(logOut()),
   };
 }

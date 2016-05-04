@@ -13,6 +13,7 @@ import React, {
 var Loader = require('../helpers/Loader');
 var env = require('../../env');
 var RegistroUsuarioResultado = require('./RegistroUsuarioResultado');
+var Header = require('../../js/common/HeaderHome');
 
 /* REDUX */
 import type {State as User} from '../../reducers/user';
@@ -102,12 +103,12 @@ class RegistroGrupos extends Component {
       view = (<Loader caption="Registrando grupo"/>);
     } else {
       view = (
-        <View style={{ flex: 1 }}>
+        <View style={{ flex: 1, marginHorizontal: 20 }}>
           <View style={{ flex: 1 }}>
             <Text style={{ fontSize: 25, fontWeight: '200', marginTop: 20, }}>
               Registro de Grupos
             </Text>
-            <View style={{backgroundColor: 'white', paddingHorizontal: 5, marginTop: 20, backgroundColor: 'white', borderRadius: 5, }}>
+            <View style={{paddingHorizontal: 5, marginTop: 20, backgroundColor: 'white', borderRadius: 5, }}>
               <TextInput placeholder='Nombre del grupo' value={this.state.grupo.nombre} onChange={this.handleChangeGrupo.bind(this, 'nombre')} autoCapitalize='words'
                 style={{height: 35}}/>
             </View>
@@ -139,7 +140,15 @@ class RegistroGrupos extends Component {
       );
     }
     return (
-      <View style={{ flex: 1, marginTop: 64, marginHorizontal: 20 }}>
+      <View style={{ flex: 1, backgroundColor: '#f2f2f2' }}>
+        <Header
+          title="Registro de Grupos"
+          leftItem={{
+            layout: 'icon',
+            title: 'Menu',
+            icon: require('../../js/common/img/hamburger.png'),
+            onPress: this.props.openDrawer,
+          }}/>
         {view}
       </View>
     );

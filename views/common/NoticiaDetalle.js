@@ -22,7 +22,7 @@ class NoticiaDetalle extends Component {
     return (
       <View style={{ flex: 1 }}>
         <Header
-          title="Noticias enciende"
+          title={noticia.titulo}
           leftItem={{
             layout: 'icon',
             title: 'Close',

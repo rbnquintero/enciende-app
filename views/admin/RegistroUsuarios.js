@@ -13,6 +13,7 @@ import React, {
 var Loader = require('../helpers/Loader');
 var env = require('../../env');
 var RegistroUsuarioResultado = require('./RegistroUsuarioResultado');
+var Header = require('../../js/common/HeaderHome');
 
 /* REDUX */
 import type {State as User} from '../../reducers/user';
@@ -82,7 +83,7 @@ class RegistroUsuarios extends Component {
   }
 
   toRegisterUserPOST() {
-    this.props.navigator.push({
+    this.props.appnavigator.push({
       title: "RegistroUsuarioResultado",
       name: 'RegistroUsuarioResultado',
       component: RegistroUsuarioResultado,
@@ -98,7 +99,7 @@ class RegistroUsuarios extends Component {
       view = (<Loader caption="Cargando grupos"/>);
     } else {
       view = (
-      <ScrollView>
+      <ScrollView style={{marginHorizontal: 20}}>
         <Text style={{ fontSize: 25, fontWeight: '200', marginTop: 20, }}>
           Registro de Participantes
         </Text>
@@ -123,7 +124,7 @@ class RegistroUsuarios extends Component {
             </View>
           </View>
         </View>
-        <View style={{paddingHorizontal: 5, marginTop: 20}}>
+        <View style={{paddingHorizontal: 5, marginTop: 20, backgroundColor: 'white', borderRadius: 5}}>
           <Picker selectedValue={this.state.user.grupo} onValueChange={this.handleChangeGroup.bind(this)}>
             {this.state.grupos.map(function(result, id){
               var nombreGrupo = 'Grupo ' + result.nombre;
@@ -144,7 +145,15 @@ class RegistroUsuarios extends Component {
     }
 
     return (
-      <View style={{ flex: 1, marginTop: 64, marginHorizontal: 20 }}>
+      <View style={{ flex: 1, backgroundColor: '#f2f2f2' }}>
+        <Header
+          title="Registro de Usuarios"
+          leftItem={{
+            layout: 'icon',
+            title: 'Menu',
+            icon: require('../../js/common/img/hamburger.png'),
+            onPress: this.props.openDrawer,
+          }}/>
         {view}
       </View>
     );

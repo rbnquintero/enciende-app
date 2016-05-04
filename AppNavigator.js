@@ -13,6 +13,8 @@ var SideMenu = require('./views/common/SideMenu');
 
 var NoticiasNavigator = require('./views/common/NoticiasNavigator');
 var RallyNavigator = require('./views/rally/RallyNavigator');
+var RegistroUsuarios = require('./views/admin/RegistroUsuarios');
+var RegistroGrupos = require('./views/admin/RegistroGrupos');
 var RallyBar = require('./views/segments/RallyBar');
 
 /* REDUX */
@@ -57,8 +59,17 @@ class AppNavigator extends Component {
           {bar}
         </View>
       );
-    } else {
+    } else if(this.props.navigation.pantalla === 'rally'){
       component = (<RallyNavigator openDrawer={this.openDrawer}/>);
+    } else if(this.props.navigation.pantalla === 'registrousuarios'){
+      component = (<RegistroUsuarios appnavigator={this.props.appnavigator} openDrawer={this.openDrawer}/>);
+    } else if(this.props.navigation.pantalla === 'registrogrupos'){
+      component = (<RegistroGrupos openDrawer={this.openDrawer}/>);
+    } else {
+      <View style={ styles.container }>
+        <NoticiasNavigator openDrawer={this.openDrawer}/>
+        {bar}
+      </View>
     }
     return (
       <View style={styles.container}>
@@ -92,7 +103,6 @@ class AppNavigator extends Component {
   }
 
   goToRally() {
-    console.log("To Rally!", this.props);
     this.props.toRallyHome();
   }
 

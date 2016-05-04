@@ -99,7 +99,7 @@ class RegistroUsuarioResultado extends Component {
             {this.state.token}</Text>
           <Text style={{ fontSize: 17, fontWeight: '200', marginVertical: 20, }}>
             Lorem ipsum dolor sit amet, maiores ornare ac fermentum, imperdiet ut vivamus a, nam lectus at nunc.</Text>
-          <TouchableOpacity onPress={ () => this.props.navigator.pop() }>
+          <TouchableOpacity onPress={ () => this.props.appnavigator.pop() }>
             <Text style={{fontSize: 17, fontWeight: '200', textAlign: 'center', color: '#3399ff'}}>
               Regresar
             </Text>

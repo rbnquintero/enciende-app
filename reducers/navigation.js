@@ -22,6 +22,14 @@ function navigation(state: State = initialState, action): State {
     return {
       pantalla: 'noticias',
     }
+  } else if (action.type === 'PANTALLA_REGISTRO_USR') {
+    return {
+      pantalla: 'registrousuarios',
+    }
+  } else if (action.type === 'PANTALLA_REGISTRO_GRP') {
+    return {
+      pantalla: 'registrogrupos',
+    }
   }
 
   return state;

@@ -104,7 +104,7 @@ function fetchProfile() {
     dispatch(updateProfileStart());
     return localRepository.getProfileFromStorage().then((profile) => {
       if(profile != null) {
-        dispatch(loadCurrentRally(profile));
+        dispatch(loadCurrentRally(profile, true));
       } else {
         dispatch(initialState());
       }
@@ -153,7 +153,7 @@ function loadUserData(user) {
         if(json.success == true){
           user['userData'] = json.usuario;
           localRepository.saveProfileToStorage(user);
-          dispatch(loadCurrentRally(user));
+          dispatch(loadCurrentRally(user, false));
         } else {
           console.log('usuario no ligado');
           dispatch(updateProfileFinish(user));
@@ -165,21 +165,39 @@ function loadUserData(user) {
   }
 }
 
-function loadCurrentRally(user) {
+function loadCurrentRally(user, fromStorage) {
   return function(dispatch) {
     dispatch(loadingUser(user));
-
-    return localRepository.getCurrentRally().then((rally) => {
-      if(rally != null) {
-        user['currentRally'] = rally;
-        dispatch(updateProfileFinish(user));
+    if(fromStorage) {
+      return localRepository.getCurrentRally().then((rally) => {
+        if(rally != null) {
+          user['currentRally'] = rally;
+          if(fromStorage) {
+            dispatch(loadFbData(user, true));
+          } else {
+            dispatch(updateProfileFinish(user));
+          }
+        } else {
+          var rally = _calculateDefaultRally(user.userData);
+          user['currentRally'] = rally;
+          localRepository.saveCurrentRally(rally);
+          if(fromStorage) {
+            dispatch(loadFbData(user, true));
+          } else {
+            dispatch(updateProfileFinish(user));
+          }
+        }
+      });
+    } else {
+      var rally = _calculateDefaultRally(user.userData);
+      user['currentRally'] = rally;
+      localRepository.saveCurrentRally(rally);
+      if(fromStorage) {
+        dispatch(loadFbData(user, true));
       } else {
-        var rally = _calculateDefaultRally(user.userData);
-        user['currentRally'] = rally;
-        localRepository.saveCurrentRally(rally);
         dispatch(updateProfileFinish(user));
       }
-    });
+    }
   }
 }
 

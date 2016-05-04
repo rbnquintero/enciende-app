@@ -74,7 +74,7 @@ class RallyActividades extends Component {
     return (
       <View style={{ flex: 1}}>
         <Header
-          title={this.props.user.currentRally.grupo.nombre}
+          title={ 'Equipo ' + this.props.user.currentRally.grupo.nombre}
           leftItem={{
             layout: 'icon',
             title: 'Menu',

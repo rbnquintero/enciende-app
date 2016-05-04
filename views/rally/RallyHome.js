@@ -37,12 +37,12 @@ class RallyHome extends Component {
     return (
       <View style={{ flex: 1, alignItems: 'center' }}>
         <Header style={styles.header}
-          title=""
+          title={ 'Rally ' + this.props.user.currentRally.grupo.rally.nombre}
           leftItem={{
             layout: 'icon',
-            title: 'Close',
-            icon: require('../../js/common/BackButtonIcon'),
-            onPress: this.props.toMainHome,
+            title: 'Menu',
+            icon: require('../../js/common/img/hamburger.png'),
+            onPress: this.props.navigator.props.openDrawer,
           }}/>
         <View style={{ flex: 1, alignItems: 'center', marginHorizontal: 15 }}>
           <AppLogo/>

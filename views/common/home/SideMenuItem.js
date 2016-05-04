@@ -11,17 +11,20 @@ class SideMenuItem extends Component {
 
   render() {
     var container = styles.container;
-    var text = (<Text style={ styles.text }>{this.props.titulo}</Text>);
+    var text = styles.text;
     if(this.props.selected) {
-      text = (<Text style={ styles.textSelected }>{this.props.titulo}</Text>);
+      text = styles.textSelected;
       container = styles.containerSelected;
+      if(this.props.rally) {
+        text = styles.textSelectedRally;
+      }
     }
 
     return (
       <TouchableOpacity onPress={this.props.action}>
         <View style={ container }>
           <Image source={ require('image!logo') } style={ styles.profilePic } />
-          {text}
+          <Text style={ text }>{this.props.titulo}</Text>
         </View>
       </TouchableOpacity>
     );
@@ -34,6 +37,9 @@ const styles = StyleSheet.create({
   },
   textSelected: {
     marginLeft: 10, fontWeight: '500', fontSize: 13, color: '#6600cc',
+  },
+  textSelectedRally: {
+    marginLeft: 10, fontWeight: '500', fontSize: 13, color: '#800000',
   },
   container: {
     flexDirection: 'row', paddingHorizontal: 10, height: 45, alignItems: 'center',
