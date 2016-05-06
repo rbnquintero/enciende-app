@@ -1,4 +1,5 @@
 <resources>
+    <string moduleConfig="true" name="reactNativeCodePush_androidDeploymentKey">zZ3FebLp5-crV3Ap943TyFTZU6loNy6WzQ7-W</string>
     <string name="app_name">enciendeApp</string>
     <string name="fb_app_id">1336153963077875</string>
 </resources>

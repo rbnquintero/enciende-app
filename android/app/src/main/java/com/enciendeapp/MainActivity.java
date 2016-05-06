@@ -1,6 +1,7 @@
 package com.enciendeapp;
 
 import com.facebook.react.ReactActivity;
+import com.microsoft.codepush.react.CodePush;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
 import com.magus.fblogin.FacebookLoginPackage;
@@ -17,6 +18,11 @@ public class MainActivity extends ReactActivity {
     @Override
     protected String getMainComponentName() {
         return "enciendeApp";
+    }
+
+    @Override
+    protected String getJSBundleFile() {
+        return CodePush.getBundleUrl();
     }
 
     /**
@@ -36,6 +42,7 @@ public class MainActivity extends ReactActivity {
     protected List<ReactPackage> getPackages() {
         return Arrays.<ReactPackage>asList(
             new MainReactPackage(),
+            new CodePush("zZ3FebLp5-crV3Ap943TyFTZU6loNy6WzQ7-W", this, BuildConfig.DEBUG),
             new FacebookLoginPackage()
         );
     }
