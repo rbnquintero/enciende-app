@@ -15,7 +15,7 @@ class ActivitySegment extends Component {
         source={require('../../js/common/img/lock.png')}/>
     );
     var desc = null;
-    if(this.props.actividad.estatus == '2') {
+    if(this.props.actividad.estatus != 0 && this.props.actividad.estatus != 100) {
       image = null;
       if(this.props.actividad.horaInstrucciones != null) {
         desc = this.props.actividad.actividad.instrucciones;
@@ -24,7 +24,7 @@ class ActivitySegment extends Component {
       } else {
         desc = 'Pista: ' + this.props.actividad.actividad.pistaLugar;
       }
-    } else if (this.props.actividad.estatus == '3') {
+    } else if (this.props.actividad.estatus == 100) {
       image = (
         <Image
           style={{ resizeMode: Image.resizeMode.contain, width: 30, height: 30 }}

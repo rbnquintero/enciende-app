@@ -89,7 +89,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row', flexWrap: 'wrap', marginVertical: 30,
   },
   desbloqueoInputContainer: {
-    backgroundColor: 'white', paddingHorizontal: 5, marginRight: 10, backgroundColor: 'white', borderRadius: 5,
+    backgroundColor: 'white', paddingHorizontal: 5, marginRight: 10, backgroundColor: 'white', borderRadius: 5, borderWidth: 1, borderColor: '#e6e6e6'
   },
   desbloqueoInput: {
     height: 30, width: 80,

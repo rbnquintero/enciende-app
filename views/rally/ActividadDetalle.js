@@ -18,9 +18,9 @@ class ActividadDetalle extends Component {
 
   render() {
     var actividad = this.props.actividad;
-
+    console.log(this.props.actividad.estatus === 0);
     var contenido = null;
-    if (actividad.estatus === '1') {
+    if (actividad.estatus === 0) {
       contenido = (
         <ActividadDetalleLocked/>
       );

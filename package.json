@@ -9,6 +9,7 @@
     "moment": "2.13.0",
     "react": "0.14.8",
     "react-native": "0.22.2",
+    "react-native-code-push": "^1.10.6-beta",
     "react-native-drawer": "2.0.0",
     "react-native-facebook-login": "1.0.3",
     "react-native-simple-store": "1.0.1",
