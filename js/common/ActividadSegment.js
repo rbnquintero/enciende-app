@@ -17,9 +17,9 @@ class ActivitySegment extends Component {
     var desc = null;
     if(this.props.actividad.estatus != 0 && this.props.actividad.estatus != 100) {
       image = null;
-      if(this.props.actividad.horaInstrucciones != null) {
+      if(this.props.actividad.horaDesbloqueada != null) {
         desc = this.props.actividad.actividad.instrucciones;
-      } else if (this.props.actividad.horaDesbloqueada) {
+      } else if (this.props.actividad.horaInstrucciones) {
         desc = 'Como llegar: ' + this.props.actividad.actividad.comoLlegar;
       } else {
         desc = 'Pista: ' + this.props.actividad.actividad.pistaLugar;

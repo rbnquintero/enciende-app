@@ -395,7 +395,7 @@ class ActividadDetalleMapa extends Component {
   }
 
   render() {
-    if (this.props.actividad.horaDesbloqueada == null) {
+    if (this.props.actividad.horaInstrucciones == null) {
       return null;
     }
 

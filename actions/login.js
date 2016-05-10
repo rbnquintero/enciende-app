@@ -4,6 +4,8 @@ var localRepository = require('../views/utils/localRepository');
 
 var FBLoginManager = require('NativeModules').FBLoginManager;
 var env = require('../env');
+
+var staffActions = require('./staff');
 /*
  * action types
  */
@@ -57,6 +59,7 @@ function logIn() {
           user = data;
         }
         dispatch(loadFbData(user, true));
+        dispatch(staffActions.loadStaff(user));
       } else {
         dispatch(logInError('error al loguear usuario'));
       }
@@ -106,6 +109,7 @@ function fetchProfile() {
     return localRepository.getProfileFromStorage().then((profile) => {
       if(profile != null) {
         dispatch(loadCurrentRally(profile, true));
+        dispatch(staffActions.loadStaff(profile));
       } else {
         dispatch(initialState());
       }
@@ -145,9 +149,7 @@ function loadFbData(user, loadUserDataFlag) {
 function loadUserData(user) {
   return function(dispatch) {
     dispatch(loadingUser(user));
-    console.log(user);
     var query = env.serverURL + '/usuario/get/' + user.token;
-    console.log("userquery", query);
     return fetch(query)
       .then(response => response.json())
       .then(json => {

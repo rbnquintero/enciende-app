@@ -126,6 +126,7 @@ function select(store) {
   return {
     user: store.user,
     navigation: store.navigation,
+    staff: store.staff,
   };
 }
 
