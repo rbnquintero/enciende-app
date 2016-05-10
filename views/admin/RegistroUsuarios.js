@@ -1,6 +1,7 @@
 import React, {
   Component,
   TouchableOpacity,
+  TouchableHighlight,
   Text,
   TextInput,
   Switch,
@@ -134,13 +135,9 @@ class RegistroUsuarios extends Component {
             })}
           </Picker>
         </View>
-        <TouchableOpacity style={{marginTop: 20}} onPress={() => this.toRegisterUserPOST()}>
-          <View>
-            <Text style={{fontSize: 17, fontWeight: '200', textAlign: 'center', color: '#3399ff'}}>
-              Registrar participante
-            </Text>
-          </View>
-        </TouchableOpacity>
+        <TouchableHighlight style={styles.button} onPress={() => this.toRegisterUserPOST()} underlayColor='#99d9f4'>
+          <Text style={styles.buttonText}>Registrar participante</Text>
+        </TouchableHighlight>
       </ScrollView>);
     }
 
@@ -160,7 +157,24 @@ class RegistroUsuarios extends Component {
   }
 }
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  buttonText: {
+    fontSize: 18,
+    color: 'white',
+    alignSelf: 'center'
+  },
+  button: {
+    height: 36,
+    marginTop: 40,
+    backgroundColor: '#48BBEC',
+    borderColor: '#48BBEC',
+    borderWidth: 1,
+    borderRadius: 8,
+    marginBottom: 10,
+    alignSelf: 'stretch',
+    justifyContent: 'center'
+  }
+});
 
 function select(store) {
   return {

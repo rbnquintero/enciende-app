@@ -4,11 +4,14 @@ var localRepository = require('../views/utils/localRepository');
 
 var FBLoginManager = require('NativeModules').FBLoginManager;
 var env = require('../env');
+
+var staffActions = require('./staff');
 /*
  * action types
  */
 const LOG_IN_START = 'LOG_IN_START';
 const LOG_OUT = 'LOG_OUT';
+const LOG_IN_ERROR = 'LOG_IN_ERROR';
 const UPD_PROFILE_START = 'UPD_PROFILE_START';
 const UPD_PROFILE_STOP = 'UPD_PROFILE_STOP';
 const INITIAL_STATE = 'INITIAL_STATE';
@@ -40,7 +43,7 @@ function logOut() {
 function logInError(error) {
   localRepository.deleteAll();
   return {
-    type: LOG_OUT,
+    type: LOG_IN_ERROR,
     error: error,
   };
 }
@@ -56,6 +59,7 @@ function logIn() {
           user = data;
         }
         dispatch(loadFbData(user, true));
+        dispatch(staffActions.loadStaff(user));
       } else {
         dispatch(logInError('error al loguear usuario'));
       }
@@ -105,6 +109,7 @@ function fetchProfile() {
     return localRepository.getProfileFromStorage().then((profile) => {
       if(profile != null) {
         dispatch(loadCurrentRally(profile, true));
+        dispatch(staffActions.loadStaff(profile));
       } else {
         dispatch(initialState());
       }
@@ -144,9 +149,7 @@ function loadFbData(user, loadUserDataFlag) {
 function loadUserData(user) {
   return function(dispatch) {
     dispatch(loadingUser(user));
-    console.log(user);
     var query = env.serverURL + '/usuario/get/' + user.token;
-    console.log("userquery", query);
     return fetch(query)
       .then(response => response.json())
       .then(json => {
@@ -173,6 +176,7 @@ function loadCurrentRally(user, fromStorage) {
         if(rally != null) {
           user['currentRally'] = rally;
           if(fromStorage) {
+            dispatch(updateProfileFinish(user));
             dispatch(loadFbData(user, true));
           } else {
             dispatch(updateProfileFinish(user));
@@ -182,6 +186,7 @@ function loadCurrentRally(user, fromStorage) {
           user['currentRally'] = rally;
           localRepository.saveCurrentRally(rally);
           if(fromStorage) {
+            dispatch(updateProfileFinish(user));
             dispatch(loadFbData(user, true));
           } else {
             dispatch(updateProfileFinish(user));

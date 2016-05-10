@@ -3,8 +3,8 @@ import React, {
   Text,
   Image,
   StyleSheet,
-  TouchableOpacity,
   TextInput,
+  TouchableOpacity,
   View
 } from 'react-native';
 
@@ -25,11 +25,12 @@ type Props = {
   validateActivity: () => void;
 };
 
-class ActividadDetalleComoLlegar extends Component {
+class ActividadDetalleSelfie extends Component {
   constructor(props) {
     super(props);
     this.state = {
       desbloqCode: '',
+      calificacion: '',
     };
   }
 
@@ -37,13 +38,14 @@ class ActividadDetalleComoLlegar extends Component {
     var info = {};
     info['actividades']=this.props.actividadesUser.actividades;
     info['staff']=this.props.staff.staff;
-    info['action']='llegar';
+    info['action']='selfie';
     info['code']=this.state.desbloqCode;
+    info['calificacion']=this.state.calificacion;
     this.props.validateActivity(info);
   }
 
   render() {
-    if (this.props.actividad.horaInstrucciones == null) {
+    if (this.props.actividad.estatus < 40) {
       return null;
     }
 
@@ -69,13 +71,20 @@ class ActividadDetalleComoLlegar extends Component {
     }
 
     var desbloq = null;
-    if(this.props.actividad.estatus == 20) {
+    if(this.props.actividad.estatus == 40) {
       desbloq = (
         <View style={ styles.desbloqueoContainer }>
           <View style={ styles.desbloqueoInputContainer }>
             <TextInput placeholder='Código'
               value={this.state.desbloqCode}
               onChange={ (event) => this.setState({ desbloqCode: event.nativeEvent.text}) }
+              autoCapitalize='characters'
+              style={ styles.desbloqueoInput }/>
+          </View>
+          <View style={ styles.desbloqueoInputContainer }>
+            <TextInput placeholder='Calificación'
+              value={this.state.calificacion}
+              onChange={ (event) => this.setState({ calificacion: event.nativeEvent.text}) }
               autoCapitalize='characters'
               style={ styles.desbloqueoInput }/>
           </View>
@@ -87,10 +96,10 @@ class ActividadDetalleComoLlegar extends Component {
     return (
       <View>
         <Text style={ styles.titulo }>
-          Cómo llegar
+          Selfie
         </Text>
         <Text style={ styles.texto }>
-          {this.props.actividad.actividad.comoLlegar}
+          Toma tu selfie
         </Text>
         {desbloq}
       </View>
@@ -139,4 +148,4 @@ function actions(dispatch) {
   };
 }
 
-module.exports = connect(select, actions)(ActividadDetalleComoLlegar);
+module.exports = connect(select, actions)(ActividadDetalleSelfie);

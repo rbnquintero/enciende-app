@@ -12,15 +12,29 @@ var ActividadDetalleCalificacion = require('../../js/common/ActividadDetalleCali
 var ActividadDetalleInstrucciones = require('../../js/common/ActividadDetalleInstrucciones');
 var ActividadDetalleComoLlegar = require('../../js/common/ActividadDetalleComoLlegar');
 var ActividadDetallePista = require('../../js/common/ActividadDetallePista');
+var ActividadDetalleSelfie = require('../../js/common/ActividadDetalleSelfie');
 var ActividadDetalleMapa = require('../../js/common/ActividadDetalleMapa');
+
+/* REDUX */
+import type {State as ActividadesUser} from '../../reducers/actividadesUser';
+var { connect } = require('react-redux');
+type Props = {
+  actividadesUser: ActividadesUser;
+};
 
 class ActividadDetalle extends Component {
 
   render() {
-    var actividad = this.props.actividad;
+    var sentActividad = this.props.actividad;
+    var actividad = null;
+    for (let a of this.props.actividadesUser.actividades) {
+      if(a.id.idActividad === sentActividad.id.idActividad && a.id.idGrupo === sentActividad.id.idGrupo) {
+        actividad = a;
+      }
+    }
 
     var contenido = null;
-    if (actividad.estatus === '1') {
+    if (actividad.estatus === 0) {
       contenido = (
         <ActividadDetalleLocked/>
       );
@@ -29,6 +43,7 @@ class ActividadDetalle extends Component {
         <View style={{ flex: 1 }}>
           <ScrollView style={{ flex: 2, marginHorizontal: 15 }}>
             <ActividadDetalleCalificacion actividad={actividad}/>
+            <ActividadDetalleSelfie actividad={actividad}/>
             <ActividadDetalleInstrucciones actividad={actividad}/>
             <ActividadDetalleComoLlegar actividad={actividad}/>
             <ActividadDetallePista actividad={actividad}/>
@@ -56,4 +71,10 @@ class ActividadDetalle extends Component {
   }
 }
 
-module.exports = ActividadDetalle;
+function select(store) {
+  return {
+    actividadesUser: store.actividadesUser,
+  };
+}
+
+module.exports = connect(select)(ActividadDetalle);

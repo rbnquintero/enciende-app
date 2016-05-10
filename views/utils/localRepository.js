@@ -5,6 +5,7 @@ var store = require('react-native-simple-store');
 const key_profile_info = "key_profile_info";
 const key_current_rally = "key_current_rally";
 const key_saved_news = "key_saved_news";
+const key_saved_staff = "key_saved_staff";
 const key_saved_activities_user = "key_saved_activities_user";
 
 var localRepository = {
@@ -42,6 +43,14 @@ var localRepository = {
   },
   saveActUser : function(actUser) {
     return store.save(key_saved_activities_user, actUser);
+  },
+
+  /** STAFF **/
+  getSavedStaff : function() {
+    return store.get(key_saved_staff);
+  },
+  saveStaff : function(staff) {
+    return store.save(key_saved_staff, staff);
   },
 };
 

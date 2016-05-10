@@ -36,15 +36,15 @@ const initialState = {
 function user(state: State = initialState, action: Action): State {
   if (action.type === 'UPD_PROFILE_START' || action.type === 'LOG_IN_START') {
     return {
-      isLoggedIn: false,
-      isRegistered: false,
+      isLoggedIn: state.isLoggedIn,
+      isRegistered: state.isRegistered,
       isFetching: true,
       error: null,
-      user: null,
-      fbData: null,
-      userData: null,
-      currentRally: null,
-      name: null
+      user: state.user,
+      fbData: state.fbData,
+      userData: state.userData,
+      currentRally: state.currentRally,
+      name: state.name
     }
   } else if (action.type === 'UPD_PROFILE_STOP') {
     var user = action.user;
@@ -78,8 +78,8 @@ function user(state: State = initialState, action: Action): State {
       name = user.userData.nombre;
     }
     return {
-      isLoggedIn: true,
-      isRegistered: false,
+      isLoggedIn: state.isLoggedIn,
+      isRegistered: state.isRegistered,
       isFetching: true,
       error: null,
       user: action.user,
@@ -87,6 +87,18 @@ function user(state: State = initialState, action: Action): State {
       userData: user.userData,
       currentRally: user.currentRally,
       name: name
+    }
+  } else if (action.type === 'LOG_IN_ERROR') {
+    return {
+      isLoggedIn: state.isLoggedIn,
+      isRegistered: state.isRegistered,
+      isFetching: false,
+      error: action.error,
+      user: state.user,
+      fbData: state.fbData,
+      userData: state.userData,
+      currentRally: state.currentRally,
+      name: state.name
     }
   } else if (action.type === 'LOG_OUT') {
     return initialState;

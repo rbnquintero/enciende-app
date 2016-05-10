@@ -15,6 +15,7 @@ var NoticiasNavigator = require('./views/common/NoticiasNavigator');
 var RallyNavigator = require('./views/rally/RallyNavigator');
 var RegistroUsuarios = require('./views/admin/RegistroUsuarios');
 var RegistroGrupos = require('./views/admin/RegistroGrupos');
+var Contacto = require('./views/rally/Contacto');
 var RallyBar = require('./views/segments/RallyBar');
 
 /* REDUX */
@@ -65,6 +66,8 @@ class AppNavigator extends Component {
       component = (<RegistroUsuarios appnavigator={this.props.appnavigator} openDrawer={this.openDrawer}/>);
     } else if(this.props.navigation.pantalla === 'registrogrupos'){
       component = (<RegistroGrupos openDrawer={this.openDrawer}/>);
+    } else if(this.props.navigation.pantalla === 'contacto'){
+      component = (<Contacto openDrawer={this.openDrawer}/>);
     } else {
       <View style={ styles.container }>
         <NoticiasNavigator openDrawer={this.openDrawer}/>
@@ -126,6 +129,7 @@ function select(store) {
   return {
     user: store.user,
     navigation: store.navigation,
+    staff: store.staff,
   };
 }
 
