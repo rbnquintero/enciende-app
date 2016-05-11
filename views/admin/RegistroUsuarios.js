@@ -15,6 +15,9 @@ var Loader = require('../helpers/Loader');
 var env = require('../../env');
 var RegistroUsuarioResultado = require('./RegistroUsuarioResultado');
 var Header = require('../../js/common/HeaderHome');
+var t = require('tcomb-form-native');
+
+
 
 /* REDUX */
 import type {State as User} from '../../reducers/user';
@@ -84,56 +87,73 @@ class RegistroUsuarios extends Component {
   }
 
   toRegisterUserPOST() {
-    this.props.appnavigator.push({
-      title: "RegistroUsuarioResultado",
-      name: 'RegistroUsuarioResultado',
-      component: RegistroUsuarioResultado,
-      fromBottom: true,
-      //TODO use redux
-      passProps: { userToRegister: this.state.user, parent: this},
-    });
+    var value = this.refs.form.getValue();
+    if (value) {
+      this.props.appnavigator.push({
+        title: "RegistroUsuarioResultado",
+        name: 'RegistroUsuarioResultado',
+        component: RegistroUsuarioResultado,
+        fromBottom: true,
+        //TODO use redux
+        passProps: { userToRegister: value, parent: this}
+      });
+      console.log(value); // value here is an instance of Person
+    }
   }
 
   render() {
+    console.log(Genero);
     var view = null;
     if(this.state.isLoading){
       view = (<Loader caption="Cargando grupos"/>);
     } else {
+
+      var Form = t.form.Form;
+
+      var Talla = t.enums({
+        C: 'Chica',
+        M: 'Mediana',
+        G: 'Grande',
+        XG:'Extra Grande'
+      });
+
+      var Genero = t.enums({
+        H: 'Hombre',
+        M: 'Mujer'
+      });
+      var gruposMap = {};
+
+
+      for(var i=0;i<this.state.grupos.length;i++){
+        gruposMap[this.state.grupos[i].idGrupo]=this.state.grupos[i].nombre;
+      }
+      var Grupo = t.enums(gruposMap);
+
+
+
+      // here we are: define your domain model
+      var Registro = t.struct({
+        nombre: t.String,              // a required string
+        correo: t.String,  // an optional string
+        talla: Talla,               // a required number
+        genero: Genero  ,
+        grupo: Grupo      // a boolean
+      });
+
+      var options = {};
+      console.log(this.state.grupos);
+
       view = (
       <ScrollView style={{marginHorizontal: 20}}>
         <Text style={{ fontSize: 25, fontWeight: '200', marginTop: 20, }}>
           Registro de Participantes
         </Text>
-        <View style={{backgroundColor: 'white', paddingHorizontal: 5, marginTop: 20, backgroundColor: 'white', borderRadius: 5, }}>
-          <TextInput placeholder='Nombre' value={this.state.user.nombre} onChange={this.handleChangeUser.bind(this, 'nombre')} autoCapitalize='words'
-            style={{height: 35}}/>
-        </View>
-        <View style={{backgroundColor: 'white', paddingHorizontal: 5, marginTop: 20, backgroundColor: 'white', borderRadius: 5, }}>
-          <TextInput placeholder='Correo' value={this.state.user.email} onChange={this.handleChangeUser.bind(this, 'email')}
-            style={{height: 35}} keyboardType='email-address' autoCapitalize='none'/>
-        </View>
-        <View style={{flexDirection: 'row', flexWrap: 'wrap', marginTop: 20}}>
-          <View style={{flex: 1, backgroundColor: 'white', paddingHorizontal: 5, backgroundColor: 'white', borderRadius: 5, }}>
-            <TextInput placeholder='Talla de playera' value={this.state.user.tallaPlayera} onChange={this.handleChangeUser.bind(this, 'tallaPlayera')}
-              style={{height: 35}}/>
-          </View>
-          <View style={{flex: 2, alignItems: 'flex-end'}}>
-            <View style={{height: 35, flexDirection: 'row', alignItems: 'center'}}>
-              <Text style={{fontSize: 17, fontWeight: '200', marginHorizontal:5}}>Hombre</Text>
-              <Switch value={this.state.user.generoFem} onChange={this.handleChangeGender.bind(this)}/>
-              <Text style={{fontSize: 17, fontWeight: '200', marginHorizontal:5}}>Mujer</Text>
-            </View>
-          </View>
-        </View>
-        <View style={{paddingHorizontal: 5, marginTop: 20, backgroundColor: 'white', borderRadius: 5}}>
-          <Picker selectedValue={this.state.user.grupo} onValueChange={this.handleChangeGroup.bind(this)}>
-            {this.state.grupos.map(function(result, id){
-              var nombreGrupo = 'Grupo ' + result.nombre;
-              return (
-                <Picker.Item key={id} label={nombreGrupo} value={result.idGrupo} />
-              );
-            })}
-          </Picker>
+        <View style={styles.container}>
+          <Form
+            ref="form"
+            type={Registro}
+            options={options}
+          />
         </View>
         <TouchableHighlight style={styles.button} onPress={() => this.toRegisterUserPOST()} underlayColor='#99d9f4'>
           <Text style={styles.buttonText}>Registrar participante</Text>
@@ -158,6 +178,17 @@ class RegistroUsuarios extends Component {
 }
 
 const styles = StyleSheet.create({
+  container: {
+    justifyContent: 'center',
+    marginTop: 50,
+    padding: 20,
+    backgroundColor: '#ffffff',
+  },
+  title: {
+    fontSize: 30,
+    alignSelf: 'center',
+    marginBottom: 30
+  },
   buttonText: {
     fontSize: 18,
     color: 'white',
@@ -165,7 +196,6 @@ const styles = StyleSheet.create({
   },
   button: {
     height: 36,
-    marginTop: 40,
     backgroundColor: '#48BBEC',
     borderColor: '#48BBEC',
     borderWidth: 1,
