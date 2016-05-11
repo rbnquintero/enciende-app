@@ -1,4 +1,5 @@
 apply plugin: "com.android.application"
+apply plugin: 'com.google.gms.google-services'
 
 import com.android.build.OutputFile
 
@@ -120,6 +121,8 @@ android {
 }
 
 dependencies {
+    compile project(':gandalf-react-native-system-notification')
+    compile project(':gandalf-react-native-gcm-push-notification')
     compile project(':react-native-maps')
     compile fileTree(dir: "libs", include: ["*.jar"])
     compile "com.android.support:appcompat-v7:23.0.1"

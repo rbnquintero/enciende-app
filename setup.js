@@ -25,18 +25,14 @@ var logger = createLogger({
 
 let store = createStore(enciendeReducers, applyMiddleware(thunkMiddleware, logger));
 
-function setup(): Component {
-  class Root extends React.Component {
-    render() {
-      return (
-        <Provider store={store}>
-          <EnciendeApp />
-        </Provider>
-      );
-    }
+class Setup extends Component {
+  render() {
+    return (
+      <Provider store={store}>
+        <EnciendeApp />
+      </Provider>
+    );
   }
-
-  return Root;
 }
 
-module.exports = setup;
+module.exports = Setup;

@@ -9,4 +9,4 @@ import React, {
 
 const setup = require('./setup');
 
-AppRegistry.registerComponent('enciendeApp', setup);
+AppRegistry.registerComponent('enciendeApp', () => setup);

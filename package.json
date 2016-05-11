@@ -6,6 +6,8 @@
     "start": "node node_modules/react-native/local-cli/cli.js start"
   },
   "dependencies": {
+    "gandalf-react-native-gcm-push-notification": "^1.0.12",
+    "gandalf-react-native-system-notification": "^0.1.105",
     "moment": "2.13.0",
     "react": "0.14.8",
     "react-native": "0.22.2",
@@ -13,6 +15,7 @@
     "react-native-drawer": "2.0.0",
     "react-native-facebook-login": "1.0.3",
     "react-native-maps": "^0.3.2",
+    "react-native-router-flux": "^3.22.23",
     "react-native-simple-store": "1.0.1",
     "react-redux": "4.4.5",
     "react-timer-mixin": "0.13.3",
