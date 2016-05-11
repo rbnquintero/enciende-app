@@ -74,7 +74,7 @@ class RallyNavigator extends Component {
 
   didFocus(route) {
     if(_this.props.actividadesUser.actividades.length > 0) {
-      _this.props.refreshUserActividades();
+      _this.props.refreshUserActividades(_this.props.actividadesUser.actividades);
     } else {
       _this.props.loadUserActividades();
     }
@@ -103,7 +103,7 @@ function actions(dispatch) {
   return {
     updateProfile: () => dispatch(fetchProfile()),
     loadUserActividades: () => dispatch(loadActUser()),
-    refreshUserActividades: () => dispatch(fetchActUser()),
+    refreshUserActividades: (actividades) => dispatch(fetchActUser(actividades)),
     logOut: () => dispatch(logOut()),
   };
 }

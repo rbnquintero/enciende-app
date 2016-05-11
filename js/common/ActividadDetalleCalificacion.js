@@ -9,7 +9,7 @@ import React, {
 class ActividadDetalleCalificacion extends Component {
 
   render() {
-    if (this.props.actividad.calificacion == null) {
+    if (this.props.actividad.estatus != 100) {
       return null;
     }
 

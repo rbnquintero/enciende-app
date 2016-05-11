@@ -1,6 +1,7 @@
 package com.enciendeapp;
 
 import com.facebook.react.ReactActivity;
+import com.AirMaps.AirPackage;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
 import com.magus.fblogin.FacebookLoginPackage;
@@ -36,6 +37,8 @@ public class MainActivity extends ReactActivity {
     protected List<ReactPackage> getPackages() {
         return Arrays.<ReactPackage>asList(
             new MainReactPackage(),
+            new AirPackage(),
+            //new CodePush(null, this, BuildConfig.DEBUG),
             new FacebookLoginPackage()
         );
     }
