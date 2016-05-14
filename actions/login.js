@@ -3,6 +3,19 @@
 var localRepository = require('../views/utils/localRepository');
 
 var FBLoginManager = require('NativeModules').FBLoginManager;
+
+const FBSDK = require('react-native-fbsdk');
+const {
+  LoginButton,
+  ShareDialog,
+  AccessToken
+} = FBSDK;
+
+
+
+
+
+
 var env = require('../env');
 
 var staffActions = require('./staff');
@@ -52,18 +65,29 @@ function logIn() {
   return function(dispatch) {
     dispatch(logInStart());
 
-    return FBLoginManager.loginWithPermissions(["public_profile","email"], function(error, data) {
-      if (!error) {
-        var user = data.credentials;
-        if(user == null) {
-          user = data;
+    return FBLoginManager.logInWithReadPermissions(["public_profile","email"]).then(
+      function(result) {
+        if (result.isCancelled) {
+          dispatch(logInError('error al loguear usuario'));
+        } else {
+          alert('Login success with permissions: '
+            +result.grantedPermissions.toString());
+          AccessToken.getCurrentAccessToken().then(
+            function(token) {
+              console.log(token);
+              var user = {token:token.accessToken};
+
+              dispatch(loadFbData(user, true));
+              dispatch(staffActions.loadStaff(user));
+            }
+          ).catch(error => {
+            console.log(error);
+            dispatch(logInError('error al loguear usuario'));
+          });
         }
-        dispatch(loadFbData(user, true));
-        dispatch(staffActions.loadStaff(user));
-      } else {
-        dispatch(logInError('error al loguear usuario'));
       }
-    });
+
+    );
   }
 }
 
