@@ -4,6 +4,8 @@ import android.content.Intent;     // <--- import
 import android.os.Bundle;
 import com.facebook.react.ReactActivity;
 import com.facebook.reactnative.androidsdk.FBSDKPackage;
+import io.neson.react.notification.NotificationPackage;
+import com.oney.gcm.GcmPackage;
 import com.AirMaps.AirPackage;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
@@ -44,6 +46,8 @@ public class MainActivity extends ReactActivity {
         mCallbackManager = new CallbackManager.Factory().create();
         return Arrays.<ReactPackage>asList(
             new MainReactPackage(),
+            new GcmPackage(),
+            new NotificationPackage(this),
             new AirPackage(),
             new ImagePickerPackage(),
             //new CodePush(null, this, BuildConfig.DEBUG),

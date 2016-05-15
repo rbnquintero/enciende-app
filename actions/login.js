@@ -1,6 +1,7 @@
 'use strict'
 
 var localRepository = require('../views/utils/localRepository');
+var GCMServices = require('../views/utils/GCMServices');
 
 var FBLoginManager = require('NativeModules').FBLoginManager;
 
@@ -135,6 +136,7 @@ function fetchProfile() {
         dispatch(loadCurrentRally(profile, true));
         dispatch(staffActions.loadStaff(profile));
       } else {
+        GCMServices.subscribeTopic('general');
         dispatch(initialState());
       }
     });
@@ -199,6 +201,7 @@ function loadCurrentRally(user, fromStorage) {
       return localRepository.getCurrentRally().then((rally) => {
         if(rally != null) {
           user['currentRally'] = rally;
+          GCMServices.subscribeTopic('rally_' + rally.idRally);
           if(fromStorage) {
             dispatch(updateProfileFinish(user));
             dispatch(loadFbData(user, true));
@@ -209,6 +212,7 @@ function loadCurrentRally(user, fromStorage) {
           var rally = _calculateDefaultRally(user.userData);
           user['currentRally'] = rally;
           localRepository.saveCurrentRally(rally);
+          GCMServices.subscribeTopic('rally_' + rally.idRally);
           if(fromStorage) {
             dispatch(updateProfileFinish(user));
             dispatch(loadFbData(user, true));
@@ -221,6 +225,7 @@ function loadCurrentRally(user, fromStorage) {
       var rally = _calculateDefaultRally(user.userData);
       user['currentRally'] = rally;
       localRepository.saveCurrentRally(rally);
+      GCMServices.subscribeTopic('rally_' + rally.idRally);
       if(fromStorage) {
         dispatch(loadFbData(user, true));
       } else {
