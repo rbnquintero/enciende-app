@@ -41,14 +41,14 @@ class Home extends Component {
       loadedNews: false,
     };
     this.props.loadNews();
-    LocationReportingService.beginReportingLocation("1", "2");
+    /*LocationReportingService.beginReportingLocation("1", "2");
     LocationReportingService.getLocations((error, locations) => {
       if (error) {
         console.error(error);
       } else {
         console.log(locations);
       }
-    });
+    });*/
   }
 
   _rowPressed(noticia) {

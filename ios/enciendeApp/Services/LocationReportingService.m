@@ -25,7 +25,7 @@ RCT_EXPORT_MODULE();
 RCT_EXPORT_METHOD(beginReportingLocation:(NSString*) grupo usuario:(NSString*) usuario) {
   NSUserDefaults* sud = [NSUserDefaults standardUserDefaults];
   locations = [sud mutableArrayValueForKey:@"locations"];
-  if(locations == nil || true) {
+  if(locations == nil) {
     locations = [[NSMutableArray alloc] init];
   }
   

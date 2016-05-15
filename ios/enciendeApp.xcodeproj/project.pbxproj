@@ -15,6 +15,8 @@
 		37FB8136AD104EC8AD81693C /* libAirMaps.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 442E72B1689C42419F3625EE /* libAirMaps.a */; };
 		5F68F9090E41B64FD46A066E /* libPods-enciendeApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BB453CC8487F6BC4F1D02248 /* libPods-enciendeApp.a */; };
 		63678F66860DD7282567E796 /* libPods-enciendeAppTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D23CF0673B650700068FF1E /* libPods-enciendeAppTests.a */; };
+		9902E8CA1CE9170000014659 /* LocationHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 9902E8C71CE9170000014659 /* LocationHandler.m */; };
+		9902E8CB1CE9170000014659 /* LocationReportingService.m in Sources */ = {isa = PBXBuildFile; fileRef = 9902E8C91CE9170000014659 /* LocationReportingService.m */; };
 		CD6B50EC1CE696F200C46059 /* libRNImagePicker.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD6B50EB1CE696D400C46059 /* libRNImagePicker.a */; };
 /* End PBXBuildFile section */
 
@@ -64,6 +66,10 @@
 		3962095821D3FEA47F4B11F8 /* Pods-enciendeAppTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-enciendeAppTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-enciendeAppTests/Pods-enciendeAppTests.debug.xcconfig"; sourceTree = "<group>"; };
 		442E72B1689C42419F3625EE /* libAirMaps.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libAirMaps.a; sourceTree = "<group>"; };
 		5D23CF0673B650700068FF1E /* libPods-enciendeAppTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-enciendeAppTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		9902E8C61CE9170000014659 /* LocationHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LocationHandler.h; path = enciendeApp/Services/LocationHandler.h; sourceTree = "<group>"; };
+		9902E8C71CE9170000014659 /* LocationHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LocationHandler.m; path = enciendeApp/Services/LocationHandler.m; sourceTree = "<group>"; };
+		9902E8C81CE9170000014659 /* LocationReportingService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LocationReportingService.h; path = enciendeApp/Services/LocationReportingService.h; sourceTree = "<group>"; };
+		9902E8C91CE9170000014659 /* LocationReportingService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LocationReportingService.m; path = enciendeApp/Services/LocationReportingService.m; sourceTree = "<group>"; };
 		B65DB74F980DBC36681A12B8 /* Pods-enciendeAppTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-enciendeAppTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-enciendeAppTests/Pods-enciendeAppTests.release.xcconfig"; sourceTree = "<group>"; };
 		BB453CC8487F6BC4F1D02248 /* libPods-enciendeApp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-enciendeApp.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD6B50E61CE696D400C46059 /* RNImagePicker.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNImagePicker.xcodeproj; path = "../node_modules/react-native-image-picker/ios/RNImagePicker.xcodeproj"; sourceTree = "<group>"; };
@@ -115,10 +121,10 @@
 		13B07FAE1A68108700A75B9A /* enciendeApp */ = {
 			isa = PBXGroup;
 			children = (
-				996F9D1D1CE637BD00510C46 /* Services */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
+				9902E8C21CE916EA00014659 /* Services */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				13B07FB11A68108700A75B9A /* LaunchScreen.xib */,
@@ -149,7 +155,6 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
-				996F9D301CE63EC800510C46 /* CoreLocation.framework */,
 				13B07FAE1A68108700A75B9A /* enciendeApp */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* enciendeAppTests */,
@@ -168,6 +173,17 @@
 				00E356EE1AD99517003FC87E /* enciendeAppTests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		9902E8C21CE916EA00014659 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				9902E8C61CE9170000014659 /* LocationHandler.h */,
+				9902E8C71CE9170000014659 /* LocationHandler.m */,
+				9902E8C81CE9170000014659 /* LocationReportingService.h */,
+				9902E8C91CE9170000014659 /* LocationReportingService.m */,
+			);
+			name = Services;
 			sourceTree = "<group>";
 		};
 		CD6B50E71CE696D400C46059 /* Products */ = {
@@ -465,8 +481,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
-				996F9D2C1CE637FC00510C46 /* LocationHandler.m in Sources */,
-				996F9D2F1CE6388B00510C46 /* LocationReportingService.m in Sources */,
+				9902E8CB1CE9170000014659 /* LocationReportingService.m in Sources */,
+				9902E8CA1CE9170000014659 /* LocationHandler.m in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
