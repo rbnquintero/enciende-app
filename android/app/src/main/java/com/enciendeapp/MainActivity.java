@@ -6,6 +6,7 @@ import com.facebook.react.ReactActivity;
 import com.facebook.reactnative.androidsdk.FBSDKPackage;
 import io.neson.react.notification.NotificationPackage;
 import com.oney.gcm.GcmPackage;
+import com.microsoft.codepush.react.CodePush;
 import com.AirMaps.AirPackage;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
@@ -26,6 +27,11 @@ public class MainActivity extends ReactActivity {
     @Override
     protected String getMainComponentName() {
         return "enciendeApp";
+    }
+
+    @Override
+    protected String getJSBundleFile() {
+        return CodePush.getBundleUrl();
     }
 
     /**
@@ -50,8 +56,8 @@ public class MainActivity extends ReactActivity {
             new NotificationPackage(this),
             new AirPackage(),
             new ImagePickerPackage(),
-            //new CodePush(null, this, BuildConfig.DEBUG),
-            new FBSDKPackage(mCallbackManager)
+            new FBSDKPackage(mCallbackManager),
+            new CodePush("zZ3FebLp5-crV3Ap943TyFTZU6loNy6WzQ7-W", this, BuildConfig.DEBUG)
         );
     }
 

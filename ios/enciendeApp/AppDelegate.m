@@ -13,6 +13,7 @@
 
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <FBSDKLoginKit/FBSDKLoginKit.h>
+#import "CodePush.h"
 
 @interface AppDelegate ()
 @property(nonatomic, strong) void (^registrationHandler)
@@ -28,7 +29,7 @@ NSString *const SubscriptionTopic = @"/topics/general";
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-  
+
   /* GCM NOTIFICATIONS */
   // [START_EXCLUDE]
   _registrationKey = @"onRegistrationCompleted";
@@ -81,7 +82,7 @@ NSString *const SubscriptionTopic = @"/topics/general";
     }
   };
   /*********************/
-  
+
   NSURL *jsCodeLocation;
 
   /**
@@ -98,7 +99,11 @@ NSString *const SubscriptionTopic = @"/topics/general";
    * on the same Wi-Fi network.
    */
 
-  jsCodeLocation = [NSURL URLWithString:@"http://localhost:8081/index.ios.bundle?platform=ios&dev=true"];
+  #ifdef DEBUG
+    jsCodeLocation = [NSURL URLWithString:@"http://localhost:8081/index.ios.bundle?platform=ios&dev=true"];
+  #else
+    jsCodeLocation = [CodePush bundleURL];
+  #endif
 
   /**
    * OPTION 2
@@ -128,7 +133,7 @@ NSString *const SubscriptionTopic = @"/topics/general";
 // Facebook SDK
 - (void)applicationDidBecomeActive:(UIApplication *)application {
   [FBSDKAppEvents activateApp];
-  
+
   // Connect to the GCM server to receive non-APNS notifications
   [[GCMService sharedInstance] connectWithHandler:^(NSError *error) {
     if (error) {

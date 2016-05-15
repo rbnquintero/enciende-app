@@ -7,11 +7,17 @@ import React, {
   Platform,
   View
 } from 'react-native';
+import codePush from "react-native-code-push";
+
 var AppNavigator = require('./AppNavigator');
 
 class EnciendeApp extends Component {
   constructor(props) {
     super(props);
+  }
+
+  componentDidMount() {
+    codePush.sync();
   }
 
   sceneConfig(route, routeStack) {

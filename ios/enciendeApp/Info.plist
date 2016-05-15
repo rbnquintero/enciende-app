@@ -10,6 +10,8 @@
 	<array>
 		<string>remote-notification</string>
 	</array>
+	<key>CodePushDeploymentKey</key>
+	<string>zZ3FebLp5-crV3Ap943TyFTZU6loNy6WzQ7-W</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleExecutable</key>

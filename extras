@@ -37,3 +37,12 @@ curl -X POST -H "Authorization: key=AIzaSyCLkKku33JoNKN-BRrQ43qcL8YTfGujB08" -H 
 }' 'https://gcm-http.googleapis.com/gcm/send'
 
 lIq8moto52uXugjRK91rDA089Bg=
+
+Successfully added the "enciendeApp" app, along with the following default deployments:
+┌────────────┬───────────────────────────────────────┐
+│ Name       │ Deployment Key                        │
+├────────────┼───────────────────────────────────────┤
+│ Production │ uFOz-djtowa5wsdX19LqkpO2dZxMNy6WzQ7-W │
+├────────────┼───────────────────────────────────────┤
+│ Staging    │ zZ3FebLp5-crV3Ap943TyFTZU6loNy6WzQ7-W │
+└────────────┴───────────────────────────────────────┘

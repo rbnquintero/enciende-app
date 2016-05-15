@@ -5,6 +5,8 @@ include ':gandalf-react-native-system-notification'
 project(':gandalf-react-native-system-notification').projectDir = new File(settingsDir, '../node_modules/gandalf-react-native-system-notification/android')
 include ':gandalf-react-native-gcm-push-notification'
 project(':gandalf-react-native-gcm-push-notification').projectDir = new File(rootProject.projectDir, '../node_modules/gandalf-react-native-gcm-push-notification/android')
+include ':react-native-code-push'
+project(':react-native-code-push').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-code-push/android/app')
 include ':react-native-maps'
 project(':react-native-maps').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-maps/android')
 
