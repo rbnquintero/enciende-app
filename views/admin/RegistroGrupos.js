@@ -1,6 +1,7 @@
 import React, {
   Component,
   TouchableOpacity,
+  TouchableHighlight,
   Text,
   TextInput,
   Switch,
@@ -32,6 +33,9 @@ class RegistroGrupos extends Component {
       grupos: [],
       isLoading: true,
       isRegistering: false,
+      errorLoading: false,
+      messegeError: '',
+      exito:false
     }
 
     this.loadGrupos();
@@ -47,6 +51,8 @@ class RegistroGrupos extends Component {
           this.setState({
             isLoading: false,
             grupos: json.grupos,
+            errorLoading : false,
+            messegeError:''
           });
         } else {
           console.log(json.error);
@@ -69,30 +75,40 @@ class RegistroGrupos extends Component {
   }
 
   registraGrupo() {
-    this.setState({ isLoading: true, isRegistering: false,});
-    var query = env.serverURL + '/rally/grabarGrupos';
-    query+='?nombre=' + this.state.grupo.nombre;
-    query+='&rally.idRally=' + this.props.user.currentRally.grupo.rally.idRally;
-    query+='&token=' + this.props.user.user.token;
-
-    fetch(query, { method: 'POST'
-    }).then(response => response.json())
-      .then(json => {
-        if(json.success == true) {
-          this.setState({ isLoading: true, isRegistering: false, grupo: { nombre: ''}, });
-          this.loadGrupos();
-        } else {
-          console.log(json.error);
-          this.setState({
-            errorLoading: true
-          });
-        }
-      }).catch(error => {
-        console.log(error);
-        this.setState({
-          errorLoading: true
-        });
+    if(this.state.grupo.nombre==''){
+      this.setState({
+        errorLoading: true,isRegistering:false,isLoading: false,
+        messegeError:"El nombre del grupo es requerido",exito:false
       });
+    }else{
+      this.setState({ isLoading: true, isRegistering: false,});
+      var query = env.serverURL + '/rally/grabarGrupos';
+      query+='?nombre=' + this.state.grupo.nombre;
+      query+='&rally.idRally=' + this.props.user.currentRally.grupo.rally.idRally;
+      query+='&token=' + this.props.user.user.token;
+
+      fetch(query, { method: 'POST'
+      }).then(response => response.json())
+        .then(json => {
+          if(json.success == true) {
+            this.setState({ isLoading: true, isRegistering: false,exito:true,
+              errorLoading : false, grupo: { nombre: ''},messegeError:'' });
+            this.loadGrupos();
+          } else {
+            console.log(json);
+            this.setState({
+              errorLoading: true,isRegistering:false,isLoading: false,
+              messegeError:json.errorMessage,exito:false
+            });
+          }
+        }).catch(error => {
+          console.log(error);
+          this.setState({
+            errorLoading: true,isRegistering:false,isLoading: false,exito:false,
+            messegeError:'Error al grabar el grupo, intenta más tarde'
+          });
+        });
+      }
   }
 
   render() {
@@ -102,26 +118,40 @@ class RegistroGrupos extends Component {
     } else if (this.state.isRegistering) {
       view = (<Loader caption="Registrando grupo"/>);
     } else {
+      var textoError = null;
+      var textoExito = null;
+      if(this.state.errorLoading){
+        textoError = (
+          <Text style={{ fontSize: 18, fontWeight: '200', marginTop: 20,  color:'red' }}>
+            {this.state.messegeError}
+          </Text>
+        )
+      }
+      if(this.state.exito && !this.state.errorLoading){
+        textoExito = (
+          <Text style={{ fontSize: 18, fontWeight: '200', marginTop: 20,  color:'green' }}>
+            El grupo ha sido guardado
+          </Text>
+        )
+      }
       view = (
         <View style={{ flex: 1, marginHorizontal: 20 }}>
           <View style={{ flex: 1 }}>
-            <Text style={{ fontSize: 25, fontWeight: '200', marginTop: 20, }}>
+            <Text style={{ fontSize: 25, fontWeight: '200', marginTop: 20}}>
               Registro de Grupos
             </Text>
+            {textoError}
+            {textoExito}
             <View style={{paddingHorizontal: 5, marginTop: 20, backgroundColor: 'white', borderRadius: 5, }}>
               <TextInput placeholder='Nombre del grupo' value={this.state.grupo.nombre} onChange={this.handleChangeGrupo.bind(this, 'nombre')} autoCapitalize='words'
                 style={{height: 35}}/>
             </View>
-            <TouchableOpacity style={{marginTop: 20}} onPress={() => this.registraGrupo()}>
-              <View>
-                <Text style={{fontSize: 17, textAlign: 'center', fontWeight: '200', color: '#3399ff'}}>
-                  Registrar grupo
-                </Text>
-              </View>
-            </TouchableOpacity>
+            <TouchableHighlight style={styles.button} onPress={() => this.registraGrupo()} underlayColor='#99d9f4'>
+              <Text style={styles.buttonText}>Registrar grupo</Text>
+            </TouchableHighlight>
           </View>
           <View style={{ flex: 1 }}>
-            <Text style={{ fontSize: 25, fontWeight: '200', marginVertical: 20, }}>
+            <Text style={{ fontSize: 25, fontWeight: '200', marginVertical: 20 }}>
               Grupos registrados
             </Text>
             <ScrollView>
@@ -155,7 +185,35 @@ class RegistroGrupos extends Component {
   }
 }
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  container: {
+    justifyContent: 'center',
+    marginTop: 50,
+    padding: 20,
+    backgroundColor: '#ffffff',
+  },
+  title: {
+    fontSize: 30,
+    alignSelf: 'center',
+    marginBottom: 30
+  },
+  buttonText: {
+    fontSize: 18,
+    color: 'white',
+    alignSelf: 'center'
+  },
+  button: {
+    height: 36,
+    backgroundColor: '#48BBEC',
+    borderColor: '#48BBEC',
+    borderWidth: 1,
+    borderRadius: 8,
+    marginBottom: 10,
+    marginTop: 20,
+    alignSelf: 'stretch',
+    justifyContent: 'center'
+  }
+});
 
 function select(store) {
   return {

@@ -33,19 +33,14 @@ class RegistroUsuarioResultado extends Component {
   }
 
   registerUser() {
-    var genero = 'H';
-    if(this.props.userToRegister.generoFem){
-      genero = 'M';
-    }
-
     var query = env.serverURL + '/rally/inscribir';
     query+='?nombre=' + this.props.userToRegister.nombre;
-    query+='&email=' + this.props.userToRegister.email;
-    query+='&genero=' + genero;
-    query+='&tallaPlayera=' + this.props.userToRegister.tallaPlayera;
+    query+='&email=' + this.props.userToRegister.correo;
+    query+='&genero=' + this.props.userToRegister.genero;
+    query+='&tallaPlayera=' + this.props.userToRegister.talla;
     query+='&grupoUsuarios[0].id.grupoIdGrupo=' + this.props.userToRegister.grupo;
     query+='&grupoUsuarios[0].rol=PARTICIPANTE';
-
+    console.log(query);
     fetch(query, { method: 'POST'
     }).then(response => response.json())
       .then(json => {
@@ -81,13 +76,13 @@ class RegistroUsuarioResultado extends Component {
             <Text style={{ flex: 1, fontSize: 17, fontWeight: '200', }}>
               Talla de playera</Text>
             <Text style={{ flex: 1, textAlign: 'right', fontSize: 17, fontWeight: '200', }}>
-              {this.props.userToRegister.tallaPlayera}</Text>
+              {this.props.userToRegister.talla}</Text>
           </View>
           <View style={{ flexDirection: 'row', marginTop: 5, }}>
             <Text style={{ flex: 1, fontSize: 17, fontWeight: '200', }}>
               Correo</Text>
             <Text style={{ flex: 1, textAlign: 'right', fontSize: 17, fontWeight: '200', }}>
-              {this.props.userToRegister.email}</Text>
+              {this.props.userToRegister.correo}</Text>
           </View>
           <View style={{ flexDirection: 'row', marginTop: 5, }}>
             <Text style={{ flex: 1, fontSize: 17, fontWeight: '200', }}>

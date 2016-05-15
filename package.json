@@ -11,13 +11,15 @@
     "react-native": "0.22.2",
     "react-native-code-push": "^1.10.6-beta",
     "react-native-drawer": "2.0.0",
-    "react-native-facebook-login": "1.0.3",
+    "react-native-fbsdk": "^0.1.0",
+    "react-native-image-picker": "^0.18.15",
     "react-native-maps": "^0.3.2",
     "react-native-simple-store": "1.0.1",
     "react-redux": "4.4.5",
     "react-timer-mixin": "0.13.3",
     "redux": "3.4.0",
     "redux-logger": "2.6.1",
-    "redux-thunk": "2.0.1"
+    "redux-thunk": "2.0.1",
+    "tcomb-form-native": "^0.4.4"
   }
 }

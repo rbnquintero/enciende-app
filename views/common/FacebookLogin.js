@@ -8,10 +8,6 @@ import React, {
   AsyncStorage,
   View
 } from 'react-native';
-
-var FBLogin = require('react-native-facebook-login');
-var FBLoginManager = require('NativeModules').FBLoginManager;
-
 var AppLogo = require('../segments/AppLogo');
 
 /* REDUX */
