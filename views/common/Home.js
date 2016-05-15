@@ -4,6 +4,7 @@ import React, {
   Text,
   Image,
   StyleSheet,
+  NativeModules,
   ScrollView,
   ListView,
   View
@@ -15,6 +16,7 @@ var NoticiaDetalle = require('./NoticiaDetalle');
 var Header = require('../../js/common/HeaderHome');
 
 var env = require('../../env');
+var LocationReportingService = NativeModules.LocationReportingService;
 
 /* REDUX */
 import type {State as Noticias} from '../../reducers/noticia';
@@ -39,6 +41,14 @@ class Home extends Component {
       loadedNews: false,
     };
     this.props.loadNews();
+    LocationReportingService.beginReportingLocation("1", "2");
+    LocationReportingService.getLocations((error, locations) => {
+      if (error) {
+        console.error(error);
+      } else {
+        console.log(locations);
+      }
+    });
   }
 
   _rowPressed(noticia) {

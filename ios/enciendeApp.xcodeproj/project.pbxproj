@@ -5,6 +5,7 @@
 	};
 	objectVersion = 46;
 	objects = {
+
 /* Begin PBXBuildFile section */
 		00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302AC1ABCB8CE00DB3ED1 /* libRCTActionSheet.a */; };
 		00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302BA1ABCB90400DB3ED1 /* libRCTGeolocation.a */; };
@@ -22,6 +23,9 @@
 		146834051AC3E58100842450 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
 		37FB8136AD104EC8AD81693C /* libAirMaps.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 442E72B1689C42419F3625EE /* libAirMaps.a */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
+		996F9D2C1CE637FC00510C46 /* LocationHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 996F9D2B1CE637FC00510C46 /* LocationHandler.m */; };
+		996F9D2F1CE6388B00510C46 /* LocationReportingService.m in Sources */ = {isa = PBXBuildFile; fileRef = 996F9D2E1CE6388B00510C46 /* LocationReportingService.m */; };
+		996F9D311CE63EC800510C46 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 996F9D301CE63EC800510C46 /* CoreLocation.framework */; };
 		9991C1941CBDCF4C00A9085B /* libRCTFBLogin.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9991C18A1CBDCE6400A9085B /* libRCTFBLogin.a */; };
 		9991C1981CBDD16300A9085B /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9991C1951CBDD16200A9085B /* FBSDKCoreKit.framework */; };
 		9991C1991CBDD16300A9085B /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9991C1961CBDD16200A9085B /* FBSDKLoginKit.framework */; };
@@ -146,6 +150,11 @@
 		4F5593A8B90C4760872DB2AC /* AirMaps.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = AirMaps.xcodeproj; path = "../node_modules/react-native-maps/ios/AirMaps.xcodeproj"; sourceTree = "<group>"; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
+		996F9D2A1CE637FC00510C46 /* LocationHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LocationHandler.h; path = enciendeApp/Services/LocationHandler.h; sourceTree = "<group>"; };
+		996F9D2B1CE637FC00510C46 /* LocationHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LocationHandler.m; path = enciendeApp/Services/LocationHandler.m; sourceTree = "<group>"; };
+		996F9D2D1CE6388B00510C46 /* LocationReportingService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LocationReportingService.h; path = enciendeApp/Services/LocationReportingService.h; sourceTree = "<group>"; };
+		996F9D2E1CE6388B00510C46 /* LocationReportingService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LocationReportingService.m; path = enciendeApp/Services/LocationReportingService.m; sourceTree = "<group>"; };
+		996F9D301CE63EC800510C46 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		9991C1841CBDCE6400A9085B /* RCTFBLogin.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTFBLogin.xcodeproj; path = "../node_modules/react-native-facebook-login/RCTFBLogin.xcodeproj"; sourceTree = "<group>"; };
 		9991C1951CBDD16200A9085B /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKCoreKit.framework; sourceTree = "<group>"; };
 		9991C1961CBDD16200A9085B /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKLoginKit.framework; sourceTree = "<group>"; };
@@ -164,6 +173,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				996F9D311CE63EC800510C46 /* CoreLocation.framework in Frameworks */,
 				9991C1941CBDCF4C00A9085B /* libRCTFBLogin.a in Frameworks */,
 				9991C1981CBDD16300A9085B /* FBSDKCoreKit.framework in Frameworks */,
 				146834051AC3E58100842450 /* libReact.a in Frameworks */,
@@ -261,6 +271,7 @@
 		13B07FAE1A68108700A75B9A /* enciendeApp */ = {
 			isa = PBXGroup;
 			children = (
+				996F9D1D1CE637BD00510C46 /* Services */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
@@ -318,6 +329,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				996F9D301CE63EC800510C46 /* CoreLocation.framework */,
 				13B07FAE1A68108700A75B9A /* enciendeApp */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* enciendeAppTests */,
@@ -337,6 +349,17 @@
 				00E356EE1AD99517003FC87E /* enciendeAppTests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		996F9D1D1CE637BD00510C46 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				996F9D2D1CE6388B00510C46 /* LocationReportingService.h */,
+				996F9D2E1CE6388B00510C46 /* LocationReportingService.m */,
+				996F9D2A1CE637FC00510C46 /* LocationHandler.h */,
+				996F9D2B1CE637FC00510C46 /* LocationHandler.m */,
+			);
+			name = Services;
 			sourceTree = "<group>";
 		};
 		9991C1851CBDCE6400A9085B /* Products */ = {
@@ -406,6 +429,9 @@
 					00E356ED1AD99517003FC87E = {
 						CreatedOnToolsVersion = 6.2;
 						TestTargetID = 13B07F861A680F5B00A75B9A;
+					};
+					13B07F861A680F5B00A75B9A = {
+						DevelopmentTeam = 83V2XJYZ7B;
 					};
 				};
 			};
@@ -615,6 +641,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
+				996F9D2C1CE637FC00510C46 /* LocationHandler.m in Sources */,
+				996F9D2F1CE6388B00510C46 /* LocationReportingService.m in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -657,9 +685,7 @@
 				INFOPLIST_FILE = enciendeAppTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/enciendeApp.app/enciendeApp";
 			};
@@ -677,9 +703,7 @@
 				INFOPLIST_FILE = enciendeAppTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/enciendeApp.app/enciendeApp";
 			};
@@ -689,6 +713,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				DEAD_CODE_STRIPPING = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -713,6 +738,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
