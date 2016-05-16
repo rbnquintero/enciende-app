@@ -56,22 +56,15 @@ class Camara extends Component {
   render() {
     var view = null;
     if(this.state.isLoading) {
-      view = (<Loader caption="Cargando grupos"/>);
+      view = (<Loader caption="Cargando..."/>);
     } else{
-      view =(<View style={styles.container}>
-
+      view =(
         <View>
-          <View style={ styles.barraCamara }>
-            <Text style={styles.espacio}></Text>
-            <View style={{flex:1,height:55,justifyContent: 'center',alignItems: 'center'}}>
-              <TouchableHighlight onPress={this.takePicture.bind(this)} >
-                <Image source={ require('../../img/icon/camera.png')}  style={styles.botonCamara}/>
-              </TouchableHighlight>
-            </View>
-
-          </View>
+          <TouchableHighlight style={styles.button} onPress={() => this.takePicture()} underlayColor='#99d9f4'>
+            <Text style={styles.buttonText}>Tomar selfie</Text>
+          </TouchableHighlight>
         </View>
-      </View>);
+      );
     }
 
     return view;
@@ -79,22 +72,14 @@ class Camara extends Component {
 
 
   takePicture() {
-
-
-
-
     var options = {
-      title: 'Select Avatar', // specify null or empty string to remove the title
-      cancelButtonTitle: 'Cancel',
-      takePhotoButtonTitle: 'Take Photo...', // specify null or empty string to remove this button
-      chooseFromLibraryButtonTitle: 'Choose from Library...', // specify null or empty string to remove this button
-      customButtons: {
-        'Choose Photo from Facebook': 'fb', // [Button Text] : [String returned upon selection]
-      },
+      title: 'Selecciona una foto', // specify null or empty string to remove the title
+      cancelButtonTitle: 'Cancelar',
+      takePhotoButtonTitle: 'Tomar foto...', // specify null or empty string to remove this button
+      chooseFromLibraryButtonTitle: 'Escoger de libería...', // specify null or empty string to remove this button
       cameraType: 'back', // 'front' or 'back'
       mediaType: 'photo', // 'photo' or 'video'
       videoQuality: 'high', // 'low', 'medium', or 'high'
-      durationLimit: 10, // video recording max time in seconds
       maxWidth: 2000, // photos only
       maxHeight: 2000, // photos only
       aspectX: 2, // android only - aspectX:aspectY, the cropping image's ratio of width to height
@@ -125,83 +110,50 @@ class Camara extends Component {
       else if (response.error) {
         console.log('ImagePickerManager Error: ', response.error);
       }
-      else if (response.customButton) {
-        console.log('User tapped custom button: ', response.customButton);
-      }
       else {
         // You can display the image using either data:
         const source = {uri: 'data:image/jpeg;base64,' + response.data, isStatic: true};
-
+        this.setState({isLoading:true});
         shareLinkContent.photos[0].imageUrl=response.uri;
         console.log(shareLinkContent);
         ShareDialog.canShow(shareLinkContent).then(
           function(canShow) {
-
             if (canShow) {
               return ShareDialog.show(shareLinkContent);
             }
           }
         ).then(
           function(result) {
+            this.setState({isLoading:false});
             if (result.isCancelled) {
               alert('Share cancelled');
-            } else {
-              alert('Share success with postId: '
-                + result.postId);
             }
           },
           function(error) {
             alert('Share fail with error: ' + error);
           }
         );
-
-        this.setState({
-          avatarSource: source
-        });
       }
     });
-
-
-
   }
 }
 
 const styles = StyleSheet.create({
-  barraCamara:{
-      backgroundColor:'#81c04d',
-      flexDirection:'row' ,
-      height:60
+  buttonText: {
+    fontSize: 18,
+    color: 'white',
+    alignSelf: 'center'
   },
-  espacio:{
-      width: 50
-  },
-  botonCambiarCamara:{
-      width: 100,
-      resizeMode: Image.resizeMode.contain,
-      height:40
-  },
-  botonCamara:{
-      flex:1,
-      resizeMode: Image.resizeMode.contain,
-      height:55
-  },
-  container: {
-    flex: 1
-  },
-  preview: {
-    flex: 1,
-    justifyContent: 'flex-end',
-    alignItems: 'center',
-    height: Dimensions.get('window').height,
-    width: Dimensions.get('window').width
-  },
-  capture: {
-    flex: 0,
-    backgroundColor: '#fff',
-    borderRadius: 5,
-    color: '#000',
-    padding: 10,
-    margin: 40
+  button: {
+    height: 36,
+    backgroundColor: '#48BBEC',
+    borderColor: '#48BBEC',
+    borderWidth: 1,
+    borderRadius: 8,
+    marginBottom: 10,
+    marginTop: 20,
+    alignSelf: 'stretch',
+    justifyContent: 'center'
   }
 });
 function select(store) {
