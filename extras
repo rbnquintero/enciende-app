@@ -8,3 +8,41 @@ class vs component
 postear!
 
 https://graph.facebook.com/v2.6/me?fields=id,name,email,picture&access_token=CAASZCOZAZAVoPMBAOva5dSQdmnrKOrIwRBQ8neZA5LeZC8PZCbahKBmUHBZAzhD6JhAjZCx5lAZCsDZCqhDFC9HNgJMwZChF4yGZCfQc9193CuJE2k9DeposGTMbHaDUq43UMDTEi23vZCG6uXbkesJZAVOkK8hKcfi62cI5t7758UkRCCC9orFd4K200L9XlwSADgyQo5FCsA5pDv2Nm7ZC4T9IXZCsMDDGJVqBZCJkZD
+
+AIzaSyCVwmnKdxjJudK8zWXLPONAhMKSRZbM5j8
+
+
+{
+  "to": "gcm_token_of_the_device",
+  "notification": {
+    "sound": "default",
+    "badge": "2",
+    "title": "default",
+    "body": "Test Push!"
+  }
+}
+
+eCl9XUXe8Uc:APA91bGj8lb9gI00hdrZ1FUTSbzsHyBzvnInjzC6DYLOsFwRwxEjf9RicOgyTAC6CmhtqvNVA_3-KY2iSJ6EsN_hAa6hOmA1bKqrjED099vecXCYO9QeGUhxgdA4LP-1p78TGUScjgqb
+
+curl -X POST -H "Authorization: key=AIzaSyCLkKku33JoNKN-BRrQ43qcL8YTfGujB08" -H "Content-Type: application/json" -d '
+{
+  "notification": {
+      "title": "test",
+      "body": "my message",
+      "sound": "default",
+      "badge": "2",
+  },
+  "priority": "high",
+  "to" : "/topics/general"
+}' 'https://gcm-http.googleapis.com/gcm/send'
+
+lIq8moto52uXugjRK91rDA089Bg=
+
+Successfully added the "enciendeApp" app, along with the following default deployments:
+┌────────────┬───────────────────────────────────────┐
+│ Name       │ Deployment Key                        │
+├────────────┼───────────────────────────────────────┤
+│ Production │ uFOz-djtowa5wsdX19LqkpO2dZxMNy6WzQ7-W │
+├────────────┼───────────────────────────────────────┤
+│ Staging    │ zZ3FebLp5-crV3Ap943TyFTZU6loNy6WzQ7-W │
+└────────────┴───────────────────────────────────────┘

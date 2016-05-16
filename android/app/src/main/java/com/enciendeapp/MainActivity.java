@@ -4,6 +4,9 @@ import android.content.Intent;     // <--- import
 import android.os.Bundle;
 import com.facebook.react.ReactActivity;
 import com.facebook.reactnative.androidsdk.FBSDKPackage;
+import io.neson.react.notification.NotificationPackage;
+import com.oney.gcm.GcmPackage;
+import com.microsoft.codepush.react.CodePush;
 import com.AirMaps.AirPackage;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
@@ -26,6 +29,11 @@ public class MainActivity extends ReactActivity {
         return "enciendeApp";
     }
 
+    @Override
+    protected String getJSBundleFile() {
+        return CodePush.getBundleUrl();
+    }
+
     /**
      * Returns whether dev mode should be enabled.
      * This enables e.g. the dev menu.
@@ -44,10 +52,12 @@ public class MainActivity extends ReactActivity {
         mCallbackManager = new CallbackManager.Factory().create();
         return Arrays.<ReactPackage>asList(
             new MainReactPackage(),
+            new GcmPackage(),
+            new NotificationPackage(this),
             new AirPackage(),
             new ImagePickerPackage(),
-            //new CodePush(null, this, BuildConfig.DEBUG),
-            new FBSDKPackage(mCallbackManager)
+            new FBSDKPackage(mCallbackManager),
+            new CodePush("zZ3FebLp5-crV3Ap943TyFTZU6loNy6WzQ7-W", this, BuildConfig.DEBUG)
         );
     }
 
