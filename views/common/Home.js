@@ -41,8 +41,8 @@ class Home extends Component {
       loadedNews: false,
     };
     this.props.loadNews();
-    /*LocationReportingService.beginReportingLocation("1", "2");
-    LocationReportingService.getLocations((error, locations) => {
+    //LocationReportingService.beginReportingLocation("3", "7");
+    /*LocationReportingService.getLocations((error, locations) => {
       if (error) {
         console.error(error);
       } else {

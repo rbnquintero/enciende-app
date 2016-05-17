@@ -14,6 +14,7 @@ import com.facebook.CallbackManager;
 import com.facebook.FacebookSdk;
 import com.facebook.reactnative.androidsdk.FBSDKPackage;
 import com.imagepicker.ImagePickerPackage;
+import com.enciendeapp.services.LocationReportingServicePackage;
 
 import java.util.Arrays;
 import java.util.List;
@@ -57,6 +58,7 @@ public class MainActivity extends ReactActivity {
             new AirPackage(),
             new ImagePickerPackage(),
             new FBSDKPackage(mCallbackManager),
+            new LocationReportingServicePackage(),
             new CodePush("zZ3FebLp5-crV3Ap943TyFTZU6loNy6WzQ7-W", this, BuildConfig.DEBUG)
         );
     }
