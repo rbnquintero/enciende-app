@@ -26,13 +26,39 @@ eCl9XUXe8Uc:APA91bGj8lb9gI00hdrZ1FUTSbzsHyBzvnInjzC6DYLOsFwRwxEjf9RicOgyTAC6Cmht
 
 curl -X POST -H "Authorization: key=AIzaSyCLkKku33JoNKN-BRrQ43qcL8YTfGujB08" -H "Content-Type: application/json" -d '
 {
+  "data": {
+    "notification": {
+      "subject": "Hello GCM",
+      "message": "Hello from the server side!"
+    }
+  },
   "notification": {
       "title": "test",
       "body": "my message"
   },
-  "priority": "high",
-  "content_available": true,
+  "to" : "/topics/general"
+}' 'https://gcm-http.googleapis.com/gcm/send'
+
+curl -X POST -H "Authorization: key=AIzaSyCLkKku33JoNKN-BRrQ43qcL8YTfGujB08" -H "Content-Type: application/json" -d '
+{
+  "notification": {
+      "title": "test",
+      "body": "my message",
+      "sound": "default",
+      "vibrate": "true"
+  },
   "to" : "/topics/general"
 }' 'https://gcm-http.googleapis.com/gcm/send'
 
 lIq8moto52uXugjRK91rDA089Bg=
+
+curl -X POST -H "Authorization: key=AIzaSyCLkKku33JoNKN-BRrQ43qcL8YTfGujB08" -H "Content-Type: application/json" -d '
+{
+  "data": {
+    "notification": {
+      "title": "Hello GCM",
+      "body": "Hello from the server side!"
+    }
+  },
+  "to" : "/topics/general"
+}' 'https://gcm-http.googleapis.com/gcm/send'

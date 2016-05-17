@@ -108,11 +108,11 @@ function fetchProfile() {
   return function(dispatch) {
     dispatch(updateProfileStart());
     return localRepository.getProfileFromStorage().then((profile) => {
+      GCMServices.subscribeTopic('general');
       if(profile != null) {
         dispatch(loadCurrentRally(profile, true));
         dispatch(staffActions.loadStaff(profile));
       } else {
-        GCMServices.subscribeTopic('general');
         dispatch(initialState());
       }
     });

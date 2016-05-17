@@ -32,13 +32,8 @@ if (GcmAndroid.launchNotification) {
          }
        });
        GcmAndroid.addEventListener('notification', function(notification){
-         var info = JSON.parse(notification.data.notification);
-         if (!GcmAndroid.isInForeground) {
-           Notification.create({
-             subject: info.subject,
-             message: info.message,
-           });
-         }
+         console.log(notification);
+
        });
        GcmAndroid.requestPermissions();
      }
