@@ -26,6 +26,12 @@ eCl9XUXe8Uc:APA91bGj8lb9gI00hdrZ1FUTSbzsHyBzvnInjzC6DYLOsFwRwxEjf9RicOgyTAC6Cmht
 
 curl -X POST -H "Authorization: key=AIzaSyCLkKku33JoNKN-BRrQ43qcL8YTfGujB08" -H "Content-Type: application/json" -d '
 {
+  "data": {
+    "notification": {
+      "subject": "Hello GCM",
+      "message": "Hello from the server side!"
+    }
+  },
   "notification": {
       "title": "test",
       "body": "my message",
@@ -33,6 +39,17 @@ curl -X POST -H "Authorization: key=AIzaSyCLkKku33JoNKN-BRrQ43qcL8YTfGujB08" -H 
       "badge": "2",
   },
   "priority": "high",
+  "to" : "/topics/general"
+}' 'https://gcm-http.googleapis.com/gcm/send'
+
+curl -X POST -H "Authorization: key=AIzaSyCLkKku33JoNKN-BRrQ43qcL8YTfGujB08" -H "Content-Type: application/json" -d '
+{
+  "notification": {
+      "title": "test",
+      "body": "my message",
+      "sound": "default",
+      "vibrate": "true"
+  },
   "to" : "/topics/general"
 }' 'https://gcm-http.googleapis.com/gcm/send'
 
@@ -46,3 +63,13 @@ Successfully added the "enciendeApp" app, along with the following default deplo
 ├────────────┼───────────────────────────────────────┤
 │ Staging    │ zZ3FebLp5-crV3Ap943TyFTZU6loNy6WzQ7-W │
 └────────────┴───────────────────────────────────────┘
+curl -X POST -H "Authorization: key=AIzaSyCLkKku33JoNKN-BRrQ43qcL8YTfGujB08" -H "Content-Type: application/json" -d '
+{
+  "data": {
+    "notification": {
+      "title": "Hello GCM",
+      "body": "Hello from the server side!"
+    }
+  },
+  "to" : "/topics/general"
+}' 'https://gcm-http.googleapis.com/gcm/send'
