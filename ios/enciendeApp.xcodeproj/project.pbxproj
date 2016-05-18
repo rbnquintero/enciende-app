@@ -20,6 +20,7 @@
 		9902E8D11CE91D1D00014659 /* GCMReactModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 9902E8D01CE91D1D00014659 /* GCMReactModule.m */; };
 		99AC79741CE94DB0001F1FD1 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 99AC79731CE94DB0001F1FD1 /* MapKit.framework */; };
 		99EDBC231CE4E96E00E25F37 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 99EDBC221CE4E96E00E25F37 /* GoogleService-Info.plist */; };
+		99F0DFA21CECB90300ACB9C8 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 99F0DFA11CECB90300ACB9C8 /* libz.tbd */; };
 		BBF834080FC74CD8971BF451 /* libCodePush.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E38DE3C606554981B76511E3 /* libCodePush.a */; };
 		CD6B50EC1CE696F200C46059 /* libRNImagePicker.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD6B50EB1CE696D400C46059 /* libRNImagePicker.a */; };
 /* End PBXBuildFile section */
@@ -85,6 +86,7 @@
 		9902E8D01CE91D1D00014659 /* GCMReactModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GCMReactModule.m; path = enciendeApp/GCMReactModule.m; sourceTree = "<group>"; };
 		99AC79731CE94DB0001F1FD1 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		99EDBC221CE4E96E00E25F37 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		99F0DFA11CECB90300ACB9C8 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		B65DB74F980DBC36681A12B8 /* Pods-enciendeAppTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-enciendeAppTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-enciendeAppTests/Pods-enciendeAppTests.release.xcconfig"; sourceTree = "<group>"; };
 		BB453CC8487F6BC4F1D02248 /* libPods-enciendeApp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-enciendeApp.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD6B50E61CE696D400C46059 /* RNImagePicker.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNImagePicker.xcodeproj; path = "../node_modules/react-native-image-picker/ios/RNImagePicker.xcodeproj"; sourceTree = "<group>"; };
@@ -109,6 +111,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				99F0DFA21CECB90300ACB9C8 /* libz.tbd in Frameworks */,
 				CD6B50EC1CE696F200C46059 /* libRNImagePicker.a in Frameworks */,
 				BBF834080FC74CD8971BF451 /* libCodePush.a in Frameworks */,
 				99AC79741CE94DB0001F1FD1 /* MapKit.framework in Frameworks */,
@@ -156,6 +159,7 @@
 		5FCA27C2B5BEB814BC724250 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				99F0DFA11CECB90300ACB9C8 /* libz.tbd */,
 				99AC79731CE94DB0001F1FD1 /* MapKit.framework */,
 				BB453CC8487F6BC4F1D02248 /* libPods-enciendeApp.a */,
 				5D23CF0673B650700068FF1E /* libPods-enciendeAppTests.a */,
@@ -611,6 +615,7 @@
 			baseConfigurationReference = F4BA0071498E19825834FBB2 /* Pods-enciendeApp.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -647,6 +652,7 @@
 			baseConfigurationReference = CE2C4B36E2A4F3D1B58CD67A /* Pods-enciendeApp.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
