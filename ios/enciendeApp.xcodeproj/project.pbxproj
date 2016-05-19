@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		00E356F31AD99517003FC87E /* enciendeAppTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* enciendeAppTests.m */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
-		13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB11A68108700A75B9A /* LaunchScreen.xib */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		37FB8136AD104EC8AD81693C /* libAirMaps.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 442E72B1689C42419F3625EE /* libAirMaps.a */; };
@@ -18,6 +17,18 @@
 		9902E8CA1CE9170000014659 /* LocationHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 9902E8C71CE9170000014659 /* LocationHandler.m */; };
 		9902E8CB1CE9170000014659 /* LocationReportingService.m in Sources */ = {isa = PBXBuildFile; fileRef = 9902E8C91CE9170000014659 /* LocationReportingService.m */; };
 		9902E8D11CE91D1D00014659 /* GCMReactModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 9902E8D01CE91D1D00014659 /* GCMReactModule.m */; };
+		997504ED1CED16F200330014 /* SourceSansPro-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 997504EC1CED16F200330014 /* SourceSansPro-Regular.otf */; };
+		997504FB1CEE1D4500330014 /* SourceSansPro-Black.otf in Resources */ = {isa = PBXBuildFile; fileRef = 997504F01CEE1D4400330014 /* SourceSansPro-Black.otf */; };
+		997504FC1CEE1D4500330014 /* SourceSansPro-BlackIt.otf in Resources */ = {isa = PBXBuildFile; fileRef = 997504F11CEE1D4400330014 /* SourceSansPro-BlackIt.otf */; };
+		997504FD1CEE1D4500330014 /* SourceSansPro-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 997504F21CEE1D4400330014 /* SourceSansPro-Bold.otf */; };
+		997504FE1CEE1D4500330014 /* SourceSansPro-BoldIt.otf in Resources */ = {isa = PBXBuildFile; fileRef = 997504F31CEE1D4400330014 /* SourceSansPro-BoldIt.otf */; };
+		997504FF1CEE1D4500330014 /* SourceSansPro-ExtraLight.otf in Resources */ = {isa = PBXBuildFile; fileRef = 997504F41CEE1D4400330014 /* SourceSansPro-ExtraLight.otf */; };
+		997505001CEE1D4500330014 /* SourceSansPro-ExtraLightIt.otf in Resources */ = {isa = PBXBuildFile; fileRef = 997504F51CEE1D4400330014 /* SourceSansPro-ExtraLightIt.otf */; };
+		997505011CEE1D4500330014 /* SourceSansPro-It.otf in Resources */ = {isa = PBXBuildFile; fileRef = 997504F61CEE1D4400330014 /* SourceSansPro-It.otf */; };
+		997505021CEE1D4500330014 /* SourceSansPro-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 997504F71CEE1D4400330014 /* SourceSansPro-Light.otf */; };
+		997505031CEE1D4500330014 /* SourceSansPro-LightIt.otf in Resources */ = {isa = PBXBuildFile; fileRef = 997504F81CEE1D4500330014 /* SourceSansPro-LightIt.otf */; };
+		997505041CEE1D4500330014 /* SourceSansPro-Semibold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 997504F91CEE1D4500330014 /* SourceSansPro-Semibold.otf */; };
+		997505051CEE1D4500330014 /* SourceSansPro-SemiboldIt.otf in Resources */ = {isa = PBXBuildFile; fileRef = 997504FA1CEE1D4500330014 /* SourceSansPro-SemiboldIt.otf */; };
 		99AC79741CE94DB0001F1FD1 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 99AC79731CE94DB0001F1FD1 /* MapKit.framework */; };
 		99EDBC231CE4E96E00E25F37 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 99EDBC221CE4E96E00E25F37 /* GoogleService-Info.plist */; };
 		99F0DFA21CECB90300ACB9C8 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 99F0DFA11CECB90300ACB9C8 /* libz.tbd */; };
@@ -71,7 +82,6 @@
 		13B07F961A680F5B00A75B9A /* enciendeApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = enciendeApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = enciendeApp/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = enciendeApp/AppDelegate.m; sourceTree = "<group>"; };
-		13B07FB21A68108700A75B9A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = enciendeApp/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = enciendeApp/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = enciendeApp/main.m; sourceTree = "<group>"; };
@@ -84,6 +94,18 @@
 		9902E8C91CE9170000014659 /* LocationReportingService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LocationReportingService.m; path = enciendeApp/Services/LocationReportingService.m; sourceTree = "<group>"; };
 		9902E8CF1CE91D1D00014659 /* GCMReactModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GCMReactModule.h; path = enciendeApp/GCMReactModule.h; sourceTree = "<group>"; };
 		9902E8D01CE91D1D00014659 /* GCMReactModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GCMReactModule.m; path = enciendeApp/GCMReactModule.m; sourceTree = "<group>"; };
+		997504EC1CED16F200330014 /* SourceSansPro-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SourceSansPro-Regular.otf"; sourceTree = "<group>"; };
+		997504F01CEE1D4400330014 /* SourceSansPro-Black.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SourceSansPro-Black.otf"; sourceTree = "<group>"; };
+		997504F11CEE1D4400330014 /* SourceSansPro-BlackIt.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SourceSansPro-BlackIt.otf"; sourceTree = "<group>"; };
+		997504F21CEE1D4400330014 /* SourceSansPro-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SourceSansPro-Bold.otf"; sourceTree = "<group>"; };
+		997504F31CEE1D4400330014 /* SourceSansPro-BoldIt.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SourceSansPro-BoldIt.otf"; sourceTree = "<group>"; };
+		997504F41CEE1D4400330014 /* SourceSansPro-ExtraLight.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SourceSansPro-ExtraLight.otf"; sourceTree = "<group>"; };
+		997504F51CEE1D4400330014 /* SourceSansPro-ExtraLightIt.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SourceSansPro-ExtraLightIt.otf"; sourceTree = "<group>"; };
+		997504F61CEE1D4400330014 /* SourceSansPro-It.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SourceSansPro-It.otf"; sourceTree = "<group>"; };
+		997504F71CEE1D4400330014 /* SourceSansPro-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SourceSansPro-Light.otf"; sourceTree = "<group>"; };
+		997504F81CEE1D4500330014 /* SourceSansPro-LightIt.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SourceSansPro-LightIt.otf"; sourceTree = "<group>"; };
+		997504F91CEE1D4500330014 /* SourceSansPro-Semibold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SourceSansPro-Semibold.otf"; sourceTree = "<group>"; };
+		997504FA1CEE1D4500330014 /* SourceSansPro-SemiboldIt.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SourceSansPro-SemiboldIt.otf"; sourceTree = "<group>"; };
 		99AC79731CE94DB0001F1FD1 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		99EDBC221CE4E96E00E25F37 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		99F0DFA11CECB90300ACB9C8 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
@@ -150,7 +172,6 @@
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				99EDBC221CE4E96E00E25F37 /* GoogleService-Info.plist */,
-				13B07FB11A68108700A75B9A /* LaunchScreen.xib */,
 				13B07FB71A68108700A75B9A /* main.m */,
 			);
 			name = enciendeApp;
@@ -181,6 +202,18 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				997504F01CEE1D4400330014 /* SourceSansPro-Black.otf */,
+				997504F11CEE1D4400330014 /* SourceSansPro-BlackIt.otf */,
+				997504F21CEE1D4400330014 /* SourceSansPro-Bold.otf */,
+				997504F31CEE1D4400330014 /* SourceSansPro-BoldIt.otf */,
+				997504F41CEE1D4400330014 /* SourceSansPro-ExtraLight.otf */,
+				997504F51CEE1D4400330014 /* SourceSansPro-ExtraLightIt.otf */,
+				997504F61CEE1D4400330014 /* SourceSansPro-It.otf */,
+				997504F71CEE1D4400330014 /* SourceSansPro-Light.otf */,
+				997504F81CEE1D4500330014 /* SourceSansPro-LightIt.otf */,
+				997504F91CEE1D4500330014 /* SourceSansPro-Semibold.otf */,
+				997504FA1CEE1D4500330014 /* SourceSansPro-SemiboldIt.otf */,
+				997504EC1CED16F200330014 /* SourceSansPro-Regular.otf */,
 				13B07FAE1A68108700A75B9A /* enciendeApp */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* enciendeAppTests */,
@@ -408,9 +441,20 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				997505011CEE1D4500330014 /* SourceSansPro-It.otf in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
-				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
 				99EDBC231CE4E96E00E25F37 /* GoogleService-Info.plist in Resources */,
+				997504FE1CEE1D4500330014 /* SourceSansPro-BoldIt.otf in Resources */,
+				997505041CEE1D4500330014 /* SourceSansPro-Semibold.otf in Resources */,
+				997505051CEE1D4500330014 /* SourceSansPro-SemiboldIt.otf in Resources */,
+				997505001CEE1D4500330014 /* SourceSansPro-ExtraLightIt.otf in Resources */,
+				997504FF1CEE1D4500330014 /* SourceSansPro-ExtraLight.otf in Resources */,
+				997504ED1CED16F200330014 /* SourceSansPro-Regular.otf in Resources */,
+				997504FB1CEE1D4500330014 /* SourceSansPro-Black.otf in Resources */,
+				997505021CEE1D4500330014 /* SourceSansPro-Light.otf in Resources */,
+				997505031CEE1D4500330014 /* SourceSansPro-LightIt.otf in Resources */,
+				997504FD1CEE1D4500330014 /* SourceSansPro-Bold.otf in Resources */,
+				997504FC1CEE1D4500330014 /* SourceSansPro-BlackIt.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -553,18 +597,6 @@
 			targetProxy = 00E356F41AD99517003FC87E /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
-
-/* Begin PBXVariantGroup section */
-		13B07FB11A68108700A75B9A /* LaunchScreen.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				13B07FB21A68108700A75B9A /* Base */,
-			);
-			name = LaunchScreen.xib;
-			path = enciendeApp;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		00E356F61AD99517003FC87E /* Debug */ = {
