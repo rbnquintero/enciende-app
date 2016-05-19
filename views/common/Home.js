@@ -13,7 +13,7 @@ import React, {
 var Card = require('./home/Card');
 var Loader = require('./../helpers/Loader');
 var NoticiaDetalle = require('./NoticiaDetalle');
-var Header = require('../../js/common/HeaderHome');
+var Header = require('../../js/common/Header');
 
 var env = require('../../env');
 var LocationReportingService = NativeModules.LocationReportingService;

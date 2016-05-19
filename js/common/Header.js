@@ -1,7 +1,6 @@
 import React, {
   Component,
   TouchableOpacity,
-  Text,
   ToolbarAndroid,
   Platform,
   Image,
@@ -10,6 +9,7 @@ import React, {
 } from 'react-native';
 
 var Colors = require('./Colors');
+var {Text} = require('./Text');
 
 export type Layout =
     'default'      // Use platform defaults (icon on Android, text on iOS)
@@ -100,7 +100,7 @@ class HeaderIOS extends Component {
   props: Props;
 
   render() {
-    const {leftItem, title, rightItem, foreground} = this.props;
+    const {leftItem, title, rightItem, foreground, background} = this.props;
     const titleColor = foreground === 'dark' ? Colors.darkText : 'white';
     const itemsColor = foreground === 'dark' ? Colors.lightText : 'white';
 
@@ -111,7 +111,7 @@ class HeaderIOS extends Component {
       : this.props.children;
     return (
       <View style={{alignSelf: 'stretch'}}>
-        <View style={[styles.header, this.props.style]}>
+        <View style={[styles.header, this.props.style, background]}>
           <View style={styles.leftItem}>
             <ItemWrapperIOS color={itemsColor} item={leftItem} />
           </View>
@@ -145,7 +145,7 @@ class ItemWrapperIOS extends Component {
     }
 
     let content;
-    const {title, icon, layout, onPress} = item;
+    const {title, icon, layout, onPress, iconstyle} = item;
 
     if (layout !== 'icon' && title) {
       content = (
@@ -154,7 +154,7 @@ class ItemWrapperIOS extends Component {
         </Text>
       );
     } else if (icon) {
-      content = <Image source={icon} />;
+      content = <Image source={icon} style={iconstyle}/>;
     }
 
     return (
@@ -175,13 +175,13 @@ var HEADER_HEIGHT = Platform.OS === 'ios' ? 44 + STATUS_BAR_HEIGHT : 56 + STATUS
 var styles = StyleSheet.create({
   toolbarContainer: {
     paddingTop: STATUS_BAR_HEIGHT,
-    backgroundColor: '#800000',
+    backgroundColor: 'rgb(140,51,204)',
   },
   toolbar: {
     height: HEADER_HEIGHT - STATUS_BAR_HEIGHT,
   },
   header: {
-    backgroundColor: '#800000',
+    backgroundColor: 'rgb(140,51,204)',
     paddingTop: STATUS_BAR_HEIGHT,
     height: HEADER_HEIGHT,
     flexDirection: 'row',
@@ -190,8 +190,8 @@ var styles = StyleSheet.create({
   },
   titleText: {
     color: 'white',
-    fontWeight: 'bold',
-    fontSize: 20,
+    fontFamily: 'Source Sans Pro',
+    fontSize: 17,
     flex: 1
   },
   leftItem: {
@@ -206,7 +206,7 @@ var styles = StyleSheet.create({
     alignItems: 'flex-end',
   },
   itemWrapper: {
-    padding: 11,
+    padding: 15,
   },
   itemText: {
     letterSpacing: 1,

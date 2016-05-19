@@ -12,11 +12,6 @@ const {
   AccessToken
 } = FBSDK;
 
-
-
-
-
-
 var env = require('../env');
 
 var staffActions = require('./staff');
@@ -65,30 +60,27 @@ function logInError(error) {
 function logIn() {
   return function(dispatch) {
     dispatch(logInStart());
-
     return FBLoginManager.logInWithReadPermissions(["public_profile","email"]).then(
       function(result) {
         if (result.isCancelled) {
           dispatch(logInError('error al loguear usuario'));
         } else {
-          alert('Login success with permissions: '
-            +result.grantedPermissions.toString());
           AccessToken.getCurrentAccessToken().then(
             function(token) {
-              console.log(token);
               var user = {token:token.accessToken};
-
               dispatch(loadFbData(user, true));
               dispatch(staffActions.loadStaff(user));
             }
           ).catch(error => {
-            console.log(error);
+            console.log(error.stack);
             dispatch(logInError('error al loguear usuario'));
           });
         }
       }
-
-    );
+    ).catch(error => {
+      console.log(error.stack);
+      dispatch(logInError('error al loguear usuario'));
+    });
   }
 }
 
@@ -102,10 +94,10 @@ function registerUser(user, appToken) {
         if(json.success == true){
           user['userData'] = json.usuario;
           localRepository.saveProfileToStorage(user);
-          dispatch(updateProfileFinish(user));
+          dispatch(loadCurrentRally(user, false));
+          dispatch(staffActions.loadStaff(user));
         } else {
-          console.log('usuario no ligado');
-          dispatch(updateProfileFinish(user));
+          dispatch(logInError('token no válido'))
         }
       }).catch(error => {
         console.log(error.stack);
@@ -134,8 +126,12 @@ function fetchProfile() {
     return localRepository.getProfileFromStorage().then((profile) => {
       GCMServices.subscribeTopic('general');
       if(profile != null) {
-        dispatch(loadCurrentRally(profile, true));
-        dispatch(staffActions.loadStaff(profile));
+        if(profile.userData != null) {
+          dispatch(loadCurrentRally(profile, true));
+          dispatch(staffActions.loadStaff(profile));
+        } else {
+          dispatch(updateProfileFinish(profile));
+        }
       } else {
         dispatch(initialState());
       }

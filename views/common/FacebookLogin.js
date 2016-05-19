@@ -1,14 +1,16 @@
 import React, {
   Component,
   TouchableHighlight,
-  Text,
   TextInput,
   Image,
   StyleSheet,
   AsyncStorage,
   View
 } from 'react-native';
-var AppLogo = require('../segments/AppLogo');
+var {Text, normalize} = require('../../js/common/Text');
+var FitImage = require('../../js/common/FitImage');
+var Header = require('../../js/common/Header');
+var Loader = require('../helpers/LoaderSmall');
 
 /* REDUX */
 import type {State as User} from '../../reducers/user';
@@ -29,21 +31,6 @@ class FacebookLogin extends Component {
     this.state = {
       userCode: '',
     };
-    //this.state.localDBUtil.deleteAll();
-  }
-
-  _logIn(){
-    var _this = this;
-    _this.setState({ loading: true });
-    console.log("to login");
-    _this.state.localDBUtil.logInUsuario(this);
-  }
-
-  _register(){
-    var _this = this;
-    _this.setState({ loading: true });
-    _this.state.localDBUtil.registerID(this);
-    console.log('register ' + _this.state.userCode);
   }
 
   _onInputTextChanged(event) {
@@ -59,74 +46,93 @@ class FacebookLogin extends Component {
   render() {
     var loginSection;
     if(!this.props.user.isLoggedIn && !this.props.user.isFetching) {
+      // Pantalla de log in con facebook
       loginSection = (
-      <View style={ styles.centerAlign }>
-        <Text style={ styles.text }>
-          Lorem ipsum dolor sit amet, maiores ornare ac fermentum, imperdiet ut vivamus a, nam lectus at nunc.
+      <View style={styles.centerAlign}>
+        <Text style={[ styles.texto, { fontSize: normalize(26) }]}>
+          Lorem ipsum dolor sit amet consectetur adipiscing
+        </Text>
+        <Text style={[ styles.texto, { fontSize: normalize(16) }]}>
+          Excepteur sint occaecat cupidatat non proident, sunt in culpa
         </Text>
         <TouchableHighlight style={ styles.button } onPress={() => this.props.logIn()}
           underlayColor='#99d9f4'>
-          <View style={{flexDirection: 'row'}}>
-            <Image source={ require("image!flogo")} style={{width: 40, height: 20, marginLeft: 5, marginTop: 5, resizeMode: Image.resizeMode.contain,}}/>
-            <Text style={[ styles.buttonText, { fontSize: 18, marginLeft: 0 } ]}>
-              Iniciar sesión
+          <View style={ styles.botonFacebook }>
+            <Image source={ styles.logoFacebook }/>
+            <Text style={[ styles.buttonText, { fontSize: normalize(13), fontWeight: '800', marginLeft: 10 } ]}>
+              INICIAR SESIÓN CON FACEBOOK
             </Text>
           </View>
         </TouchableHighlight>
-        <TouchableHighlight style={ styles.button } onPress={() => this.props.appnavigator.pop()}
-          underlayColor='#99d9f4'>
-            <Text style={ styles.buttonText }>
-              Cancelar
-            </Text>
-        </TouchableHighlight>
       </View>);
     } else if (this.props.user.isLoggedIn && !this.props.user.isFetching) {
+      // Pantalla de registro de código
       if(!this.props.user.isRegistered) {
         loginSection = (
           <View style={[ styles.centerAlign ]}>
-            <Text style={ styles.text }>
+            <Text style={[ styles.texto, { fontSize: normalize(16) }]}>
               Lorem ipsum dolor sit amet, maiores ornare ac fermentum, imperdiet ut vivamus a, nam lectus at nunc.
             </Text>
-            <View style={{backgroundColor: 'white', paddingHorizontal: 5, marginBottom: 20, backgroundColor: 'white', borderRadius: 5, }}>
+            <View style={ styles.input }>
               <TextInput placeholder='ID' onChange={this._onInputTextChanged.bind(this)} autoCapitalize='characters'
                 style={{height: 30, width: 80}}/>
             </View>
             <TouchableHighlight style={ styles.button } onPress={() => this.props.registerUser(this.props.user, this.state.userCode)}
               underlayColor='#99d9f4'>
               <View style={{flexDirection: 'row'}}>
-                <Text style={[ styles.buttonText, { fontSize: 18, } ]}>
-                  Registrar
+                <Text style={[ styles.buttonText, { fontSize: normalize(18), fontWeight: '800' } ]}>
+                  REGISTRAR
                 </Text>
               </View>
             </TouchableHighlight>
           </View>
         );
       } else {
+        // El usuario ya inició sesión
         loginSection = (
           <View style={[ styles.centerAlign ]}>
-            <Text>Logged in</Text>
-            <TouchableHighlight onPress={ () => this.props.appnavigator.pop() }>
-              <Text>
-                Back
-              </Text>
-            </TouchableHighlight>
+            <Text style={[ styles.texto, { fontSize: normalize(26) }]}>
+              ¡Bienvenido!</Text>
           </View>
         );
       }
     } else {
+      // Loader
       loginSection = (
         <View style={[ styles.centerAlign ]}>
-          <Text>Loading</Text>
+          <Loader/>
         </View>
       );
     }
 
     return (
-      <View style={ styles.mainContainer }>
-        <View style={[ styles.centerAlignLogo ]}>
-          <AppLogo/>
+      <View style={ styles.mainContainer}>
+        <View style={ styles.container }>
+          <FitImage source={require('image!loginbg')} style={ styles.mainContainer }
+            content={
+              <View style={{flex: 1}}>
+                <View style={{flex: 5}}>
+                  <Header
+                    title="Iniciar sesión"
+                    style={{ backgroundColor: 'rgba(0,0,0,0)' }}
+                    leftItem={{
+                      layout: 'icon',
+                      iconstyle: { height: 15, width: 15 },
+                      title: 'Menu',
+                      icon: require('../../js/common/img/exit.png'),
+                      onPress: this.props.appnavigator.pop,
+                    }}/>
+                  <View style={{ alignItems: 'center', marginTop: -10}}>
+                    <Image source={require('../../js/common/img/logo2.png')} style={styles.logo}/>
+                  </View>
+                </View>
+                <View style={{flex: 4}}>
+                  {loginSection}
+                </View>
+              </View>
+            }
+          />
         </View>
-        {loginSection}
       </View>
     );
   }
@@ -134,29 +140,35 @@ class FacebookLogin extends Component {
 
 const styles = StyleSheet.create({
   mainContainer: {
-    flex: 1, alignItems: 'center', backgroundColor: '#0059b3',
+    flex: 1, flexWrap: 'wrap', alignSelf: 'stretch', overflow: 'hidden',
   },
-  centerAlignLogo: {
-    flex: 1, alignItems: 'center',
+  container: {
+    flex: 1, flexWrap: 'wrap', flexDirection: 'row', alignSelf: 'stretch',
+  },
+  logo: {
+    width: 150,
+    resizeMode: Image.resizeMode.contain,
+  },
+  logoFacebook: {
+    width: 20, height: 15, resizeMode: Image.resizeMode.contain,
+  },
+  texto: {
+    marginHorizontal: 30, color: 'white', backgroundColor: 'rgba(0,0,0,0)', textAlign: 'center'
+  },
+  input: {
+    backgroundColor: 'white', paddingHorizontal: 5, marginTop: 20, backgroundColor: 'white', borderRadius: 5,
+  },
+  botonFacebook: {
+    flexDirection: 'row', alignItems: 'center', paddingTop: normalize(5)
   },
   centerAlign: {
     flex: 2, alignItems: 'center',
   },
-  text: {
-    color: '#FFFFFF', marginVertical: 25, marginHorizontal: 35, textAlign: 'center', alignSelf: 'stretch'
-  },
   buttonText: {
-    color:'#0059b3', textAlign: 'center', marginHorizontal: 10, marginVertical: 5
+    color:'white', textAlign: 'center', marginLeft: 10, marginVertical: 5
   },
   button: {
-    backgroundColor: '#FFFFFF', borderRadius: 10, justifyContent: 'center', marginBottom: 20
-  },
-  zipCode: {
-    width: 50, height: 16, borderWidth: 0,
-  },
-  zipContainer: {
-    marginLeft: 5,
-    marginTop: 3
+    backgroundColor: 'rgb(59,89,152)', borderRadius: 5, alignItems: 'center', height: normalize(40), left: 30, right: 30, bottom: 30, position: 'absolute'
   },
 });
 

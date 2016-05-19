@@ -65,7 +65,7 @@ class SideMenu extends Component {
     );
 
     var rally = null;
-    if(this.props.user.isRegistered) {
+    if(this.props.user.isRegistered && this.props.user.currentRally != null) {
       selected = false;
       if(this.props.navigation.pantalla === 'rally') {
         selected = true;
@@ -79,7 +79,7 @@ class SideMenu extends Component {
     var registrogrupos = null;
     var admin = null;
     if(this.props.user.isRegistered) {
-      if(this.props.user.currentRally.rol === 'ADMIN') {
+      if(this.props.user.currentRally != null && this.props.user.currentRally.rol === 'ADMIN') {
         // Usuario es admin
         admin = (
           <View style={{ flexDirection: 'row', alignItems: 'center', borderTopWidth: 1, marginTop: 10, borderColor: 'gray', paddingHorizontal: 10, height: 35 }}>
@@ -121,35 +121,40 @@ class SideMenu extends Component {
     var userinfo = (
       <TouchableOpacity onPress={() => this.goToLogIn()}>
         <View
-          style={{ paddingTop: STATUS_BAR_HEIGHT, height: 140, backgroundColor: '#6600cc' }}>
+          style={{ paddingTop: STATUS_BAR_HEIGHT, height: 140, backgroundColor: 'rgb(140,51,204)' }}>
           <Image source={ require('image!profile')} style={{ resizeMode: Image.resizeMode.contain, height: 60, width: 60, margin: 10 }}/>
           <Text style={{ margin: 10, color: 'white', fontSize: 13, fontWeight: '400' }}>Inicia sesión</Text>
         </View>
       </TouchableOpacity>
     );
+
     if(this.props.user.isRegistered) {
-      var backgroundColor = '#6600cc';
-      if(this.props.navigation.pantalla === 'rally') {
-        backgroundColor = '#800000';
+      var infoRally = null;
+      if (this.props.user.currentRally != null) {
+        infoRally = (
+          <View>
+            <Text style={{ fontWeight: '200', color: 'white', marginTop: 5, fontSize: 11 }}>
+              Rally {this.props.user.currentRally.grupo.rally.nombre}
+            </Text>
+            <View style={{flexDirection: 'row'}}>
+              <Text style={{ paddingRight: 10, color: 'white', fontWeight: '200', fontSize: 11 }}>
+                {this.props.user.currentRally.grupo.nombre}
+              </Text>
+              <Text style={{ fontWeight: '200', color: 'white', fontSize: 11 }}>
+                Talla camiseta: {this.props.user.userData.tallaPlayera}
+              </Text>
+            </View>
+          </View>
+        );
       }
       userinfo = (
         <View
-          style={{ paddingTop: STATUS_BAR_HEIGHT, height: 140, backgroundColor: backgroundColor, flexDirection: 'row', alignItems: 'center' }}>
+          style={{ paddingTop: STATUS_BAR_HEIGHT, height: 140, backgroundColor: 'rgb(140,51,204)', flexDirection: 'row', alignItems: 'center' }}>
           <Image source={{ uri: this.props.user.fbData.picture.data.url }}
             style={{ resizeMode: Image.resizeMode.contain, height: 60, width: 60, margin: 10 }}/>
             <View>
               <Text style={{ color: 'white', fontSize: 13, fontWeight: 'bold' }}>{this.props.user.userData.nombre}</Text>
-              <Text style={{ fontWeight: '200', color: 'white', marginTop: 5, fontSize: 11 }}>
-                Rally {this.props.user.currentRally.grupo.rally.nombre}
-              </Text>
-              <View style={{flexDirection: 'row'}}>
-                <Text style={{ paddingRight: 10, color: 'white', fontWeight: '200', fontSize: 11 }}>
-                  {this.props.user.currentRally.grupo.nombre}
-                </Text>
-                <Text style={{ fontWeight: '200', color: 'white', fontSize: 11 }}>
-                  Talla camiseta: {this.props.user.userData.tallaPlayera}
-                </Text>
-              </View>
+              {infoRally}
             </View>
         </View>
       );

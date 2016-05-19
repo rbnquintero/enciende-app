@@ -15,9 +15,6 @@ class SideMenuItem extends Component {
     if(this.props.selected) {
       text = styles.textSelected;
       container = styles.containerSelected;
-      if(this.props.rally) {
-        text = styles.textSelectedRally;
-      }
     }
 
     return (
@@ -36,10 +33,7 @@ const styles = StyleSheet.create({
     marginLeft: 10, fontWeight: '500', fontSize: 13,
   },
   textSelected: {
-    marginLeft: 10, fontWeight: '500', fontSize: 13, color: '#6600cc',
-  },
-  textSelectedRally: {
-    marginLeft: 10, fontWeight: '500', fontSize: 13, color: '#800000',
+    marginLeft: 10, fontWeight: '500', fontSize: 13, color: 'rgb(140,51,204)',
   },
   container: {
     flexDirection: 'row', paddingHorizontal: 10, height: 45, alignItems: 'center',
