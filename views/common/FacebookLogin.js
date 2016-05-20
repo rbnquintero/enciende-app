@@ -58,7 +58,7 @@ class FacebookLogin extends Component {
         <TouchableHighlight style={ styles.button } onPress={() => this.props.logIn()}
           underlayColor='#99d9f4'>
           <View style={ styles.botonFacebook }>
-            <Image source={ styles.logoFacebook }/>
+            <Image source={ require("image!flogo")} style={ styles.logoFacebook }/>
             <Text style={[ styles.buttonText, { fontSize: normalize(13), fontWeight: '800', marginLeft: 10 } ]}>
               INICIAR SESIÓN CON FACEBOOK
             </Text>
@@ -119,7 +119,7 @@ class FacebookLogin extends Component {
                       layout: 'icon',
                       iconstyle: { height: 15, width: 15 },
                       title: 'Menu',
-                      icon: require('../../js/common/img/exit.png'),
+                      icon: require('../../js/common/img/x-white@3x.png'),
                       onPress: this.props.appnavigator.pop,
                     }}/>
                   <View style={{ alignItems: 'center', marginTop: -10}}>

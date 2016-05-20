@@ -10,7 +10,7 @@ import React, {
 } from 'react-native';
 
 var AppLogo = require('../segments/AppLogo');
-var Header = require('../../js/common/Header');
+var Header = require('../../js/common/HeaderHome');
 
 /*  DATE */
 var moment = require('moment');
@@ -68,9 +68,9 @@ class Contacto extends Component {
 
 
     return (
-      <View style={{ flex: 1, alignItems: 'center' }}>
-        <Header style={styles.header}
-          title={ 'Contacto ' }
+      <View style={{ flex: 1, backgroundColor: '#f2f2f2' }}>
+        <Header
+          title="Contacto"
           leftItem={{
             layout: 'icon',
             title: 'Menu',
@@ -99,14 +99,6 @@ class Contacto extends Component {
   }
 
 }
-
-const styles = StyleSheet.create({
-  header: {
-    /*android: {
-      backgroundColor: '#5597B8',
-    },*/
-  },
-});
 
 function select(store) {
   return {
