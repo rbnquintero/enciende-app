@@ -15,22 +15,28 @@ void (^CompletitionHandler)(NSURLResponse *response, NSData *data, NSError *conn
 
 NSString* grupoId = @"";
 NSString* usuarioId = @"";
+NSDate* fechalimite;
 
+NSDateFormatter *dateFormatter;
 NSMutableArray* locations;
 
 RCT_EXPORT_MODULE();
 
 #pragma mark - Public API
 
-RCT_EXPORT_METHOD(beginReportingLocation:(NSString*) grupo usuario:(NSString*) usuario) {
+RCT_EXPORT_METHOD(beginReportingLocation:(NSString*) grupo usuario:(NSString*) usuario fechalimite:(NSString*)fecha) {
+  dateFormatter = [[NSDateFormatter alloc]init];
+  [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss.SSSZ"];
+  
   NSUserDefaults* sud = [NSUserDefaults standardUserDefaults];
   locations = [sud mutableArrayValueForKey:@"locations"];
   if(locations == nil) {
-    locations = [[NSMutableArray alloc] init];
+    [self resetLocations];
   }
   
   grupoId = grupo;
   usuarioId = usuario;
+  fechalimite = [dateFormatter dateFromString:fecha];
   
   dispatch_async(dispatch_get_main_queue(), ^{
     [[LocationHandler getSharedInstance] setDelegate:self];
@@ -48,8 +54,6 @@ RCT_EXPORT_METHOD(getLocations:(RCTResponseSenderBlock) callback) {
 
 - (void)didUpdateLocations:(CLLocation *)location {
   NSDate *currDate = [NSDate date];
-  NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
-  [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss.SSSZ"];
   NSString *dateString = [dateFormatter stringFromDate:currDate];
   
   NSDictionary* locationMap = [[NSDictionary alloc] initWithObjectsAndKeys:
@@ -72,11 +76,20 @@ RCT_EXPORT_METHOD(getLocations:(RCTResponseSenderBlock) callback) {
   [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
   [request setHTTPBody:postDataJSON];
   
+  if([[[NSDate alloc]init] compare:fechalimite]>0) {
+    [[LocationHandler getSharedInstance] stopUpdating];
+  }
+  
   CompletitionHandler = ^(NSURLResponse *response, NSData *data, NSError *connectionError) {
     if (connectionError == nil || data != nil) {
       NSDictionary *res = [NSJSONSerialization JSONObjectWithData:data options:0 error:NULL];
       if(res != nil) {
-        locations = [[NSMutableArray alloc] init];
+        if([res objectForKey:@"terminate"] != nil && [[NSNumber numberWithInt:1] isEqualToNumber: [res objectForKey:@"terminate"]]) {
+          [self stopReceivingUpdates];
+        }
+        if([res objectForKey:@"success"] != nil && [[NSNumber numberWithInt:1] isEqualToNumber: [res objectForKey:@"success"]]) {
+          [self resetLocations];
+        }
       } else {
         NSLog(@"Error");
       }
@@ -90,6 +103,14 @@ RCT_EXPORT_METHOD(getLocations:(RCTResponseSenderBlock) callback) {
   NSUserDefaults* sud = [NSUserDefaults standardUserDefaults];
   [sud setObject:locations forKey:@"locations"];
   [sud synchronize];
+}
+
+- (void) stopReceivingUpdates {
+  [[LocationHandler getSharedInstance] stopUpdating];
+}
+
+- (void) resetLocations {
+  locations = [[NSMutableArray alloc] init];
 }
 
 - (void)didRecieveAddress:(NSString *)address {

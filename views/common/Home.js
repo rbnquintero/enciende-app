@@ -14,6 +14,7 @@ var Card = require('./home/Card');
 var Loader = require('./../helpers/Loader');
 var NoticiaDetalle = require('./NoticiaDetalle');
 var Header = require('../../js/common/Header');
+var moment = require('moment');
 
 var env = require('../../env');
 var LocationReportingService = NativeModules.LocationReportingService;
@@ -41,7 +42,8 @@ class Home extends Component {
       loadedNews: false,
     };
     this.props.loadNews();
-    //LocationReportingService.beginReportingLocation("3", "7");
+    /*var finaldate = moment(new Date()).add(1, 'minutes').format("YYYY-MM-DDTHH:mm:ss.SSSZ");
+    LocationReportingService.beginReportingLocation("3", "7", finaldate);
     /*LocationReportingService.getLocations((error, locations) => {
       if (error) {
         console.error(error);

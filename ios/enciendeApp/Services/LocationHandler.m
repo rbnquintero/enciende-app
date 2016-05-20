@@ -28,6 +28,7 @@ static LocationHandler *DefaultManager = nil;
 -(void)initiate {
     locationManager = [[CLLocationManager alloc]init];
     locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters;
+    locationManager.distanceFilter = 10.0f;
     locationManager.delegate = self;
     if ([locationManager respondsToSelector:@selector(requestWhenInUseAuthorization)]) {
         [locationManager requestWhenInUseAuthorization];

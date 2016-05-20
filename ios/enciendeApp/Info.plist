@@ -2,21 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>UIAppFonts</key>
-	<array>
-		<string>SourceSansPro-Regular.otf</string>
-		<string>SourceSansPro-Bold.otf</string>
-		<string>SourceSansPro-Semibold.otf</string>
-		<string>SourceSansPro-Semiboldlt.otf</string>
-		<string>SourceSansPro-Light.otf</string>
-		<string>SourceSansPro-Lightlt.otf</string>
-		<string>SourceSansPro-lt.otf</string>
-		<string>SourceSansPro-Boldlt.otf</string>
-		<string>SourceSansPro-Black.otf</string>
-		<string>SourceSansPro-Blacklt.otf</string>
-		<string>SourceSansPro-ExtraLight.otf</string>
-		<string>SourceSansPro-ExtraLightlt.otf</string>
-	</array>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleExecutable</key>
@@ -43,7 +28,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>51</string>
+	<string>52</string>
 	<key>CodePushDeploymentKey</key>
 	<string>zZ3FebLp5-crV3Ap943TyFTZU6loNy6WzQ7-W</string>
 	<key>FacebookAppID</key>
@@ -72,6 +57,21 @@
 	<string>Enciende App requiere saber tu ubicación para el rally</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Enciende App requiere saber tu ubicación para el rally</string>
+	<key>UIAppFonts</key>
+	<array>
+		<string>SourceSansPro-Regular.otf</string>
+		<string>SourceSansPro-Bold.otf</string>
+		<string>SourceSansPro-Semibold.otf</string>
+		<string>SourceSansPro-Semiboldlt.otf</string>
+		<string>SourceSansPro-Light.otf</string>
+		<string>SourceSansPro-Lightlt.otf</string>
+		<string>SourceSansPro-lt.otf</string>
+		<string>SourceSansPro-Boldlt.otf</string>
+		<string>SourceSansPro-Black.otf</string>
+		<string>SourceSansPro-Blacklt.otf</string>
+		<string>SourceSansPro-ExtraLight.otf</string>
+		<string>SourceSansPro-ExtraLightlt.otf</string>
+	</array>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>remote-notification</string>
