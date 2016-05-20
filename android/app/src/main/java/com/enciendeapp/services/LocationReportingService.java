@@ -19,6 +19,7 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.text.SimpleDateFormat;
+import java.text.ParseException;
 import java.util.Date;
 
 import android.os.AsyncTask;
@@ -42,6 +43,8 @@ public class LocationReportingService extends ReactContextBaseJavaModule impleme
 
   private String grupoId = "";
   private String usuarioId = "";
+  private Date fechafinal;
+  private SimpleDateFormat format;
   private Location mLastLocation;
   private GoogleApiClient mGoogleApiClient = null;
   private LocationListener locationListener;
@@ -54,7 +57,16 @@ public class LocationReportingService extends ReactContextBaseJavaModule impleme
   }
 
   @ReactMethod
-  public void beginReportingLocation(String grupo, String usuario) {
+  public void beginReportingLocation(String grupo, String usuario, String fechafinalStr) {
+    String pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSZ";
+    format = new SimpleDateFormat(pattern);
+    try {
+      fechafinal = format.parse(fechafinalStr);
+    } catch (ParseException pe) {
+      pe.printStackTrace();
+    }
+    logger.d("######################");
+    logger.d(fechafinal.toString());
     grupoId = grupo;
     usuarioId = usuario;
     if(locations == null || locations == "") {
@@ -139,13 +151,16 @@ public class LocationReportingService extends ReactContextBaseJavaModule impleme
 	}
 
   private void manageLocation(Location location) {
-    String pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSZ";
-    SimpleDateFormat format = new SimpleDateFormat(pattern);
     locations = locations + mLastLocation.getLatitude() + "," + mLastLocation.getLongitude() + "," + mLastLocation.getAccuracy() + "," + format.format(new Date()) + ";";
     try {
+      if(fechafinal!=null && (new Date()).after(fechafinal)) {
+        stopLocationUpdates();
+        return;
+      }
+
       StringBuffer jsonString = new StringBuffer();
       jsonString.append("{\"grupoId\":\"" + grupoId + "\",\"usuarioId\":\"" + usuarioId + "\",\"locations\":[");
-      System.out.println(locations);
+      logger.d(locations);
       for(String point : locations.split(";")) {
         jsonString.append("{\"latitud\":\"" + point.split(",")[0] + "\",");
         jsonString.append("\"longitud\":\"" + point.split(",")[1] + "\",");
@@ -153,7 +168,7 @@ public class LocationReportingService extends ReactContextBaseJavaModule impleme
         jsonString.append("\"hora\":\"" + point.split(",")[3] + "\"},");
       }
       jsonString.append("]}");
-      System.out.println(jsonString.toString());
+      logger.d(jsonString.toString());
       new SaveLocationTask().execute(jsonString.toString());
     } catch (Exception e) {
       logger.e(e);
@@ -191,9 +206,15 @@ public class LocationReportingService extends ReactContextBaseJavaModule impleme
   			BufferedReader br = new BufferedReader(new InputStreamReader((conn.getInputStream())));
 
   			String output;
-  			System.out.println("Output from Server .... \n");
+  			logger.d("Output from Server .... \n");
   			while ((output = br.readLine()) != null) {
-  				System.out.println(output);
+  				logger.d(output);
+          if(!output.contains("\"success\":true")){
+            logger.d("Error!");
+          }
+          if(output.contains("\"terminate\":true")){
+            stopLocationUpdates();
+          }
   			}
 
   			conn.disconnect();
