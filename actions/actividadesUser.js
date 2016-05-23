@@ -67,7 +67,10 @@ function fetchActUser(actividades) {
     if(actividades != null) {
       var info = [];
       info['actividades'] = actividades;
+      info['code'] = env.validtoken;
+      dispatch(validateActivity(info));
     } else {
+      dispatch(actUserLoading());
       var query = env.serverURL + '/rally/actividades/2/';
       return fetch(query)
         .then(response => response.json())
@@ -90,14 +93,14 @@ function validateActivity(info) {
   return function(dispatch) {
     dispatch(actPushing());
     var valid = false;
-    if(info.action != null) {
+    if(info.action != null && info.action != 'instrucciones') {
       for (let s of info.staff) {
         if(s.token == info.code) {
           valid = true;
           break;
         }
       }
-    } else {
+    } else if(info.action == 'instrucciones' || info.code == env.validtoken){
       valid = true;
     }
     var next = false;
@@ -148,8 +151,13 @@ function validateActivity(info) {
       })
       .then(response => response.json())
       .then(json => {
-        var actividades = json.actividades;
-        dispatch(actPushingDone(actividades))
+        if(json.success) {
+          var actividades = json.actividades;
+          dispatch(actPushingDone(actividades));
+        } else {
+          var actividades = json.actividades;
+          dispatch(actPushingDone(actividades));
+        }
       }).catch(error => {
         dispatch(actPushingDone(info.actividades))
       });

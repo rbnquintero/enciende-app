@@ -6,6 +6,7 @@ import React, {
   StyleSheet,
   NativeModules,
   ScrollView,
+  RefreshControl,
   ListView,
   View
 } from 'react-native';
@@ -88,7 +89,15 @@ class Home extends Component {
       list = (
         <ListView
           dataSource={this.state.dataSource}
-          renderRow={this.renderRow.bind(this)} />
+          renderRow={this.renderRow.bind(this)}
+          refreshControl={
+            <RefreshControl
+              refreshing={this.props.news.isFetching}
+              onRefresh={this.props.loadNews}
+              tintColor='rgb(140,51,204)'
+              progressBackgroundColor="#ffff00"
+            />
+          }/>
       );
     } else {
       if(!this.props.news.isFetching && this.props.news.error != null) {
