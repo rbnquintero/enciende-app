@@ -8,6 +8,7 @@ var env = require('../env');
  */
 const PANTALLA_RALLY = 'PANTALLA_RALLY';
 const PANTALLA_CONTACTO = 'PANTALLA_CONTACTO';
+const PANTALLA_ESTATUS = 'PANTALLA_ESTATUS';
 const PANTALLA_NOTICIAS = 'PANTALLA_NOTICIAS';
 const PANTALLA_REGISTRO_USR = 'PANTALLA_REGISTRO_USR';
 const PANTALLA_REGISTRO_GRP = 'PANTALLA_REGISTRO_GRP';
@@ -24,6 +25,12 @@ function toMainHome() {
 function toRallyHome() {
   return {
     type: PANTALLA_RALLY,
+  };
+}
+
+function toEstatus() {
+  return {
+    type: PANTALLA_ESTATUS,
   };
 }
 
@@ -45,4 +52,4 @@ function toPantallaRegistroGrp() {
   };
 }
 
-module.exports = {toMainHome, toRallyHome, toContacto, toPantallaRegistroGrp, toPantallaRegistroUsr, };
+module.exports = {toMainHome, toRallyHome, toContacto, toEstatus, toPantallaRegistroGrp, toPantallaRegistroUsr, };

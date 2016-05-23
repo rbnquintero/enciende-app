@@ -11,6 +11,7 @@ target 'enciendeApp' do
     pod 'react-native-fbsdkcore', :path => '../node_modules/react-native-fbsdk/iOS/core'
     pod 'react-native-fbsdklogin', :path => '../node_modules/react-native-fbsdk/iOS/login'
     pod 'react-native-fbsdkshare', :path => '../node_modules/react-native-fbsdk/iOS/share'
+    pod 'react-native-maps', :path => '../node_modules/react-native-maps'
     pod 'Google/CloudMessaging'
   target 'enciendeAppTests' do
     inherit! :search_paths

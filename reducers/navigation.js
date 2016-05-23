@@ -18,6 +18,10 @@ function navigation(state: State = initialState, action): State {
     return {
       pantalla: 'contacto',
     }
+  } else if (action.type === 'PANTALLA_ESTATUS') {
+    return {
+      pantalla: 'estatus',
+    }
   } else if (action.type === 'PANTALLA_NOTICIAS') {
     return {
       pantalla: 'noticias',

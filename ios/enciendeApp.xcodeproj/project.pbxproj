@@ -11,7 +11,6 @@
 		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
-		37FB8136AD104EC8AD81693C /* libAirMaps.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 442E72B1689C42419F3625EE /* libAirMaps.a */; };
 		5F68F9090E41B64FD46A066E /* libPods-enciendeApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BB453CC8487F6BC4F1D02248 /* libPods-enciendeApp.a */; };
 		63678F66860DD7282567E796 /* libPods-enciendeAppTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D23CF0673B650700068FF1E /* libPods-enciendeAppTests.a */; };
 		9902E8CA1CE9170000014659 /* LocationHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 9902E8C71CE9170000014659 /* LocationHandler.m */; };
@@ -43,13 +42,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = 13B07F861A680F5B00A75B9A;
 			remoteInfo = enciendeApp;
-		};
-		99401E7B1CE925C80045B912 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = DF349252B1E4417A8D0501F6 /* AirMaps.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 11FA5C511C4A1296003AC2EE;
-			remoteInfo = AirMaps;
 		};
 		99B0D9841CDA6DCB00B7B703 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -86,7 +78,6 @@
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = enciendeApp/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = enciendeApp/main.m; sourceTree = "<group>"; };
 		3962095821D3FEA47F4B11F8 /* Pods-enciendeAppTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-enciendeAppTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-enciendeAppTests/Pods-enciendeAppTests.debug.xcconfig"; sourceTree = "<group>"; };
-		442E72B1689C42419F3625EE /* libAirMaps.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libAirMaps.a; sourceTree = "<group>"; };
 		5D23CF0673B650700068FF1E /* libPods-enciendeAppTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-enciendeAppTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9902E8C61CE9170000014659 /* LocationHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LocationHandler.h; path = enciendeApp/Services/LocationHandler.h; sourceTree = "<group>"; };
 		9902E8C71CE9170000014659 /* LocationHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LocationHandler.m; path = enciendeApp/Services/LocationHandler.m; sourceTree = "<group>"; };
@@ -114,7 +105,6 @@
 		CD6B50E61CE696D400C46059 /* RNImagePicker.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNImagePicker.xcodeproj; path = "../node_modules/react-native-image-picker/ios/RNImagePicker.xcodeproj"; sourceTree = "<group>"; };
 		CDEEC5241CE4E20E00A6B4EC /* React.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = React.xcodeproj; path = "../node_modules/react-native/React/React.xcodeproj"; sourceTree = "<group>"; };
 		CE2C4B36E2A4F3D1B58CD67A /* Pods-enciendeApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-enciendeApp.release.xcconfig"; path = "Pods/Target Support Files/Pods-enciendeApp/Pods-enciendeApp.release.xcconfig"; sourceTree = "<group>"; };
-		DF349252B1E4417A8D0501F6 /* AirMaps.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = AirMaps.xcodeproj; path = "../node_modules/react-native-maps/ios/AirMaps.xcodeproj"; sourceTree = "<group>"; };
 		E38DE3C606554981B76511E3 /* libCodePush.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libCodePush.a; sourceTree = "<group>"; };
 		F4BA0071498E19825834FBB2 /* Pods-enciendeApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-enciendeApp.debug.xcconfig"; path = "Pods/Target Support Files/Pods-enciendeApp/Pods-enciendeApp.debug.xcconfig"; sourceTree = "<group>"; };
 		FD1F4C747D064C69AC3015A4 /* CodePush.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = CodePush.xcodeproj; path = "../node_modules/react-native-code-push/ios/CodePush.xcodeproj"; sourceTree = "<group>"; };
@@ -137,7 +127,6 @@
 				CD6B50EC1CE696F200C46059 /* libRNImagePicker.a in Frameworks */,
 				BBF834080FC74CD8971BF451 /* libCodePush.a in Frameworks */,
 				99AC79741CE94DB0001F1FD1 /* MapKit.framework in Frameworks */,
-				37FB8136AD104EC8AD81693C /* libAirMaps.a in Frameworks */,
 				5F68F9090E41B64FD46A066E /* libPods-enciendeApp.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -193,7 +182,6 @@
 			children = (
 				CD6B50E61CE696D400C46059 /* RNImagePicker.xcodeproj */,
 				CDEEC5241CE4E20E00A6B4EC /* React.xcodeproj */,
-				DF349252B1E4417A8D0501F6 /* AirMaps.xcodeproj */,
 				FD1F4C747D064C69AC3015A4 /* CodePush.xcodeproj */,
 			);
 			name = Libraries;
@@ -245,14 +233,6 @@
 				9902E8C91CE9170000014659 /* LocationReportingService.m */,
 			);
 			name = Services;
-			sourceTree = "<group>";
-		};
-		99401E781CE925C80045B912 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				99401E7C1CE925C80045B912 /* libAirMaps.a */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 		99B0D9811CDA6DCB00B7B703 /* Products */ = {
@@ -374,10 +354,6 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
-					ProductGroup = 99401E781CE925C80045B912 /* Products */;
-					ProjectRef = DF349252B1E4417A8D0501F6 /* AirMaps.xcodeproj */;
-				},
-				{
 					ProductGroup = 99B0D9811CDA6DCB00B7B703 /* Products */;
 					ProjectRef = FD1F4C747D064C69AC3015A4 /* CodePush.xcodeproj */;
 				},
@@ -399,13 +375,6 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		99401E7C1CE925C80045B912 /* libAirMaps.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libAirMaps.a;
-			remoteRef = 99401E7B1CE925C80045B912 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
 		99B0D9851CDA6DCB00B7B703 /* libCodePush.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -668,6 +637,7 @@
 					"$(SRCROOT)/../node_modules/react-native-fbsdk/iOS/core/iOS/**",
 				);
 				INFOPLIST_FILE = enciendeApp/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -704,6 +674,7 @@
 					"$(SRCROOT)/../node_modules/react-native-fbsdk/iOS/core/iOS/**",
 				);
 				INFOPLIST_FILE = enciendeApp/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",

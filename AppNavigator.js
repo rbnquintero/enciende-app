@@ -13,9 +13,10 @@ var SideMenu = require('./views/common/SideMenu');
 
 var NoticiasNavigator = require('./views/common/NoticiasNavigator');
 var RallyNavigator = require('./views/rally/RallyNavigator');
+var Contacto = require('./views/rally/Contacto');
 var RegistroUsuarios = require('./views/admin/RegistroUsuarios');
 var RegistroGrupos = require('./views/admin/RegistroGrupos');
-var Contacto = require('./views/rally/Contacto');
+var EstatusGruposNavigation = require('./navegaciones/EstatusGruposNavigation');
 var RallyBar = require('./views/segments/RallyBar');
 
 /* REDUX */
@@ -25,6 +26,7 @@ var {
   toRallyHome,
   toMainHome,
   toContacto,
+  toEstatus
 } = require('./actions');
 var { connect } = require('react-redux');
 type Props = {
@@ -33,6 +35,7 @@ type Props = {
   toMainHome: () => void;
   toRallyHome: () => void;
   toContacto: () => void;
+  toEstatus: () => void;
 };
 
 class AppNavigator extends Component {
@@ -68,6 +71,8 @@ class AppNavigator extends Component {
       component = (<RegistroGrupos openDrawer={this.openDrawer}/>);
     } else if(this.props.navigation.pantalla === 'contacto'){
       component = (<Contacto openDrawer={this.openDrawer}/>);
+    } else if(this.props.navigation.pantalla === 'estatus'){
+      component = (<EstatusGruposNavigation openDrawer={this.openDrawer}/>);
     } else {
       <View style={ styles.container }>
         <NoticiasNavigator openDrawer={this.openDrawer}/>
@@ -138,6 +143,7 @@ function actions(dispatch) {
     toMainHome: () => dispatch(toMainHome()),
     toRallyHome: () => dispatch(toRallyHome()),
     toContacto: () => dispatch(toContacto()),
+    toEstatus: () => dispatch(toEstatus()),
   };
 }
 

@@ -3,7 +3,6 @@ package com.enciendeapp;
 import android.content.Intent;     // <--- import
 import android.os.Bundle;
 import com.facebook.react.ReactActivity;
-import com.facebook.reactnative.androidsdk.FBSDKPackage;
 import io.neson.react.notification.NotificationPackage;
 import com.oney.gcm.GcmPackage;
 import com.microsoft.codepush.react.CodePush;

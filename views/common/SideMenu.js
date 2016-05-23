@@ -18,7 +18,7 @@ import type {State as Navigation} from '../../reducers/navigation';
 import type {State as User} from '../../reducers/user';
 var { connect } = require('react-redux');
 var {
-  toMainHome, toRallyHome, toContacto, toPantallaRegistroUsr, toPantallaRegistroGrp,
+  toMainHome, toRallyHome, toContacto, toEstatus, toPantallaRegistroUsr, toPantallaRegistroGrp,
   logOut,
 } = require('../../actions');
 type Props = {
@@ -28,6 +28,7 @@ type Props = {
   toMainHome: () => void;
   toRallyHome: () => void;
   toContacto: () => void;
+  toEstatus: () => void;
   toPantallaRegistroUsr: () => void;
   toPantallaRegistroGrp: () => void;
 };
@@ -76,9 +77,19 @@ class SideMenu extends Component {
 
     /* Admin opts */
     var registroparticipantes = null;
+    var estatusGrupos = null;
     var registrogrupos = null;
     var admin = null;
     if(this.props.user.isRegistered) {
+      if(this.props.user.currentRally != null && this.props.user.currentRally.rol !== 'PARTICIPANTE'){
+        selected = false;
+        if(this.props.navigation.pantalla === 'ESTATUS') {
+          selected = true;
+        }
+        estatusGrupos = (
+          <SideMenuItem titulo="Estatus Grupos" selected={selected} action={() => {this.props.closeMenu(); this.props.toEstatus();}}/>
+        );
+      }
       if(this.props.user.currentRally != null && this.props.user.currentRally.rol === 'ADMIN') {
         // Usuario es admin
         admin = (
@@ -101,6 +112,8 @@ class SideMenu extends Component {
           <SideMenuItem titulo="Registro de Grupos" selected={selected} action={() => {this.props.closeMenu(); this.props.toPantallaRegistroGrp();}}/>
         );
       }
+
+
 
       var cerrar = null;
       cerrar = (<SideMenuItem titulo="Cerrar sesión"
@@ -166,6 +179,7 @@ class SideMenu extends Component {
         <View style={{ marginVertical: 10 }}>
           {noticias}
           {rally}
+          {estatusGrupos}
           {admin}
           {registroparticipantes}
           {registrogrupos}
@@ -191,6 +205,7 @@ function actions(dispatch) {
     toMainHome: () => dispatch(toMainHome()),
     toRallyHome: () => dispatch(toRallyHome()),
     toContacto: () => dispatch(toContacto()),
+    toEstatus: () => dispatch(toEstatus()),
     toPantallaRegistroUsr: () => dispatch(toPantallaRegistroUsr()),
     toPantallaRegistroGrp: () => dispatch(toPantallaRegistroGrp()),
     logOut: () => dispatch(logOut()),
