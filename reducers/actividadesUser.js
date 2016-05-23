@@ -45,10 +45,14 @@ function actividadesUser(state: State = initialState, action): State {
       isPushing: true,
     }
   } else if (action.type === 'ACT_PUSHING_DONE') {
+    var actividades = action.actUser;
+    if(actividades == null) {
+      actividades = state.actividades;
+    }
     return {
       isFetching: false,
       error: null,
-      actividades: action.actUser,
+      actividades: actividades,
       isPushing: false,
     }
   }

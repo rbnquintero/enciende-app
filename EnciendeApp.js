@@ -17,7 +17,7 @@ class EnciendeApp extends Component {
   }
 
   componentDidMount() {
-    codePush.sync();
+    codePush.sync({installMode: codePush.InstallMode.IMMEDIATE});
   }
 
   sceneConfig(route, routeStack) {

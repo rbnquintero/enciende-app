@@ -6,6 +6,7 @@ import React, {
   StyleSheet,
   NativeModules,
   ScrollView,
+  RefreshControl,
   ListView,
   View
 } from 'react-native';
@@ -14,6 +15,7 @@ var Card = require('./home/Card');
 var Loader = require('./../helpers/Loader');
 var NoticiaDetalle = require('./NoticiaDetalle');
 var Header = require('../../js/common/Header');
+var moment = require('moment');
 
 var env = require('../../env');
 var LocationReportingService = NativeModules.LocationReportingService;
@@ -41,7 +43,8 @@ class Home extends Component {
       loadedNews: false,
     };
     this.props.loadNews();
-    //LocationReportingService.beginReportingLocation("3", "7");
+    /*var finaldate = moment(new Date()).add(1, 'minutes').format("YYYY-MM-DDTHH:mm:ss.SSSZ");
+    LocationReportingService.beginReportingLocation("3", "7", finaldate);
     /*LocationReportingService.getLocations((error, locations) => {
       if (error) {
         console.error(error);
@@ -86,7 +89,15 @@ class Home extends Component {
       list = (
         <ListView
           dataSource={this.state.dataSource}
-          renderRow={this.renderRow.bind(this)} />
+          renderRow={this.renderRow.bind(this)}
+          refreshControl={
+            <RefreshControl
+              refreshing={this.props.news.isFetching}
+              onRefresh={this.props.loadNews}
+              tintColor='rgb(140,51,204)'
+              progressBackgroundColor="#ffff00"
+            />
+          }/>
       );
     } else {
       if(!this.props.news.isFetching && this.props.news.error != null) {

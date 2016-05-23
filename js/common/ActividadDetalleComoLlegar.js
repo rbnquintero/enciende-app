@@ -58,7 +58,7 @@ class ActividadDetalleComoLlegar extends Component {
         </View>
       </TouchableOpacity>
     );
-    if (this.state.isLoading) {
+    if (this.props.actividadesUser.isPushing && this.props.actividad.estatus == 20) {
       button = (
         <View style={ styles.desbloqueoBotonContainer }>
           <View style={ styles.desbloqueoBotonTextoContainer }>

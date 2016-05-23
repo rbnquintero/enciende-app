@@ -2,6 +2,7 @@ import React, {
   Component,
   TouchableOpacity,
   Text,
+  RefreshControl,
   ScrollView,
   View
 } from 'react-native';
@@ -12,14 +13,19 @@ var ActividadDetalleCalificacion = require('../../js/common/ActividadDetalleCali
 var ActividadDetalleInstrucciones = require('../../js/common/ActividadDetalleInstrucciones');
 var ActividadDetalleComoLlegar = require('../../js/common/ActividadDetalleComoLlegar');
 var ActividadDetallePista = require('../../js/common/ActividadDetallePista');
-var ActividadDetalleSelfie = require('../../js/common/ActividadDetalleSelfie');
 var ActividadDetalleMapa = require('../../js/common/ActividadDetalleMapa');
 
 /* REDUX */
 import type {State as ActividadesUser} from '../../reducers/actividadesUser';
+var {
+  toMainHome,
+  fetchActUser,
+  loadActUser
+} = require('../../actions');
 var { connect } = require('react-redux');
 type Props = {
   actividadesUser: ActividadesUser;
+  refreshUserActividades: () => void;
 };
 
 class ActividadDetalle extends Component {
@@ -41,9 +47,16 @@ class ActividadDetalle extends Component {
     } else {
       contenido = (
         <View style={{ flex: 1 }}>
-          <ScrollView style={{ flex: 2, marginHorizontal: 15 }}>
+          <ScrollView style={{ flex: 2, marginHorizontal: 15 }}
+            refreshControl={
+              <RefreshControl
+                refreshing={this.props.actividadesUser.isFetching}
+                onRefresh={this.props.loadUserActividades}
+                tintColor='rgb(140,51,204)'
+                progressBackgroundColor="#ffff00"
+              />
+            }>
             <ActividadDetalleCalificacion actividad={actividad}/>
-            <ActividadDetalleSelfie actividad={actividad}/>
             <ActividadDetalleInstrucciones actividad={actividad}/>
             <ActividadDetalleComoLlegar actividad={actividad}/>
             <ActividadDetallePista actividad={actividad}/>
@@ -76,5 +89,12 @@ function select(store) {
     actividadesUser: store.actividadesUser,
   };
 }
+function actions(dispatch) {
+  return {
+    toMainHome: () => dispatch(toMainHome()),
+    loadUserActividades: () => dispatch(loadActUser()),
+    refreshUserActividades: () => dispatch(fetchActUser()),
+  };
+}
 
-module.exports = connect(select)(ActividadDetalle);
+module.exports = connect(select,actions)(ActividadDetalle);

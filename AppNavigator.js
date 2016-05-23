@@ -9,6 +9,7 @@ import React, {
   View
 } from 'react-native';
 import Drawer from 'react-native-drawer';
+import codePush from "react-native-code-push";
 var SideMenu = require('./views/common/SideMenu');
 
 var NoticiasNavigator = require('./views/common/NoticiasNavigator');
@@ -46,6 +47,7 @@ class AppNavigator extends Component {
   }
 
   render() {
+    codePush.sync({installMode: codePush.InstallMode.ON_NEXT_RESUME});
     var bar = (<View/>);
     if(this.props.user.isLoggedIn && this.props.user.currentRally!=null) {
       bar = (

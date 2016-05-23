@@ -3,6 +3,7 @@ import React, {
   TouchableOpacity,
   Text,
   Image,
+  RefreshControl,
   ScrollView,
   View
 } from 'react-native';
@@ -53,7 +54,15 @@ class RallyActividades extends Component {
     );
     if(this.props.actividadesUser.actividades.length > 0) {
       actividades = (
-        <ScrollView>
+        <ScrollView
+          refreshControl={
+            <RefreshControl
+              refreshing={this.props.actividadesUser.isFetching}
+              onRefresh={this.props.loadUserActividades}
+              tintColor='rgb(140,51,204)'
+              progressBackgroundColor="#ffff00"
+            />
+          }>
           {this.props.actividadesUser.actividades.map(function(result, id){
             return (
               <TouchableOpacity key={id} onPress={() => _this.toActividadDetalle(result)}>
