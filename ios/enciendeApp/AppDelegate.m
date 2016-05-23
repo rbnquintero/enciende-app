@@ -29,7 +29,8 @@ NSString *const SubscriptionTopic = @"/topics/general";
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-
+  [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:NO];
+  [UIApplication sharedApplication].keyWindow.frame=CGRectMake(0, 20, 320, 460);
   /* GCM NOTIFICATIONS */
   // [START_EXCLUDE]
   _registrationKey = @"onRegistrationCompleted";

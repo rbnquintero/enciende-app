@@ -52,7 +52,6 @@ const styles = StyleSheet.create({
     color: 'white',
     fontWeight: '100',
     fontSize: 17,
-    fontFamily: 'Helvetica',
     textAlign: 'center',
   }
 });

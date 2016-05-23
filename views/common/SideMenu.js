@@ -1,12 +1,12 @@
 import React, {
   Component,
   TouchableOpacity,
-  Text,
   View,
   Alert,
   Image,
   Platform,
 } from 'react-native';
+var {Text} = require('../../js/common/Text');
 
 var STATUS_BAR_HEIGHT = Platform.OS === 'ios' ? 20 : 25;
 
@@ -133,14 +133,14 @@ class SideMenu extends Component {
       if (this.props.user.currentRally != null) {
         infoRally = (
           <View>
-            <Text style={{ fontWeight: '200', color: 'white', marginTop: 5, fontSize: 11 }}>
+            <Text style={{ color: 'white', marginTop: 5, fontSize: 11 }}>
               Rally {this.props.user.currentRally.grupo.rally.nombre}
             </Text>
             <View style={{flexDirection: 'row'}}>
-              <Text style={{ paddingRight: 10, color: 'white', fontWeight: '200', fontSize: 11 }}>
+              <Text style={{ paddingRight: 10, color: 'white', fontSize: 11 }}>
                 {this.props.user.currentRally.grupo.nombre}
               </Text>
-              <Text style={{ fontWeight: '200', color: 'white', fontSize: 11 }}>
+              <Text style={{ color: 'white', fontSize: 11 }}>
                 Talla camiseta: {this.props.user.userData.tallaPlayera}
               </Text>
             </View>

@@ -1,11 +1,11 @@
 import React, {
   Component,
   TouchableOpacity,
-  Text,
   RefreshControl,
   ScrollView,
   View
 } from 'react-native';
+var {Text} = require('../../js/common/Text');
 
 var Header = require('../../js/common/Header');
 var ActividadDetalleLocked = require('../../js/common/ActividadDetalleLocked');

@@ -1,6 +1,5 @@
 import React, {
   Component,
-  Text,
   MapView,
   PropTypes,
   StyleSheet,
@@ -9,6 +8,7 @@ import React, {
   TextInput,
   View
 } from 'react-native';
+var {Text} = require('./Text');
 
 var regionText = {
   latitude: '0',

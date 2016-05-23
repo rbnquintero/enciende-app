@@ -1,7 +1,6 @@
 import React, {
   Component,
   TouchableHighlight,
-  Text,
   StatusBar,
   View
 } from 'react-native';

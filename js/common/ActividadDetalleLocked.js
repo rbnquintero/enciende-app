@@ -1,10 +1,10 @@
 import React, {
   Component,
-  Text,
   Image,
   StyleSheet,
   View
 } from 'react-native';
+var {Text} = require('./Text');
 
 class ActividadDetalleLocked extends Component {
 

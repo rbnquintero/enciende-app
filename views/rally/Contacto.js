@@ -1,13 +1,13 @@
 import React, {
   Component,
   TouchableOpacity,
-  Text,
   Image,
   Linking,
   ScrollView,
   StyleSheet,
   View
 } from 'react-native';
+var {Text} = require('../../js/common/Text');
 
 var AppLogo = require('../segments/AppLogo');
 var Header = require('../../js/common/HeaderHome');

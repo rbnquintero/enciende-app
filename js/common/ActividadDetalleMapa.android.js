@@ -1,12 +1,12 @@
 import React, {
   Component,
-  Text,
   StyleSheet,
   TouchableOpacity,
   Image,
   TextInput,
   View
 } from 'react-native';
+var {Text} = require('./Text');
 
 var MapView = require('react-native-maps');
 

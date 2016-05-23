@@ -1,10 +1,10 @@
 import React, {
   Component,
   TouchableOpacity,
-  Text,
   StyleSheet,
   View
 } from 'react-native';
+var {Text} = require('../../js/common/Text');
 
 var Loader = require('../helpers/Loader');
 var env = require('../../env');

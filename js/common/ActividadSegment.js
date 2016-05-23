@@ -1,10 +1,10 @@
 import React, {
   Component,
   TouchableOpacity,
-  Text,
   Image,
   View
 } from 'react-native';
+var {Text} = require('./Text');
 
 class ActivitySegment extends Component {
 

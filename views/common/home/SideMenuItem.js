@@ -1,11 +1,11 @@
 import React, {
   Component,
   TouchableOpacity,
-  Text,
   View,
   StyleSheet,
   Image,
 } from 'react-native';
+var {Text} = require('../../../js/common/Text');
 
 class SideMenuItem extends Component {
 
