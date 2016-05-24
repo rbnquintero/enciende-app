@@ -16,6 +16,8 @@ var Header = require('../../js/common/HeaderHome');
 var moment = require('moment');
 var esLocale = require('moment/locale/es');
 
+import BackPress from '../../js/common/BackPress';
+
 /* REDUX */
 import type {State as User} from '../../reducers/user';
 import type {State as Navigation} from '../../reducers/navigation';
@@ -30,12 +32,19 @@ type Props = {
 };
 
 class Contacto extends Component {
+  componentDidMount() {
+      this.backPress = new BackPress(this.props.appnavigator,this.props.drawer);
+  }
+
+  componentWillUnmount() {
+    this.backPress.removeListener();
+  }
   llamar(contacto) {
-    Linking.canOpenURL('call:'+contacto.telefono).then(supported => {
+    Linking.canOpenURL('tel:'+contacto.telefono).then(supported => {
       if (supported) {
-        Linking.openURL('call:'+contacto.telefono);
+        Linking.openURL('tel:'+contacto.telefono);
       } else {
-        console.log('Don\'t know how to open URI: ' + 'call:'+contacto.telefono);
+        console.log('Don\'t know how to open URI: ' + 'tel:'+contacto.telefono);
       }
     });
   }

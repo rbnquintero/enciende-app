@@ -18,6 +18,7 @@ var Header = require('../../js/common/HeaderHome');
 var t = require('tcomb-form-native');
 
 
+import BackPress from '../../js/common/BackPress';
 
 /* REDUX */
 import type {State as User} from '../../reducers/user';
@@ -41,6 +42,14 @@ class RegistroUsuarios extends Component {
       isLoading: true,
     }
     this.loadGrupos();
+  }
+
+  componentDidMount() {
+      this.backPress = new BackPress(this.props.appnavigator,this.props.drawer);
+  }
+
+  componentWillUnmount() {
+    this.backPress.removeListener();
   }
 
   loadGrupos() {

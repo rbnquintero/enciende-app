@@ -5,24 +5,24 @@ import React, {
   View
 } from 'react-native';
 
-var Home = require('./Home');
+var EstatusGrupos = require('../views/rally/admin/EstatusGrupos');
 
 /* REDUX */
-import type {State as User} from '../../reducers/user';
-import BackPress from '../../js/common/BackPress';
+import type {State as User} from '../reducers/user';
+import BackPress from '../js/common/BackPress';
 
 var { connect } = require('react-redux');
 var {
   fetchProfile,
   logOut,
-} = require('../../actions');
+} = require('../actions');
 type Props = {
   user: User;
   updateProfile: () => void;
   logOut: () => void;
 };
 
-class NoticiasNavigator extends Component {
+class EstatusGruposNavigation extends Component {
   props: Props;
 
   constructor(props) {
@@ -68,7 +68,7 @@ class NoticiasNavigator extends Component {
         style={{ flex:1 }}
         ref={view => this.navigation = view}
         configureScene={ this.sceneConfig }
-        initialRoute={{ name:'Inicio', title:'Inicio', component: Home }}
+        initialRoute={{ name:'EstatusGrupos', title:'Estatus Grupos', component: EstatusGrupos }}
         renderScene={ this.routeMapper }
         openDrawer={this.props.openDrawer}/>
     );
@@ -89,4 +89,4 @@ function actions(dispatch) {
   };
 }
 
-module.exports = connect(select, actions)(NoticiasNavigator);
+module.exports = connect(select, actions)(EstatusGruposNavigation);

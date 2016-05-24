@@ -10,6 +10,8 @@ var Actividades = require('./RallyActividades');
 /* REDUX */
 import type {State as User} from '../../reducers/user';
 import type {State as ActividadesUser} from '../../reducers/actividadesUser';
+import BackPress from '../../js/common/BackPress';
+
 var { connect } = require('react-redux');
 var {
   fetchProfile,
@@ -35,6 +37,13 @@ class RallyNavigator extends Component {
       this.props.updateProfile();
     }
     _this = this;
+  }
+  componentDidMount() {
+      this.backPress = new BackPress(this.navigation,this.props.drawer);
+  }
+
+  componentWillUnmount() {
+    this.backPress.removeListener();
   }
   sceneConfig(route, routeStack) {
     if(route.fromBottom!=null){
@@ -63,6 +72,7 @@ class RallyNavigator extends Component {
     return (
       <Navigator
         style={{ flex:1 }}
+        ref={view => this.navigation = view}
         configureScene={ this.sceneConfig }
         onDidFocus={ this.didFocus }
         initialRoute={{ name:'Inicio', title:'Inicio', component: component, }}

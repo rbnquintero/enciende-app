@@ -16,6 +16,8 @@ var env = require('../../env');
 var RegistroUsuarioResultado = require('./RegistroUsuarioResultado');
 var Header = require('../../js/common/HeaderHome');
 
+import BackPress from '../../js/common/BackPress';
+
 /* REDUX */
 import type {State as User} from '../../reducers/user';
 var { connect } = require('react-redux');
@@ -40,7 +42,13 @@ class RegistroGrupos extends Component {
 
     this.loadGrupos();
   }
+  componentDidMount() {
+      this.backPress = new BackPress(this.props.appnavigator,this.props.drawer);
+  }
 
+  componentWillUnmount() {
+    this.backPress.removeListener();
+  }
   loadGrupos() {
     var rally = this.props.user.currentRally.grupo.rally;
     var query = env.serverURL + '/rally/' + rally.idRally + '/grupos';
