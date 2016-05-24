@@ -9,6 +9,8 @@ var Home = require('./Home');
 
 /* REDUX */
 import type {State as User} from '../../reducers/user';
+import BackPress from '../../js/common/BackPress';
+
 var { connect } = require('react-redux');
 var {
   fetchProfile,
@@ -29,6 +31,14 @@ class NoticiasNavigator extends Component {
     if (!this.props.user.isLoggedIn || !this.props.user.isRegistered || !this.props.user.currentRally== null) {
       this.props.updateProfile();
     }
+  }
+
+  componentDidMount() {
+      this.backPress = new BackPress(this.navigation,this.props.drawer);
+  }
+
+  componentWillUnmount() {
+    this.backPress.removeListener();
   }
 
   sceneConfig(route, routeStack) {
@@ -56,6 +66,7 @@ class NoticiasNavigator extends Component {
     return (
       <Navigator
         style={{ flex:1 }}
+        ref={view => this.navigation = view}
         configureScene={ this.sceneConfig }
         initialRoute={{ name:'Inicio', title:'Inicio', component: Home }}
         renderScene={ this.routeMapper }

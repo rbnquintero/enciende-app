@@ -61,23 +61,23 @@ class AppNavigator extends Component {
     if(this.props.navigation.pantalla === 'noticias') {
       component = (
         <View style={ styles.container }>
-          <NoticiasNavigator openDrawer={this.openDrawer}/>
+          <NoticiasNavigator openDrawer={this.openDrawer} drawer={this._drawerF}/>
           {bar}
         </View>
       );
     } else if(this.props.navigation.pantalla === 'rally'){
-      component = (<RallyNavigator openDrawer={this.openDrawer}/>);
+      component = (<RallyNavigator openDrawer={this.openDrawer} drawer={this._drawerF}/>);
     } else if(this.props.navigation.pantalla === 'registrousuarios'){
-      component = (<RegistroUsuarios appnavigator={this.props.appnavigator} openDrawer={this.openDrawer}/>);
+      component = (<RegistroUsuarios appnavigator={this.props.appnavigator} openDrawer={this.openDrawer} drawer={this._drawerF}/>);
     } else if(this.props.navigation.pantalla === 'registrogrupos'){
-      component = (<RegistroGrupos openDrawer={this.openDrawer}/>);
+      component = (<RegistroGrupos openDrawer={this.openDrawer} drawer={this._drawerF} appnavigator={this.props.appnavigator}/>);
     } else if(this.props.navigation.pantalla === 'contacto'){
-      component = (<Contacto openDrawer={this.openDrawer}/>);
+      component = (<Contacto openDrawer={this.openDrawer} drawer={this._drawerF} appnavigator={this.props.appnavigator}/>);
     } else if(this.props.navigation.pantalla === 'estatus'){
-      component = (<EstatusGruposNavigation openDrawer={this.openDrawer}/>);
+      component = (<EstatusGruposNavigation openDrawer={this.openDrawer} drawer={this._drawerF}/>);
     } else {
       <View style={ styles.container }>
-        <NoticiasNavigator openDrawer={this.openDrawer}/>
+        <NoticiasNavigator openDrawer={this.openDrawer} drawer={this._drawerF}/>
         {bar}
       </View>
     }
@@ -122,6 +122,10 @@ class AppNavigator extends Component {
 
   openDrawer = () => {
     this._drawer.open()
+  }
+
+  _drawerF = () => {
+    return this._drawer
   }
 
 }

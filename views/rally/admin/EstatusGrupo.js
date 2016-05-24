@@ -1,4 +1,5 @@
 import React, {
+  BackAndroid,
   Component,
   Dimensions,
   TouchableOpacity,
@@ -49,6 +50,7 @@ class EstatusGrupo extends Component {
       actividades:null
     };
   }
+
   componentDidMount() {
     this.cargarActividades();
   }
