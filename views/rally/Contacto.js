@@ -61,7 +61,7 @@ class Contacto extends Component {
 
       textContactos = (
         <Text style={{ marginTop: 25, marginBottom:20, fontSize: 20, fontWeight: '200', textAlign: 'center' }}>
-          En caso de alguna emergencia durante el rally puedes marcar a cualquiera de las siguientes personas
+          En caso de alguna emergencia durante el Rally, marca a cualquiera de las siguientes personas:
         </Text>
       )
     }
@@ -80,7 +80,7 @@ class Contacto extends Component {
         <ScrollView>
           <View style={{ flex: 2, alignItems: 'center', marginHorizontal: 15 }}>
             <Text style={{ marginTop: 25, fontSize: 25, fontWeight: '200', textAlign: 'center' }} onPress={() => this.openMail()}>
-              Envianos un email a contacto@enciende.org
+              Envianos un correo a contacto@enciende.org
             </Text>
             {textContactos}
             {contactos.map(function(result, id){

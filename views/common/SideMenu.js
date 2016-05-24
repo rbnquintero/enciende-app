@@ -79,7 +79,7 @@ class SideMenu extends Component {
     var registrogrupos = null;
     var admin = null;
     if(this.props.user.isRegistered) {
-      if(this.props.user.currentRally != null && this.props.user.currentRally.rol === 'ADMIN' || this.props.user.currentRally.rol === 'PARTICIPANTE') {
+      if(this.props.user.currentRally != null && this.props.user.currentRally.rol === 'ADMIN') {
         // Usuario es admin
         admin = (
           <View style={{ flexDirection: 'row', alignItems: 'center', borderTopWidth: 1, marginTop: 10, borderColor: 'gray', paddingHorizontal: 10, height: 35 }}>
@@ -90,7 +90,7 @@ class SideMenu extends Component {
           selected = true;
         }
         var registroparticipantes = (
-          <SideMenuItem titulo="Registro de Usuarios" selected={selected} action={() => {this.props.closeMenu(); this.props.toPantallaRegistroUsr();}}/>
+          <SideMenuItem titulo="Registro de Participantes" selected={selected} action={() => {this.props.closeMenu(); this.props.toPantallaRegistroUsr();}}/>
         );
 
         selected = false;

@@ -49,10 +49,10 @@ class RallyHome extends Component {
         </View>
         <View style={{ flex: 2, alignItems: 'center', marginHorizontal: 15 }}>
           <Text style={{ marginTop: 25, fontSize: 25, fontWeight: '200', textAlign: 'center' }}>
-            El Rally {rally.nombre} comienza {fechaStr}
+            Rally {rally.nombre}
           </Text>
           <Text style={{ marginTop: 25, fontSize: 17, fontWeight: '200', textAlign: 'center' }}>
-            Lorem ipsum dolor sit amet, maiores ornare ac fermentum, imperdiet ut vivamus a, nam lectus at nunc.
+            ¡Prepárate para el Rally Enciende de este año!
           </Text>
         </View>
       </View>
