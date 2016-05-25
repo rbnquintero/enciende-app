@@ -66,7 +66,7 @@ class EstatusGrupo extends Component {
         console.log(error);
         this.setState({
           errorLoading: true,isRegistering:false,isLoading: false,exito:false,
-          messegeError:'Error al grabar el grupo, intenta más tarde'
+          messegeError:'Error al grabar el equipo, intenta más tarde'
         });
       });
   }
@@ -113,7 +113,7 @@ class EstatusGrupo extends Component {
         console.log(error);
         this.setState({
           errorLoading: true,isRegistering:false,isLoading: false,exito:false,
-          messegeError:'Error al grabar el grupo, intenta más tarde'
+          messegeError:'Error al grabar el equipo, intenta más tarde'
         });
       });
   }
@@ -182,7 +182,7 @@ class EstatusGrupo extends Component {
     return (
       <View style={{ flex: 1 }}>
         <Header
-          title={'Grupo '+this.props.grupo.nombre}
+          title={'Equipo '+this.props.grupo.nombre}
           leftItem={{
             layout: 'icon',
             title: 'Close',

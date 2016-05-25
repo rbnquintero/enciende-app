@@ -57,14 +57,14 @@ class EstatusGrupos extends Component {
         console.log(error);
         this.setState({
           errorLoading: true,isRegistering:false,isLoading: false,exito:false,
-          messegeError:'Error al grabar el grupo, intenta más tarde'
+          messegeError:'Error al grabar el equipo, intenta más tarde'
         });
       });
   }
   render() {
 
     if(!this.state.gruposCargados) {
-      view = (<Loader caption="Cargando grupos..."/>);
+      view = (<Loader caption="Cargando equipos..."/>);
     }else{
       var _this = this;
       view =(
@@ -75,7 +75,7 @@ class EstatusGrupos extends Component {
                 <TouchableHighlight  onPress={() => _this._pressRow(result)}>
                     <View style={styles.row}>
                       <Text style={styles.text}>
-                        {'Grupo: '+result.grupo.nombre}
+                        {'Equipo: '+result.grupo.nombre}
                       </Text>
                       <Text style={styles.text}>
                         {' Actvidad '+result.orden+': '+result.actividad.nombre+". Estatus: "+_this.getNombreEstatus(result.estatus)}
@@ -97,7 +97,7 @@ class EstatusGrupos extends Component {
     return (
       <View style={{ flex: 1 }}>
         <Header
-          title="Estatus Grupos"
+          title="Estatus Equipos"
           leftItem={{
             layout: 'icon',
             title: 'Menu',
@@ -113,7 +113,7 @@ class EstatusGrupos extends Component {
   _pressRow(actividad) {
     console.log(actividad);
     this.props.navigator.push({
-      title: "Detalle Grupo",
+      title: "Detalle Equipo",
       name: 'EstatusGrupo',
       component: EstatusGrupo,
       passProps: {grupoId: actividad.id.idGrupo,grupo: actividad.grupo}
