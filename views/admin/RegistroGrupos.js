@@ -86,7 +86,7 @@ class RegistroGrupos extends Component {
     if(this.state.grupo.nombre==''){
       this.setState({
         errorLoading: true,isRegistering:false,isLoading: false,
-        messegeError:"El nombre del grupo es requerido",exito:false
+        messegeError:"El nombre del equipo es requerido",exito:false
       });
     }else{
       this.setState({ isLoading: true, isRegistering: false,});
@@ -113,7 +113,7 @@ class RegistroGrupos extends Component {
           console.log(error);
           this.setState({
             errorLoading: true,isRegistering:false,isLoading: false,exito:false,
-            messegeError:'Error al grabar el grupo, intenta más tarde'
+            messegeError:'Error al grabar el equipo, intenta más tarde'
           });
         });
       }
@@ -122,9 +122,9 @@ class RegistroGrupos extends Component {
   render() {
     var view = null;
     if(this.state.isLoading) {
-      view = (<Loader caption="Cargando grupos"/>);
+      view = (<Loader caption="Cargando equipos"/>);
     } else if (this.state.isRegistering) {
-      view = (<Loader caption="Registrando grupo"/>);
+      view = (<Loader caption="Registrando equipo"/>);
     } else {
       var textoError = null;
       var textoExito = null;
@@ -138,7 +138,7 @@ class RegistroGrupos extends Component {
       if(this.state.exito && !this.state.errorLoading){
         textoExito = (
           <Text style={{ fontSize: 18, fontWeight: '200', marginTop: 20,  color:'green' }}>
-            El grupo ha sido guardado
+            El equipo ha sido guardado
           </Text>
         )
       }
@@ -146,21 +146,21 @@ class RegistroGrupos extends Component {
         <View style={{ flex: 1, marginHorizontal: 20 }}>
           <View style={{ flex: 1 }}>
             <Text style={{ fontSize: 25, fontWeight: '200', marginTop: 20}}>
-              Registro de Grupos
+              Registra los equipos al rally
             </Text>
             {textoError}
             {textoExito}
             <View style={{paddingHorizontal: 5, marginTop: 20, backgroundColor: 'white', borderRadius: 5, }}>
-              <TextInput placeholder='Nombre del grupo' value={this.state.grupo.nombre} onChange={this.handleChangeGrupo.bind(this, 'nombre')} autoCapitalize='words'
+              <TextInput placeholder='Nombre del equipo' value={this.state.grupo.nombre} onChange={this.handleChangeGrupo.bind(this, 'nombre')} autoCapitalize='words'
                 style={{height: 35}}/>
             </View>
             <TouchableHighlight style={styles.button} onPress={() => this.registraGrupo()} underlayColor='#99d9f4'>
-              <Text style={styles.buttonText}>Registrar grupo</Text>
+              <Text style={styles.buttonText}>Registrar equipo</Text>
             </TouchableHighlight>
           </View>
           <View style={{ flex: 1 }}>
             <Text style={{ fontSize: 25, fontWeight: '200', marginVertical: 20 }}>
-              Grupos registrados
+              Equipos registrados
             </Text>
             <ScrollView>
               {this.state.grupos.map(function(result, id){
@@ -180,7 +180,7 @@ class RegistroGrupos extends Component {
     return (
       <View style={{ flex: 1, backgroundColor: '#f2f2f2' }}>
         <Header
-          title="Registro de Grupos"
+          title="Registro de Equipos"
           leftItem={{
             layout: 'icon',
             title: 'Menu',

@@ -95,7 +95,7 @@ class SideMenu extends Component {
           selected = true;
         }
         estatusGrupos = (
-          <SideMenuItem titulo="Estatus Grupos" icon={require('image!icon_status')} selected={selected} action={() => {this.props.closeMenu(); this.props.toEstatus();}}/>
+          <SideMenuItem titulo="Estatus Equipos" icon={require('image!icon_status')} selected={selected} action={() => {this.props.closeMenu(); this.props.toEstatus();}}/>
         );
 
         if(this.props.user.currentRally.rol === 'ADMIN'){
@@ -117,7 +117,7 @@ class SideMenu extends Component {
             selected = true;
           }
           var registrogrupos = (
-            <SideMenuItem titulo="Registro de Grupos" icon={require('image!icon_rgrupos')} selected={selected} action={() => {this.props.closeMenu(); this.props.toPantallaRegistroGrp();}}/>
+            <SideMenuItem titulo="Registro de Equipos" icon={require('image!icon_rgrupos')} selected={selected} action={() => {this.props.closeMenu(); this.props.toPantallaRegistroGrp();}}/>
           );
         }
       }
