@@ -71,7 +71,7 @@ class FacebookLogin extends Component {
         loginSection = (
           <View style={[ styles.centerAlign ]}>
             <Text style={[ styles.texto, { fontSize: normalize(16) }]}>
-              Lorem ipsum dolor sit amet, maiores ornare ac fermentum, imperdiet ut vivamus a, nam lectus at nunc.
+              Ahora ingresa el código que te fue asignado cuando te inscribiste al rally.
             </Text>
             <View style={ styles.input }>
               <TextInput placeholder='ID' onChange={this._onInputTextChanged.bind(this)} autoCapitalize='characters'

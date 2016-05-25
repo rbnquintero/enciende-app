@@ -14,7 +14,7 @@ export type State = {
   isRegistered: boolean;
   isFetching: boolean;
   error: ?string;
-  user: ?Object;
+  token: ?string;
   fbData: ?Object;
   userData: ?Object;
   currentRally: ?Object;
@@ -26,7 +26,7 @@ const initialState = {
   isRegistered: false,
   isFetching: false,
   error: null,
-  user: null,
+  token: null,
   fbData: null,
   userData: null,
   currentRally: null,
@@ -40,7 +40,7 @@ function user(state: State = initialState, action: Action): State {
       isRegistered: state.isRegistered,
       isFetching: true,
       error: null,
-      user: state.user,
+      token: state.token,
       fbData: state.fbData,
       userData: state.userData,
       currentRally: state.currentRally,
@@ -62,7 +62,7 @@ function user(state: State = initialState, action: Action): State {
       isRegistered: isRegistered,
       isFetching: false,
       error: null,
-      user: user,
+      token: user.token,
       fbData: fbData,
       userData: userData,
       currentRally: currentRally,
@@ -82,7 +82,7 @@ function user(state: State = initialState, action: Action): State {
       isRegistered: state.isRegistered,
       isFetching: true,
       error: null,
-      user: action.user,
+      token: action.user.token,
       fbData: user.fbData,
       userData: user.userData,
       currentRally: user.currentRally,
@@ -94,7 +94,7 @@ function user(state: State = initialState, action: Action): State {
       isRegistered: state.isRegistered,
       isFetching: false,
       error: action.error,
-      user: state.user,
+      token: state.token,
       fbData: state.fbData,
       userData: state.userData,
       currentRally: state.currentRally,
