@@ -58,7 +58,7 @@ public class MainActivity extends ReactActivity {
             new ImagePickerPackage(),
             new FBSDKPackage(mCallbackManager),
             new LocationReportingServicePackage(),
-            new CodePush("XcSFY3U6ZUNo0ANxutOKPzhuos8oNy6WzQ7-W", this, BuildConfig.DEBUG)
+            new CodePush("Cdu3nlA-L6W0srfHRUYShku0ac1VNy6WzQ7-W", this, BuildConfig.DEBUG)
         );
     }
 
