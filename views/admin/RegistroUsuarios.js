@@ -154,8 +154,8 @@ class RegistroUsuarios extends Component {
 
       view = (
       <ScrollView style={{marginHorizontal: 20}}>
-        <Text style={{ fontSize: 25, fontWeight: '200', marginTop: 20, }}>
-          Registro de Participantes
+        <Text style={{ fontSize: 17, fontWeight: '200', marginTop: 20, }}>
+          Ingresa los datos del participante
         </Text>
         <View style={styles.container}>
           <Form
@@ -173,7 +173,7 @@ class RegistroUsuarios extends Component {
     return (
       <View style={{ flex: 1, backgroundColor: '#f2f2f2' }}>
         <Header
-          title="Registro de Usuarios"
+          title="Registro de Participantes"
           leftItem={{
             layout: 'icon',
             title: 'Menu',

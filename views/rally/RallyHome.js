@@ -6,6 +6,7 @@ import React, {
   View
 } from 'react-native';
 var {Text} = require('../../js/common/Text');
+var FitImage = require('../../js/common/FitImage');
 
 var AppLogo = require('../segments/AppLogo');
 var Header = require('../../js/common/Header');
@@ -35,8 +36,8 @@ class RallyHome extends Component {
     var fechaStr = moment(fecha).locale("es", esLocale).endOf('hour').fromNow();
 
     return (
-      <View style={{ flex: 1, alignItems: 'center' }}>
-        <Header style={styles.header}
+      <View style={ styles.mainContainer}>
+        <Header
           title={ 'Rally ' + this.props.user.currentRally.grupo.rally.nombre}
           leftItem={{
             layout: 'icon',
@@ -44,16 +45,20 @@ class RallyHome extends Component {
             icon: require('../../js/common/img/hamburger.png'),
             onPress: this.props.navigator.props.openDrawer,
           }}/>
-        <View style={{ flex: 1, alignItems: 'center', marginHorizontal: 15 }}>
-          <AppLogo/>
-        </View>
-        <View style={{ flex: 2, alignItems: 'center', marginHorizontal: 15 }}>
-          <Text style={{ marginTop: 25, fontSize: 25, fontWeight: '200', textAlign: 'center' }}>
-            Rally {rally.nombre}
-          </Text>
-          <Text style={{ marginTop: 25, fontSize: 17, fontWeight: '200', textAlign: 'center' }}>
-            ¡Prepárate para el Rally Enciende de este año!
-          </Text>
+        <View style={ styles.container }>
+          <FitImage source={ require('image!going') }
+            style={ styles.mainContainer } content={
+            <View style={ styles.textContainerContainer }>
+              <View style={ styles.textContainer }>
+                <Text style={ styles.subtitulo }>
+                  ¡Prepárate para el Rally Enciende de este año!
+                </Text>
+                <Text style={ styles.texto }>
+                  El rally {rally.nombre} comienza {fechaStr}
+                </Text>
+              </View>
+            </View>
+          }/>
         </View>
       </View>
     );
@@ -61,11 +66,20 @@ class RallyHome extends Component {
 }
 
 const styles = StyleSheet.create({
-  header: {
-    /*android: {
-      backgroundColor: '#5597B8',
-    },*/
-  },
+  mainContainer: {
+    flex: 1, flexWrap: 'wrap', alignSelf: 'stretch', overflow: 'hidden', },
+  container: {
+    flex: 1, flexWrap: 'wrap', flexDirection: 'row', alignSelf: 'stretch', },
+  textContainerContainer: {
+    flex: 1, flexDirection: 'row', alignItems: 'center', backgroundColor: 'rgba(0,0,0,0.5)' },
+  textContainer: {
+    flex: 1, alignItems: 'stretch', marginHorizontal: 15 },
+  titulo: {
+    flex: 1, fontSize: 25, textAlign: 'center', color: 'white' },
+  subtitulo: {
+    flex: 1, fontSize: 20, textAlign: 'center', color: 'white', marginTop: 10 },
+  texto: {
+    flex: 1, fontSize: 17, textAlign: 'center', color: 'white', marginTop: 18},
 });
 
 function select(store) {

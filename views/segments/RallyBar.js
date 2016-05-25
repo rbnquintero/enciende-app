@@ -30,7 +30,7 @@ class RallyBar extends Component {
     return (
       <View style={styles.timercontainer}>
         <View style={styles.timercontainerContainer}>
-          <Text style={styles.timercontainerText}>{rally.nombre} {fechaStr}</Text>
+          <Text style={styles.timercontainerText}>Rally {rally.nombre} {fechaStr}</Text>
         </View>
       </View>
     );

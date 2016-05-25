@@ -20,7 +20,7 @@ class SideMenuItem extends Component {
     return (
       <TouchableOpacity onPress={this.props.action}>
         <View style={ container }>
-          <Image source={ require('image!logo') } style={ styles.profilePic } />
+          <Image source={ this.props.icon } style={ styles.profilePic } />
           <Text style={ text }>{this.props.titulo}</Text>
         </View>
       </TouchableOpacity>
