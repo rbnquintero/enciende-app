@@ -171,7 +171,7 @@ class SideMenu extends Component {
       }
       console.log(this.props.user);
       var pictureUri = this.props.user.fbData.picture.data.url;
-      pictureUri = 'https://graph.facebook.com/v2.6/' + this.props.user.fbData.id + '/picture?height=200&access_token=' + this.props.user.user.token;
+      pictureUri = 'https://graph.facebook.com/v2.6/' + this.props.user.fbData.id + '/picture?height=200&access_token=' + this.props.user.token;
       console.log(pictureUri);
       userinfo = (
         <View

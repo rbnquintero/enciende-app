@@ -86,8 +86,8 @@ function logIn() {
 
 function registerUser(user, appToken) {
   return function(dispatch) {
-    dispatch(loadingUser(user));
-    var query = env.serverURL + '/usuario/registrarFacebook/' + appToken + '/' + user.user.token;
+    dispatch(logInStart());
+    var query = env.serverURL + '/usuario/registrarFacebook/' + appToken + '/' + user.token;
     return fetch(query)
       .then(response => response.json())
       .then(json => {
@@ -101,7 +101,7 @@ function registerUser(user, appToken) {
         }
       }).catch(error => {
         console.log(error.stack);
-        dispatch(logInError('error al obtener info usuario'))
+        dispatch(logInError('error al registrar usuario'))
       });
   }
 }
@@ -139,14 +139,6 @@ function fetchProfile() {
   }
 }
 
-/* EXTRAS */
-function loadingUser(user) {
-  return {
-    type: USER_LOADING,
-    user: user,
-  };
-}
-
 function loadFbData(user, loadUserDataFlag) {
   return function(dispatch) {
     dispatch(logInStart());
@@ -163,14 +155,14 @@ function loadFbData(user, loadUserDataFlag) {
         }
       }).catch(error => {
         console.log(error.stack);
-        dispatch(logInError('error al obtener info usuario'));
+        dispatch(logInError('error al obtener info fb usuario'));
       });
   }
 }
 
 function loadUserData(user) {
   return function(dispatch) {
-    dispatch(loadingUser(user));
+    dispatch(logInStart());
     var query = env.serverURL + '/usuario/get/' + user.token;
     return fetch(query)
       .then(response => response.json())
@@ -192,7 +184,7 @@ function loadUserData(user) {
 
 function loadCurrentRally(user, fromStorage) {
   return function(dispatch) {
-    dispatch(loadingUser(user));
+    dispatch(logInStart());
     if(fromStorage) {
       return localRepository.getCurrentRally().then((rally) => {
         if(rally != null) {
