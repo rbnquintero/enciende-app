@@ -101,8 +101,8 @@ class AppNavigator extends Component {
            panCloseMask={0.2}
            closedDrawerOffset={-3}
            styles={{
-             drawer: {shadowColor: '#000000', shadowOpacity: 0.8, shadowRadius: 3},
-             main: {paddingLeft: 3},
+             drawer: {shadowColor: 'black', shadowOpacity: 0.8, shadowRadius: 3},
+             main: {paddingLeft: 3, backgroundColor: 'black'},
            }}
            tweenHandler={(ratio) => ({
              main: { opacity:(2-ratio)/2 }

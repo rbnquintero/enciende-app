@@ -20,7 +20,7 @@ class SideMenuItem extends Component {
     return (
       <TouchableOpacity onPress={this.props.action}>
         <View style={ container }>
-          <Image source={ this.props.icon } style={ styles.profilePic } />
+          <Image source={ this.props.icon } style={ styles.icon } />
           <Text style={ text }>{this.props.titulo}</Text>
         </View>
       </TouchableOpacity>
@@ -30,18 +30,18 @@ class SideMenuItem extends Component {
 
 const styles = StyleSheet.create({
   text: {
-    marginLeft: 10, fontWeight: '500', fontSize: 13,
+    marginLeft: 10, fontSize: 13, color: 'rgb(240,242,245)'
   },
   textSelected: {
-    marginLeft: 10, fontWeight: '500', fontSize: 13, color: 'rgb(140,51,204)',
+    marginLeft: 10, fontWeight: '500', fontSize: 13, color: 'rgb(29,30,37)',
   },
   container: {
     flexDirection: 'row', paddingHorizontal: 10, height: 45, alignItems: 'center',
   },
   containerSelected: {
-    flexDirection: 'row', paddingHorizontal: 10, height: 45, alignItems: 'center', backgroundColor: '#d9d9d9',
+    flexDirection: 'row', paddingHorizontal: 10, height: 45, alignItems: 'center', backgroundColor: 'rgb(240,242,245)',
   },
-  profilePic: {
+  icon: {
     height: 20, width: 20, resizeMode: Image.resizeMode.contain,
   },
 });
