@@ -1,7 +1,6 @@
 import React, {
   Component,
   TouchableHighlight,
-  Text,
   Image,
   StyleSheet,
   NativeModules,
@@ -10,6 +9,7 @@ import React, {
   ListView,
   View
 } from 'react-native';
+var {Text} = require('../../js/common/Text');
 
 var Card = require('./home/Card');
 var Loader = require('./../helpers/Loader');
@@ -26,6 +26,7 @@ import type {State as User} from '../../reducers/user';
 var { connect } = require('react-redux');
 var {
   loadNews,
+  fetchProfile,
   newsRendered,
 } = require('../../actions');
 type Props = {
@@ -33,6 +34,8 @@ type Props = {
   user: User;
   loadNews: () => void;
   newsRendered: () => void;
+  fetchProfile: () => void;
+  fetchAll: () => void;
 };
 
 class Home extends Component {
@@ -93,7 +96,7 @@ class Home extends Component {
           refreshControl={
             <RefreshControl
               refreshing={this.props.news.isFetching}
-              onRefresh={this.props.loadNews}
+              onRefresh={this.props.fetchAll}
               tintColor='rgb(140,51,204)'
               progressBackgroundColor="#ffff00"
             />
@@ -149,6 +152,8 @@ function actions(dispatch) {
   return {
     loadNews: () => dispatch(loadNews()),
     newsRendered: () => dispatch(newsRendered()),
+    fetchProfile: () => dispatch(fetchProfile()),
+    fetchAll: () => {dispatch(loadNews()); dispatch(fetchProfile())},
   };
 }
 

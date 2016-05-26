@@ -1,18 +1,19 @@
 import React, {
   Component,
   Image,
-  Text,
   Time,
   StyleSheet,
   View
 } from 'react-native';
+var {Text} = require('../../../js/common/Text');
+var FitImage = require('../../../js/common/FitImage');
 
 var moment = require('moment');
 var esLocale = require('moment/locale/es');
 
 class Card extends Component {
   setNativeProps(nativeProps) {
-    this._root.setNativeProps(nativeProps);
+    //this._root.setNativeProps(nativeProps);
   }
   //<Image source={{uri: evento.urlImagen}} style={styles.newscontainerImage}/>
 
@@ -21,51 +22,37 @@ class Card extends Component {
     var fecha = new Date(evento.fechaNoticia);
     var fechaStr = moment(fecha).locale("es", esLocale).format('LL');
     return (
-      <View style={styles.newscontainer} ref={component => this._root = component} {...this.props}>
-        <View style={styles.newscontainerImageContainer}>
-          <Image source={{uri: evento.urlImagen}} style={styles.newscontainerImage}/>
+      <FitImage source={{uri: evento.urlImagen}} style={styles.newscontainer}
+        ref={component => this._root = component} {...this.props} content={
+        <View style={{backgroundColor: 'rgba(0,0,0,0.4)', height: 220, }}>
+          <View style={{flex: 1}}/>
+          <Text style={styles.newscontainerTitulo}>{evento.resumen}</Text>
+          <Text style={styles.newscontainerDate}>{fechaStr}</Text>
         </View>
-        <Text style={styles.newscontainerTitulo}>{evento.titulo}</Text>
-        <Text style={styles.newscontainerDate}>{fechaStr}</Text>
-      </View>
+      }/>
     );
   }
 }
 
 const styles = StyleSheet.create({
   newscontainer: {
-    marginHorizontal: 10,
-    marginTop: 10,
-    borderWidth: 2,
-    borderRadius: 5,
     borderColor: '#d9d9d9',
     backgroundColor: 'white',
-    alignItems: 'stretch'
-  },
-  newscontainerImageContainer: {
     alignItems: 'stretch',
-    flexDirection: 'row',
-    backgroundColor: 'black',
-  },
-  newscontainerImage: {
-    flex: 1,
-    resizeMode: Image.resizeMode.cover,
-    height: 200,
+    height: 220,
   },
   newscontainerTitulo: {
-    marginTop: 5,
-    marginHorizontal: 5,
-    fontWeight: '100',
+    paddingHorizontal: 20,
+    letterSpacing : 0.5,
     textAlign: 'left',
-    fontFamily: 'Helvetica',
-    fontSize: 20,
+    fontSize: 22,
+    color: 'white',
   },
   newscontainerDate: {
-    marginLeft: 5,
-    marginBottom: 5,
-    fontFamily: 'Helvetica',
-    fontSize: 10,
-    color: 'gray'
+    paddingHorizontal: 20,
+    paddingBottom: 20,
+    fontSize: 12,
+    color: 'rgb(184,185,189)',
   },
 });
 

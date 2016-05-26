@@ -50,10 +50,10 @@ class FacebookLogin extends Component {
       loginSection = (
       <View style={styles.centerAlign}>
         <Text style={[ styles.texto, { fontSize: normalize(26) }]}>
-          Lorem ipsum dolor sit amet consectetur adipiscing
+          ¡Bienvenido!
         </Text>
         <Text style={[ styles.texto, { fontSize: normalize(16) }]}>
-          Excepteur sint occaecat cupidatat non proident, sunt in culpa
+          Inicia sesión para conocer más sobre el Rally Enciende 2016. Descubre noticias y entérate de los próximos eventos.
         </Text>
         <TouchableHighlight style={ styles.button } onPress={() => this.props.logIn()}
           underlayColor='#99d9f4'>
@@ -71,7 +71,7 @@ class FacebookLogin extends Component {
         loginSection = (
           <View style={[ styles.centerAlign ]}>
             <Text style={[ styles.texto, { fontSize: normalize(16) }]}>
-              Lorem ipsum dolor sit amet, maiores ornare ac fermentum, imperdiet ut vivamus a, nam lectus at nunc.
+              Ahora ingresa el código que te fue asignado cuando te inscribiste al rally.
             </Text>
             <View style={ styles.input }>
               <TextInput placeholder='ID' onChange={this._onInputTextChanged.bind(this)} autoCapitalize='characters'

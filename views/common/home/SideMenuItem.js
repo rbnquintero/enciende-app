@@ -1,11 +1,11 @@
 import React, {
   Component,
   TouchableOpacity,
-  Text,
   View,
   StyleSheet,
   Image,
 } from 'react-native';
+var {Text} = require('../../../js/common/Text');
 
 class SideMenuItem extends Component {
 
@@ -20,7 +20,7 @@ class SideMenuItem extends Component {
     return (
       <TouchableOpacity onPress={this.props.action}>
         <View style={ container }>
-          <Image source={ require('image!logo') } style={ styles.profilePic } />
+          <Image source={ this.props.icon } style={ styles.profilePic } />
           <Text style={ text }>{this.props.titulo}</Text>
         </View>
       </TouchableOpacity>

@@ -1,12 +1,12 @@
 import React, {
   Component,
-  Text,
   Image,
   StyleSheet,
   TouchableOpacity,
   TextInput,
   View
 } from 'react-native';
+var {Text} = require('./Text');
 
 var Loader = require('../../views/helpers/LoaderSmall');
 

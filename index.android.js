@@ -6,7 +6,6 @@
  import React, {
    AppRegistry,
    Component,
-   Text
  } from 'react-native';
 
 const Setup = require('./setup');

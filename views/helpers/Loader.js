@@ -1,13 +1,13 @@
 import React, {
   Component,
   TouchableHighlight,
-  Text,
   Platform,
   ActivityIndicatorIOS,
   ProgressBarAndroid,
   StyleSheet,
   View
 } from 'react-native';
+var {Text} = require('../../js/common/Text');
 
 class Loader extends Component {
 
