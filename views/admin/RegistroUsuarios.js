@@ -1,5 +1,6 @@
 import React, {
   Component,
+  Platform,
   TouchableOpacity,
   TouchableHighlight,
   TextInput,
@@ -19,6 +20,8 @@ var t = require('tcomb-form-native');
 
 
 import BackPress from '../../js/common/BackPress';
+import AccordionPicker from '../../js/component/AccordionPicker';
+
 
 /* REDUX */
 import type {State as User} from '../../reducers/user';
@@ -26,7 +29,6 @@ var { connect } = require('react-redux');
 type Props = {
   user: User;
 };
-
 class RegistroUsuarios extends Component {
   constructor(props) {
     super(props);
@@ -137,8 +139,48 @@ class RegistroUsuarios extends Component {
         gruposMap[this.state.grupos[i].idGrupo]=this.state.grupos[i].nombre;
       }
       var Grupo = t.enums(gruposMap);
-
-
+      var formOptions;
+      if(Platform.OS === 'ios'){
+        formOptions = {
+          fields:{
+            correo:{
+              keyboardType: 'email-address'
+            },
+            genero:{
+              template: (data) => (
+                  <AccordionPicker
+                      defaultValue={data.options.find((o) => o.value === data.value)}
+                      onChange={data.onChange}
+                      options={data.options}
+                      data={data}
+                  />
+              )
+            },
+            talla:{
+              template: (data) => (
+                  <AccordionPicker
+                      defaultValue={data.options.find((o) => o.value === data.value)}
+                      onChange={data.onChange}
+                      options={data.options}
+                      data={data}
+                  />
+              )
+            },
+            grupo:{
+              template: (data) => (
+                  <AccordionPicker
+                      defaultValue={data.options.find((o) => o.value === data.value)}
+                      onChange={data.onChange}
+                      options={data.options}
+                      data={data}
+                  />
+              )
+            }
+          }
+        };
+      }else{
+        formOptions = {};
+      }
 
       // here we are: define your domain model
       var Registro = t.struct({
@@ -149,7 +191,6 @@ class RegistroUsuarios extends Component {
         grupo: Grupo      // a boolean
       });
 
-      var options = {};
       console.log(this.state.grupos);
 
       view = (
@@ -161,7 +202,7 @@ class RegistroUsuarios extends Component {
           <Form
             ref="form"
             type={Registro}
-            options={options}
+            options={formOptions}
           />
         </View>
         <TouchableHighlight style={styles.button} onPress={() => this.toRegisterUserPOST()} underlayColor='#99d9f4'>
