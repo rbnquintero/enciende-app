@@ -143,8 +143,12 @@ class RegistroUsuarios extends Component {
       if(Platform.OS === 'ios'){
         formOptions = {
           fields:{
+            nombre:{
+              autoCapitalize: 'words'
+            },
             correo:{
-              keyboardType: 'email-address'
+              keyboardType: 'email-address',
+              autoCapitalize: 'none'
             },
             genero:{
               template: (data) => (
@@ -179,7 +183,16 @@ class RegistroUsuarios extends Component {
           }
         };
       }else{
-        formOptions = {};
+        formOptions = {
+          fields:{
+            nombre:{
+              autoCapitalize: 'words'
+            },
+            correo:{
+              keyboardType: 'email-address'
+            }
+          }
+        };
       }
 
       // here we are: define your domain model
