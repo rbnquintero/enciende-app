@@ -4,7 +4,6 @@ import React, {
   Navigator,
 } from 'react-native';
 
-var Home = require('./RallyHome');
 var Actividades = require('./RallyActividades');
 
 /* REDUX */
@@ -32,7 +31,7 @@ var _this;
 class RallyNavigator extends Component {
   constructor(props) {
     super(props);
-    //this.props.logOut();
+
     if (!this.props.user.isLoggedIn || !this.props.user.isRegistered || !this.props.user.currentRally== null) {
       this.props.updateProfile();
     }
@@ -64,10 +63,6 @@ class RallyNavigator extends Component {
     var rally = this.props.user.currentRally.grupo.rally;
     var now = new Date();
     var fecha = new Date(rally.fechaInicio);
-    var component = Home;
-    if (now > fecha) {
-      component = Actividades;
-    }
 
     return (
       <Navigator
@@ -75,7 +70,7 @@ class RallyNavigator extends Component {
         ref={view => this.navigation = view}
         configureScene={ this.sceneConfig }
         onDidFocus={ this.didFocus }
-        initialRoute={{ name:'Inicio', title:'Inicio', component: component, }}
+        initialRoute={{ name:'Inicio', title:'Inicio', component: Actividades, }}
         renderScene={this.renderScene}
         openDrawer={this.props.openDrawer}
       />

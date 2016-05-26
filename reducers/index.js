@@ -7,7 +7,8 @@ const enciendeReducers = combineReducers({
   navigation: require('./navigation'),
   news: require('./noticia'),
   staff: require('./staff'),
-  actividadesUser: require('./actividadesUser')
+  actividadesUser: require('./actividadesUser'),
+  app: require('./app'),
 });
 
 export default enciendeReducers;

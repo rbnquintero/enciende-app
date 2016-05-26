@@ -12,9 +12,11 @@ var Header = require('../../js/common/Header');
 var Actividad = require('../../js/common/ActividadSegment');
 var Loader = require('../helpers/Loader');
 var ActividadDetalle = require('./ActividadDetalle');
+var Home = require('./RallyHome');
 
 /* REDUX */
 import type {State as User} from '../../reducers/user';
+import type {State as App} from '../../reducers/app';
 import type {State as ActividadesUser} from '../../reducers/actividadesUser';
 var { connect } = require('react-redux');
 var {
@@ -24,6 +26,7 @@ var {
 } = require('../../actions');
 type Props = {
   user: User;
+  app: App;
   actividadesUser: ActividadesUser;
   toMainHome: () => void;
   loadUserActividades: () => void;
@@ -52,32 +55,36 @@ class RallyActividades extends Component {
     var actividades = (
       <Loader />
     );
-    if(this.props.actividadesUser.actividades.length > 0) {
-      actividades = (
-        <ScrollView
-          refreshControl={
-            <RefreshControl
-              refreshing={this.props.actividadesUser.isFetching}
-              onRefresh={this.props.loadUserActividades}
-              tintColor='rgb(140,51,204)'
-              progressBackgroundColor="#ffff00"
-            />
-          }>
-          {this.props.actividadesUser.actividades.map(function(result, id){
-            return (
-              <TouchableOpacity key={id} onPress={() => _this.toActividadDetalle(result)}>
-                <Actividad actividad={result}/>
-              </TouchableOpacity>
-            );
-          })}
-        </ScrollView>
-      );
-    } else if (!this.props.actividadesUser.isFetching) {
-      actividades = (
-        <Text style={{ textAlign: 'center' }}>
-          No se encontraron actividades
-        </Text>
-      );
+    if(!this.props.app.rallyOn) {
+      actividades = (<Home/>);
+    } else {
+      if(this.props.actividadesUser.actividades.length > 0) {
+        actividades = (
+          <ScrollView
+            refreshControl={
+              <RefreshControl
+                refreshing={this.props.actividadesUser.isFetching}
+                onRefresh={this.props.loadUserActividades}
+                tintColor='rgb(140,51,204)'
+                progressBackgroundColor="#ffff00"
+              />
+            }>
+            {this.props.actividadesUser.actividades.map(function(result, id){
+              return (
+                <TouchableOpacity key={id} onPress={() => _this.toActividadDetalle(result)}>
+                  <Actividad actividad={result}/>
+                </TouchableOpacity>
+              );
+            })}
+          </ScrollView>
+        );
+      } else if (!this.props.actividadesUser.isFetching) {
+        actividades = (
+          <Text style={{ textAlign: 'center' }}>
+            No se encontraron actividades
+          </Text>
+        );
+      }
     }
 
     return (
@@ -102,6 +109,7 @@ function select(store) {
   return {
     user: store.user,
     actividadesUser: store.actividadesUser,
+    app: store.app,
   };
 }
 

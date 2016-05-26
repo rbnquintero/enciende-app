@@ -12,6 +12,8 @@ import Drawer from 'react-native-drawer';
 import codePush from "react-native-code-push";
 var SideMenu = require('./views/common/SideMenu');
 
+var BackgroundProcess = require('./BackgroundProcess');
+
 var NoticiasNavigator = require('./views/common/NoticiasNavigator');
 var RallyNavigator = require('./views/rally/RallyNavigator');
 var Contacto = require('./views/rally/Contacto');
@@ -51,8 +53,8 @@ class AppNavigator extends Component {
     var bar = (<View/>);
     if(this.props.user.isLoggedIn && this.props.user.currentRally!=null) {
       bar = (
-        <TouchableOpacity onPress={() => this.goToRally()}>
-          <RallyBar />
+        <TouchableOpacity onPress={() => this.goToRally()} style={{position: 'absolute', bottom: 0, left: 0, right: 0}}>
+          <RallyBar/>
         </TouchableOpacity>
       );
     }
@@ -108,6 +110,7 @@ class AppNavigator extends Component {
            >
            {component}
         </Drawer>
+        <BackgroundProcess/>
       </View>
     );
   }

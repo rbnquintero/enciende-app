@@ -91,7 +91,7 @@ class SideMenu extends Component {
           </View>);
 
         selected = false;
-        if(this.props.navigation.pantalla === 'ESTATUS') {
+        if(this.props.navigation.pantalla === 'estatus') {
           selected = true;
         }
         estatusGrupos = (
