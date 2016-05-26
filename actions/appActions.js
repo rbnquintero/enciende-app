@@ -34,10 +34,10 @@ function rallyEnded() {
   };
 }
 
-function startRally(finaldate) {
+function startRally(group, user, finaldate) {
   return function(dispatch) {
     dispatch(rallyStarted());
-    LocationReportingService.beginReportingLocation("3", "7", finaldate);
+    LocationReportingService.beginReportingLocation(group, user, finaldate);
   }
 }
 

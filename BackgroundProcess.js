@@ -69,7 +69,7 @@ class BackgroundProcess extends Component {
     if(moment(fecha).isBefore(now) && !this.props.app.rallyOn) {
       if(moment().isBefore(moment(fecha).add(12, 'hours'))){
         var finaldate = moment(fecha).add(12, 'hours').format("YYYY-MM-DDTHH:mm:ss.SSSZ");
-        this.props.startRally(finaldate);
+        this.props.startRally(this.props.user.currentRally.grupo.idGrupo, this.props.user.userData.idUsuario, finaldate);
       } else if(this.props.app.rallyOn) {
         this.props.endRally();
       }
@@ -94,7 +94,7 @@ function select(store) {
 function actions(dispatch) {
   return {
     loadEventEmiter: (emiter) => dispatch(loadEventEmiter(emiter)),
-    startRally: (finaldate) => dispatch(startRally(finaldate)),
+    startRally: (grupo, userId, finaldate) => dispatch(startRally(grupo.toString(), userId.toString(), finaldate)),
     endRally: () => dispatch(endRally()),
   };
 }
