@@ -17,6 +17,7 @@ var RallyNavigator = require('./views/rally/RallyNavigator');
 var Contacto = require('./views/rally/Contacto');
 var RegistroUsuarios = require('./views/admin/RegistroUsuarios');
 var RegistroGrupos = require('./views/admin/RegistroGrupos');
+var EnvioNotificaciones = require('./views/admin/EnvioNotificaciones');
 var EstatusGruposNavigation = require('./navegaciones/EstatusGruposNavigation');
 var RallyBar = require('./views/segments/RallyBar');
 
@@ -71,6 +72,8 @@ class AppNavigator extends Component {
       component = (<RegistroUsuarios appnavigator={this.props.appnavigator} openDrawer={this.openDrawer} drawer={this._drawerF}/>);
     } else if(this.props.navigation.pantalla === 'registrogrupos'){
       component = (<RegistroGrupos openDrawer={this.openDrawer} drawer={this._drawerF} appnavigator={this.props.appnavigator}/>);
+    } else if(this.props.navigation.pantalla === 'envioNotificaciones'){
+      component = (<EnvioNotificaciones appnavigator={this.props.appnavigator} openDrawer={this.openDrawer} drawer={this._drawerF}/>);
     } else if(this.props.navigation.pantalla === 'contacto'){
       component = (<Contacto openDrawer={this.openDrawer} drawer={this._drawerF} appnavigator={this.props.appnavigator}/>);
     } else if(this.props.navigation.pantalla === 'estatus'){

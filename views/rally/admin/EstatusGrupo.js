@@ -83,14 +83,14 @@ class EstatusGrupo extends Component {
     }
   }
   cargarUbicaciones() {
-    var query = env.serverURL + '/location/lista/'+this.props.grupoId;
+    var query = env.serverURL + '/location/lista/'+this.props.grupoId+'/100';
 
     fetch(query, { method: 'GET'
     }).then(response => response.json())
       .then(json => {
         var locations =[];
         if(json.success && json.locations.length>0){
-          for(i=0;(i<200);i++){
+          for(i=0;i<json.locations.length;i++){
             locations.push({latitude:parseFloat(json.locations[i].latitud),longitude:parseFloat(json.locations[i].longitud)});
           }
         }
@@ -170,6 +170,7 @@ class EstatusGrupo extends Component {
                   draggable: false,
                 }}
                 title={result.actividad.nombre}
+                description={_this.getNombreEstatus(result.estatus)}
               />
             );
           })}
@@ -198,6 +199,22 @@ class EstatusGrupo extends Component {
 
       </View>
     );
+  }
+
+  getNombreEstatus(estatus){
+     if(estatus===0){
+       return 'Bloqueada';
+     }else if(estatus===10){
+       return 'Pista mostrada';
+     }else if(estatus===20){
+       return 'Como llegar mostrado';
+     }else if(estatus===30){
+       return 'Haciendo actvidad';
+     }else if(estatus===40){
+       return 'Selfie tomada';
+     }else if(estatus===100){
+       return 'Terminada';
+     }
   }
 }
 

@@ -12,6 +12,7 @@ const PANTALLA_ESTATUS = 'PANTALLA_ESTATUS';
 const PANTALLA_NOTICIAS = 'PANTALLA_NOTICIAS';
 const PANTALLA_REGISTRO_USR = 'PANTALLA_REGISTRO_USR';
 const PANTALLA_REGISTRO_GRP = 'PANTALLA_REGISTRO_GRP';
+const PANTALLA_ENVIO_NOTIFICACIONES = 'PANTALLA_ENVIO_NOTIFICACIONES';
 
 /*
  * action creators
@@ -52,4 +53,10 @@ function toPantallaRegistroGrp() {
   };
 }
 
-module.exports = {toMainHome, toRallyHome, toContacto, toEstatus, toPantallaRegistroGrp, toPantallaRegistroUsr, };
+function toPantallaEnvioNotificaciones() {
+  return {
+    type: PANTALLA_ENVIO_NOTIFICACIONES,
+  };
+}
+
+module.exports = {toMainHome, toRallyHome, toContacto, toEstatus, toPantallaRegistroGrp, toPantallaRegistroUsr,toPantallaEnvioNotificaciones };

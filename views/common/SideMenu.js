@@ -20,7 +20,7 @@ import type {State as User} from '../../reducers/user';
 var { connect } = require('react-redux');
 var {
   toMainHome, toRallyHome, toContacto, toEstatus, toPantallaRegistroUsr, toPantallaRegistroGrp,
-  logOut,
+  logOut,toPantallaEnvioNotificaciones
 } = require('../../actions');
 type Props = {
   user: User;
@@ -32,6 +32,7 @@ type Props = {
   toEstatus: () => void;
   toPantallaRegistroUsr: () => void;
   toPantallaRegistroGrp: () => void;
+  toPantallaEnvioNotificaciones: () => void;
 };
 
 class SideMenu extends Component {
@@ -80,6 +81,7 @@ class SideMenu extends Component {
     var registroparticipantes = null;
     var estatusGrupos = null;
     var registrogrupos = null;
+    var envioNotificaciones = null;
     var admin = null;
     var staff = null;
     if(this.props.user.isRegistered) {
@@ -118,6 +120,14 @@ class SideMenu extends Component {
           }
           var registrogrupos = (
             <SideMenuItem titulo="Registro de Equipos" icon={require('image!icon_rgrupos')} selected={selected} action={() => {this.props.closeMenu(); this.props.toPantallaRegistroGrp();}}/>
+          );
+
+          selected = false;
+          if(this.props.navigation.pantalla === 'envioNotificaciones') {
+            selected = true;
+          }
+          var envioNotificaciones = (
+            <SideMenuItem titulo="Envío de Notificaciones" icon={require('image!icon_rgrupos')} selected={selected} action={() => {this.props.closeMenu(); this.props.toPantallaEnvioNotificaciones();}}/>
           );
         }
       }
@@ -195,6 +205,7 @@ class SideMenu extends Component {
           {admin}
           {registroparticipantes}
           {registrogrupos}
+          {envioNotificaciones}
           <View style={{ flexDirection: 'row', alignItems: 'center', borderTopWidth: 1, marginTop: 10, borderColor: 'gray', paddingHorizontal: 10, height: 35 }}>
             <Text style={{ color: 'gray', fontSize: 13, fontWeight: '400' }}>Información</Text>
           </View>
@@ -220,6 +231,7 @@ function actions(dispatch) {
     toEstatus: () => dispatch(toEstatus()),
     toPantallaRegistroUsr: () => dispatch(toPantallaRegistroUsr()),
     toPantallaRegistroGrp: () => dispatch(toPantallaRegistroGrp()),
+    toPantallaEnvioNotificaciones: () => dispatch(toPantallaEnvioNotificaciones()),
     logOut: () => dispatch(logOut()),
   };
 }
