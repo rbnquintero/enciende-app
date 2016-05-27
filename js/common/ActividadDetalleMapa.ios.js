@@ -404,21 +404,21 @@ class ActividadDetalleMapa extends Component {
 
     return (
       <MapView
-          style={ styles.map }
-          showsUserLocation={true}
-          annotations={[{
-            latitude: lat,
-            longitude: lon,
-            animateDrop: true,
-            draggable: false,
-          }]}
-          region={{
-            latitude: lat,
-            longitude: lon,
-            latitudeDelta: 0.01,
-            longitudeDelta: 0.01,
-          }}
-        />
+        style={ styles.map }
+        showsUserLocation={true}
+        annotations={[{
+          latitude: lat,
+          longitude: lon,
+          animateDrop: true,
+          draggable: false,
+        }]}
+        region={{
+          latitude: lat,
+          longitude: lon,
+          latitudeDelta: 0.01,
+          longitudeDelta: 0.01,
+        }}
+      />
     );
   }
 }

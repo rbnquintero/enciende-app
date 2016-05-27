@@ -12,7 +12,7 @@ class ActivitySegment extends Component {
     var image = (
       <Image
         style={{ resizeMode: Image.resizeMode.contain, width: 30, height: 30 }}
-        source={require('image!actBloq')}/>
+        source={require('image!actbloq')}/>
     );
     var desc = 'Actividad bloqueada';
     if(this.props.actividad.estatus != 0 && this.props.actividad.estatus != 100) {
@@ -28,7 +28,7 @@ class ActivitySegment extends Component {
       image = (
         <Image
           style={{ resizeMode: Image.resizeMode.contain, width: 30, height: 30 }}
-          source={require('image!actOk')}/>
+          source={require('image!actok')}/>
       );
       desc = this.props.actividad.actividad.instrucciones;
     }
