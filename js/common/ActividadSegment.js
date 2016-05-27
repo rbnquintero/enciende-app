@@ -12,11 +12,11 @@ class ActivitySegment extends Component {
     var image = (
       <Image
         style={{ resizeMode: Image.resizeMode.contain, width: 30, height: 30 }}
-        source={require('../../js/common/img/lock.png')}/>
+        source={require('image!actbloq')}/>
     );
-    var desc = null;
+    var desc = 'Actividad bloqueada';
     if(this.props.actividad.estatus != 0 && this.props.actividad.estatus != 100) {
-      image = null;
+      image = (<View style={{width: 30}}/>);
       if(this.props.actividad.horaDesbloqueada != null) {
         desc = this.props.actividad.actividad.instrucciones;
       } else if (this.props.actividad.horaInstrucciones) {
@@ -28,23 +28,23 @@ class ActivitySegment extends Component {
       image = (
         <Image
           style={{ resizeMode: Image.resizeMode.contain, width: 30, height: 30 }}
-          source={require('../../js/common/img/ok.png')}/>
+          source={require('image!actok')}/>
       );
       desc = this.props.actividad.actividad.instrucciones;
     }
 
     return (
-      <View style={{ backgroundColor: '#f2f2f2', paddingHorizontal: 10, paddingVertical: 6, borderBottomWidth: 1, borderColor: 'gray' }}>
-        <View style={{ flexDirection: 'row' }}>
-          <Text style={{ fontSize: 25, fontWeight: '200', flex: 1 }}>
-            {this.props.actividad.actividad.nombre}
-          </Text>
+      <View style={{ backgroundColor: 'transparent', marginHorizontal: 30, paddingVertical: 21, borderBottomWidth: 1, borderColor: 'rgba(255,255,255,0.15)' }}>
+        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
           {image}
-        </View>
-        <View style={{ flexDirection: 'row', marginTop: 6, }}>
-          <Text style={{ fontSize: 13, fontWeight: '200', color: 'gray', flex: 1 }}>
-            {desc}
-          </Text>
+          <View style={{ marginLeft: 10 }}>
+            <Text style={{ color: 'white', fontSize: 15, flex: 1 }}>
+              {this.props.actividad.actividad.nombre}
+            </Text>
+            <Text style={{ marginTop: 5, fontSize: 12, color: 'white', opacity: 0.7, flex: 1 }}>
+              {desc}
+            </Text>
+          </View>
         </View>
       </View>
     );

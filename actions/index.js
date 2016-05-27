@@ -5,6 +5,7 @@ const newsActions = require('./news');
 const staffActions = require('./staff');
 const actividadesUser = require('./actividadesUser');
 const navigationActions = require('./navigation');
+const appActions = require('./appActions');
 
 module.exports = {
   ...loginActions,
@@ -12,4 +13,5 @@ module.exports = {
   ...staffActions,
   ...navigationActions,
   ...actividadesUser,
+  ...appActions,
 };

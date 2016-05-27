@@ -48,21 +48,21 @@ function actUserLoaded(actUser) {
   };
 }
 
-function loadActUser() {
+function loadActUser(grupoId) {
   return function(dispatch) {
     dispatch(actUserLoading());
     return localRepository.getSavedActUser().then((actUser) => {
       if(actUser != null) {
         dispatch(actUserLoaded(actUser));
-        dispatch(fetchActUser(actUser));
+        dispatch(fetchActUser(actUser, null));
       } else {
-        dispatch(fetchActUser());
+        dispatch(fetchActUser(null, grupoId));
       }
     });
   }
 }
 
-function fetchActUser(actividades) {
+function fetchActUser(actividades, grupoId) {
   return function(dispatch) {
     if(actividades != null) {
       var info = [];
@@ -71,7 +71,7 @@ function fetchActUser(actividades) {
       dispatch(validateActivity(info));
     } else {
       dispatch(actUserLoading());
-      var query = env.serverURL + '/rally/actividades/2/';
+      var query = env.serverURL + '/rally/actividades/' + grupoId + '/';
       return fetch(query)
         .then(response => response.json())
         .then(json => {

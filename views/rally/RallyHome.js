@@ -17,49 +17,61 @@ var esLocale = require('moment/locale/es');
 
 /* REDUX */
 import type {State as User} from '../../reducers/user';
-import type {State as Navigation} from '../../reducers/navigation';
+import type {State as App} from '../../reducers/app';
 var { connect } = require('react-redux');
 var {
   toMainHome,
 } = require('../../actions');
 type Props = {
   user: User;
-  navigation: Navigation;
+  app: App;
   toMainHome: () => void;
 };
 
 class RallyHome extends Component {
+  constructor(props) {
+    super(props);
+    var rally = this.props.user.currentRally.grupo.rally;
+    var fecha = new Date(rally.fechaInicio);
+    var fechaStr = moment(fecha).fromNow();
+    this.state = {
+      fecha: fechaStr,
+      subscription : null,
+    }
+  }
+
+  componentDidMount() {
+    var _this = this;
+    if (_this.props.app.eventEmitter != null) {
+      _this.state.subscription = _this.props.app.eventEmitter.addListener('changedate', (args) => {
+        _this.setState({fecha: args.fecha});
+      });
+    }
+  }
+
+  componentWillUnmount() {
+    if(this.state.subscription != null) {
+      this.state.subscription.remove();
+    }
+  }
 
   render() {
     var rally = this.props.user.currentRally.grupo.rally;
-    var fecha = new Date(rally.fechaInicio);
-    var fechaStr = moment(fecha).locale("es", esLocale).endOf('hour').fromNow();
-
     return (
-      <View style={ styles.mainContainer}>
-        <Header
-          title={ 'Rally ' + this.props.user.currentRally.grupo.rally.nombre}
-          leftItem={{
-            layout: 'icon',
-            title: 'Menu',
-            icon: require('../../js/common/img/hamburger.png'),
-            onPress: this.props.navigator.props.openDrawer,
-          }}/>
-        <View style={ styles.container }>
-          <FitImage source={ require('image!going') }
-            style={ styles.mainContainer } content={
-            <View style={ styles.textContainerContainer }>
-              <View style={ styles.textContainer }>
-                <Text style={ styles.subtitulo }>
-                  ¡Prepárate para el Rally Enciende de este año!
-                </Text>
-                <Text style={ styles.texto }>
-                  El rally {rally.nombre} comienza {fechaStr}
-                </Text>
-              </View>
+      <View style={ styles.container }>
+        <FitImage source={ require('image!going') }
+          style={ styles.mainContainer } content={
+          <View style={ styles.textContainerContainer }>
+            <View style={ styles.textContainer }>
+              <Text style={ styles.subtitulo }>
+                ¡Prepárate para el Rally Enciende de este año!
+              </Text>
+              <Text style={ styles.texto }>
+                El rally {rally.nombre} comienza {this.state.fecha}
+              </Text>
             </View>
-          }/>
-        </View>
+          </View>
+        }/>
       </View>
     );
   }
@@ -85,7 +97,7 @@ const styles = StyleSheet.create({
 function select(store) {
   return {
     user: store.user,
-    navigation: store.navigation,
+    app: store.app,
   };
 }
 

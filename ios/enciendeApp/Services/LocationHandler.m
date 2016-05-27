@@ -28,7 +28,7 @@ static LocationHandler *DefaultManager = nil;
 -(void)initiate {
     locationManager = [[CLLocationManager alloc]init];
     locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters;
-    locationManager.distanceFilter = 10.0f;
+    locationManager.distanceFilter = 50.0f;
     locationManager.delegate = self;
     if ([locationManager respondsToSelector:@selector(requestWhenInUseAuthorization)]) {
         [locationManager requestWhenInUseAuthorization];
@@ -56,7 +56,7 @@ static LocationHandler *DefaultManager = nil;
 -(void) getAddressFromCLLocation:(CLLocation*)location {
     CLGeocoder *geocoder = [[CLGeocoder alloc] init];
     __block NSString *response = nil;
-    
+
     CLGeocodeCompletionHandler handler = ^(NSArray *placemarks, NSError *error) {
         NSLog(@"Finding address");
         if (error) {
@@ -67,7 +67,7 @@ static LocationHandler *DefaultManager = nil;
             [self.delegate didRecieveAddress:response];
         }
     };
-    
+
     [geocoder reverseGeocodeLocation:location completionHandler: handler];
 }
 

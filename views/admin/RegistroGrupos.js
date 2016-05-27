@@ -4,12 +4,12 @@ import React, {
   TouchableHighlight,
   TextInput,
   Switch,
+  Text,
   ScrollView,
   StyleSheet,
   Picker,
   View
 } from 'react-native';
-var {Text} = require('../../js/common/Text');
 
 var Loader = require('../helpers/Loader');
 var env = require('../../env');
@@ -130,14 +130,14 @@ class RegistroGrupos extends Component {
       var textoExito = null;
       if(this.state.errorLoading){
         textoError = (
-          <Text style={{ fontSize: 18, fontWeight: '200', marginTop: 20,  color:'red' }}>
+          <Text style={[styles.font, { fontSize: 18, fontWeight: '200', marginTop: 20,  color:'red' }]}>
             {this.state.messegeError}
           </Text>
         )
       }
       if(this.state.exito && !this.state.errorLoading){
         textoExito = (
-          <Text style={{ fontSize: 18, fontWeight: '200', marginTop: 20,  color:'green' }}>
+          <Text style={[styles.font, { fontSize: 18, fontWeight: '200', marginTop: 20,  color:'green' }]}>
             El equipo ha sido guardado
           </Text>
         )
@@ -145,7 +145,7 @@ class RegistroGrupos extends Component {
       view = (
         <View style={{ flex: 1, marginHorizontal: 20 }}>
           <View style={{ flex: 1 }}>
-            <Text style={{ fontSize: 25, fontWeight: '200', marginTop: 20}}>
+            <Text style={[styles.font, { fontSize: 25, fontWeight: '200', marginTop: 20}]}>
               Registra los equipos al rally
             </Text>
             {textoError}
@@ -155,18 +155,18 @@ class RegistroGrupos extends Component {
                 style={{height: 35}}/>
             </View>
             <TouchableHighlight style={styles.button} onPress={() => this.registraGrupo()} underlayColor='#99d9f4'>
-              <Text style={styles.buttonText}>Registrar equipo</Text>
+              <Text style={[styles.font, styles.buttonText]}>Registrar equipo</Text>
             </TouchableHighlight>
           </View>
           <View style={{ flex: 1 }}>
-            <Text style={{ fontSize: 25, fontWeight: '200', marginVertical: 20 }}>
+            <Text style={[styles.font, { fontSize: 25, fontWeight: '200', marginVertical: 20 }]}>
               Equipos registrados
             </Text>
             <ScrollView>
               {this.state.grupos.map(function(result, id){
                 return (
                   <View key={id} style={{marginBottom: 7}}>
-                    <Text style={{fontSize: 17, fontWeight: '200'}}>
+                    <Text style={[styles.font, {fontSize: 17, fontWeight: '200'}]}>
                       {result.nombre}
                     </Text>
                   </View>
@@ -220,6 +220,9 @@ const styles = StyleSheet.create({
     marginTop: 20,
     alignSelf: 'stretch',
     justifyContent: 'center'
+  },
+  font: {
+    fontFamily: 'Source Sans Pro',
   }
 });
 

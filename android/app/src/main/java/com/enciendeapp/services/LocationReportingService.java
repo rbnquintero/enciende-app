@@ -82,6 +82,11 @@ public class LocationReportingService extends ReactContextBaseJavaModule impleme
     logger.d("Result: " + checkGooglePlayServices());
   }
 
+  @ReactMethod
+  public void stopReportingLocation() {
+
+  }
+
   private boolean checkGooglePlayServices(){
   	int checkGooglePlayServices = GooglePlayServicesUtil.isGooglePlayServicesAvailable(getReactApplicationContext());
   	if (checkGooglePlayServices != ConnectionResult.SUCCESS) {
@@ -108,9 +113,9 @@ public class LocationReportingService extends ReactContextBaseJavaModule impleme
 
   protected void createLocationRequest() {
   	mLocationRequest = new LocationRequest();
-  	mLocationRequest.setInterval(60000);
-  	mLocationRequest.setFastestInterval(30000);
-  	mLocationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
+  	mLocationRequest.setInterval(240000);
+  	mLocationRequest.setFastestInterval(120000);
+  	mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
   }
 
   protected void startLocationUpdates() {
@@ -141,7 +146,7 @@ public class LocationReportingService extends ReactContextBaseJavaModule impleme
 
 	@Override
 	public void onConnectionFailed(ConnectionResult connectionResult) {
-
+    stopLocationUpdates();
 	}
 
   @Override

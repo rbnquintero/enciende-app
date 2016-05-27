@@ -1,6 +1,7 @@
 import React, {
   Component,
   TouchableOpacity,
+  TouchableWithoutFeedback,
   RefreshControl,
   ScrollView,
   View
@@ -14,9 +15,11 @@ var ActividadDetalleInstrucciones = require('../../js/common/ActividadDetalleIns
 var ActividadDetalleComoLlegar = require('../../js/common/ActividadDetalleComoLlegar');
 var ActividadDetallePista = require('../../js/common/ActividadDetallePista');
 var ActividadDetalleMapa = require('../../js/common/ActividadDetalleMapa');
+var ActividadDetalleMapaDetalle = require('../../js/common/ActividadDetalleMapaDetalle');
 
 /* REDUX */
 import type {State as ActividadesUser} from '../../reducers/actividadesUser';
+import type {State as User} from '../../reducers/user';
 var {
   toMainHome,
   fetchActUser,
@@ -29,6 +32,18 @@ type Props = {
 };
 
 class ActividadDetalle extends Component {
+  refresh() {
+    this.props.loadUserActividades(this.props.user.currentRally.grupo.idGrupo);
+  }
+
+  toMapaDetalle() {
+    this.props.navigator.push({
+      title: "Mapa Detalle",
+      name: 'Mapa Detalle',
+      component: ActividadDetalleMapaDetalle,
+      passProps: {actividad: this.props.actividad}
+    });
+  }
 
   render() {
     var sentActividad = this.props.actividad;
@@ -47,11 +62,11 @@ class ActividadDetalle extends Component {
     } else {
       contenido = (
         <View style={{ flex: 1 }}>
-          <ScrollView style={{ flex: 2, marginHorizontal: 15 }}
+          <ScrollView style={{ flex: 4, marginHorizontal: 15 }}
             refreshControl={
               <RefreshControl
                 refreshing={this.props.actividadesUser.isFetching}
-                onRefresh={this.props.loadUserActividades}
+                onRefresh={this.refresh.bind(this)}
                 tintColor='rgb(140,51,204)'
                 progressBackgroundColor="#ffff00"
               />
@@ -62,6 +77,12 @@ class ActividadDetalle extends Component {
             <ActividadDetallePista actividad={actividad}/>
           </ScrollView>
           <ActividadDetalleMapa actividad={actividad}/>
+          <View style={{left: 0, right: 0, top: 0, bottom: 0, position: 'absolute'}}>
+            <View style={{flex: 4}}/>
+            <TouchableWithoutFeedback style={{flex: 1}} onPress={this.toMapaDetalle.bind(this)}>
+              <View style={{flex: 1}}/>
+            </TouchableWithoutFeedback>
+          </View>
         </View>
       );
     }
@@ -87,13 +108,14 @@ class ActividadDetalle extends Component {
 function select(store) {
   return {
     actividadesUser: store.actividadesUser,
+    user: store.user,
   };
 }
 function actions(dispatch) {
   return {
     toMainHome: () => dispatch(toMainHome()),
-    loadUserActividades: () => dispatch(loadActUser()),
-    refreshUserActividades: () => dispatch(fetchActUser()),
+    loadUserActividades: (grupoId) => dispatch(loadActUser(grupoId)),
+    refreshUserActividades: (actividades, grupoId) => dispatch(fetchActUser(actividades, grupoId)),
   };
 }
 
