@@ -50,12 +50,21 @@ class RallyActividades extends Component {
     });
   }
 
+  refresh() {
+    this.props.loadUserActividades(this.props.user.currentRally.grupo.idGrupo);
+  }
+
   render() {
     var _this = this;
     var actividades = (
       <Loader />
     );
-    if(!this.props.app.rallyOn) {
+
+    var rally = this.props.user.currentRally.grupo.rally;
+    var now = new Date();
+    var fecha = new Date(rally.fechaInicio);
+
+    if(!this.props.app.rallyOn && now <= fecha) {
       actividades = (<Home/>);
     } else {
       if(this.props.actividadesUser.actividades.length > 0) {
@@ -64,7 +73,7 @@ class RallyActividades extends Component {
             refreshControl={
               <RefreshControl
                 refreshing={this.props.actividadesUser.isFetching}
-                onRefresh={this.props.loadUserActividades}
+                onRefresh={this.refresh.bind(this)}
                 tintColor='rgb(140,51,204)'
                 progressBackgroundColor="#ffff00"
               />
@@ -116,8 +125,8 @@ function select(store) {
 function actions(dispatch) {
   return {
     toMainHome: () => dispatch(toMainHome()),
-    loadUserActividades: () => dispatch(loadActUser()),
-    refreshUserActividades: () => dispatch(fetchActUser()),
+    loadUserActividades: (grupoId) => dispatch(loadActUser(grupoId)),
+    refreshUserActividades: (actividades, grupoId) => dispatch(fetchActUser(actividades, grupoId)),
   };
 }
 

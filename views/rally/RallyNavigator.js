@@ -33,7 +33,7 @@ class RallyNavigator extends Component {
     super(props);
 
     if (!this.props.user.isLoggedIn || !this.props.user.isRegistered || !this.props.user.currentRally== null) {
-      this.props.updateProfile();
+      this.props.updateProfile(null, this.props.user.currentRally.grupo.grupoId);
     }
     _this = this;
   }
@@ -60,16 +60,13 @@ class RallyNavigator extends Component {
     if(!this.props.user.isLoggedIn || !this.props.user.isRegistered || this.props.user.currentRally == null) {
       return null;
     }
-    var rally = this.props.user.currentRally.grupo.rally;
-    var now = new Date();
-    var fecha = new Date(rally.fechaInicio);
 
     return (
       <Navigator
         style={{ flex:1 }}
         ref={view => this.navigation = view}
         configureScene={ this.sceneConfig }
-        onDidFocus={ this.didFocus }
+        onDidFocus={ this.didFocus.bind(this) }
         initialRoute={{ name:'Inicio', title:'Inicio', component: Actividades, }}
         renderScene={this.renderScene}
         openDrawer={this.props.openDrawer}
@@ -78,10 +75,10 @@ class RallyNavigator extends Component {
   }
 
   didFocus(route) {
-    if(_this.props.actividadesUser.actividades.length > 0) {
-      _this.props.refreshUserActividades(_this.props.actividadesUser.actividades);
+    if(this.props.actividadesUser.actividades.length > 0) {
+      this.props.refreshUserActividades(this.props.actividadesUser.actividades, this.props.user.currentRally.grupo.grupoId);
     } else {
-      _this.props.loadUserActividades();
+      this.props.loadUserActividades(this.props.user.currentRally.grupo.idGrupo);
     }
   }
 
@@ -106,9 +103,9 @@ function select(store) {
 
 function actions(dispatch) {
   return {
-    updateProfile: () => dispatch(fetchProfile()),
-    loadUserActividades: () => dispatch(loadActUser()),
-    refreshUserActividades: (actividades) => dispatch(fetchActUser(actividades)),
+    updateProfile: (actividades, grupoId) => dispatch(fetchProfile(actividades, grupoId)),
+    loadUserActividades: (grupoId) => dispatch(loadActUser(grupoId)),
+    refreshUserActividades: (actividades, grupoId) => dispatch(fetchActUser(actividades, grupoId)),
     logOut: () => dispatch(logOut()),
   };
 }

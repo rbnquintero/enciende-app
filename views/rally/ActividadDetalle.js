@@ -17,6 +17,7 @@ var ActividadDetalleMapa = require('../../js/common/ActividadDetalleMapa');
 
 /* REDUX */
 import type {State as ActividadesUser} from '../../reducers/actividadesUser';
+import type {State as User} from '../../reducers/user';
 var {
   toMainHome,
   fetchActUser,
@@ -29,6 +30,9 @@ type Props = {
 };
 
 class ActividadDetalle extends Component {
+  refresh() {
+    this.props.loadUserActividades(this.props.user.currentRally.grupo.idGrupo);
+  }
 
   render() {
     var sentActividad = this.props.actividad;
@@ -51,7 +55,7 @@ class ActividadDetalle extends Component {
             refreshControl={
               <RefreshControl
                 refreshing={this.props.actividadesUser.isFetching}
-                onRefresh={this.props.loadUserActividades}
+                onRefresh={this.refresh.bind(this)}
                 tintColor='rgb(140,51,204)'
                 progressBackgroundColor="#ffff00"
               />
@@ -87,13 +91,14 @@ class ActividadDetalle extends Component {
 function select(store) {
   return {
     actividadesUser: store.actividadesUser,
+    user: store.user,
   };
 }
 function actions(dispatch) {
   return {
     toMainHome: () => dispatch(toMainHome()),
-    loadUserActividades: () => dispatch(loadActUser()),
-    refreshUserActividades: () => dispatch(fetchActUser()),
+    loadUserActividades: (grupoId) => dispatch(loadActUser(grupoId)),
+    refreshUserActividades: (actividades, grupoId) => dispatch(fetchActUser(actividades, grupoId)),
   };
 }
 

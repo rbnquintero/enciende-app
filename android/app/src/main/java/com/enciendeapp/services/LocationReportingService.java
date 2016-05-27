@@ -82,6 +82,11 @@ public class LocationReportingService extends ReactContextBaseJavaModule impleme
     logger.d("Result: " + checkGooglePlayServices());
   }
 
+  @ReactMethod
+  public void stopReportingLocation() {
+
+  }
+
   private boolean checkGooglePlayServices(){
   	int checkGooglePlayServices = GooglePlayServicesUtil.isGooglePlayServicesAvailable(getReactApplicationContext());
   	if (checkGooglePlayServices != ConnectionResult.SUCCESS) {
@@ -141,7 +146,7 @@ public class LocationReportingService extends ReactContextBaseJavaModule impleme
 
 	@Override
 	public void onConnectionFailed(ConnectionResult connectionResult) {
-
+    stopLocationUpdates();
 	}
 
   @Override
