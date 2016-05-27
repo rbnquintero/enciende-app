@@ -6,6 +6,7 @@ import React, {
   ScrollView,
   View
 } from 'react-native';
+import LinearGradient from 'react-native-linear-gradient';
 var {Text} = require('../../js/common/Text');
 
 var Header = require('../../js/common/Header');
@@ -97,9 +98,13 @@ class RallyActividades extends Component {
     }
 
     return (
-      <View style={{ flex: 1}}>
+      <LinearGradient
+        locations={[0,1.0]}
+        colors={['rgb(157,14,214)', 'rgb(136,72,250)',]}
+        style={{ flex: 1}}>
         <Header
-          title={ 'Equipo ' + this.props.user.currentRally.grupo.nombre}
+          title={ 'Actividades Equipo ' + this.props.user.currentRally.grupo.nombre}
+          style={{ backgroundColor: 'rgba(0,0,0,0)', borderColor: 'rgba(255,255,255,0.15)', borderBottomWidth: 1 }}
           leftItem={{
             layout: 'icon',
             title: 'Menu',
@@ -109,7 +114,7 @@ class RallyActividades extends Component {
         <View style={{ flex: 1 }}>
           {actividades}
         </View>
-      </View>
+      </LinearGradient>
     );
   }
 }

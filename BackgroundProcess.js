@@ -52,7 +52,7 @@ class BackgroundProcess extends Component {
     var _this = this;
     setTimeout(function(){
       if(_this.state.update){
-        if(_this.props.user.isLoggedIn){
+        if(_this.props.user.isLoggedIn && _this.props.user.currentRally != null){
           _this.refreshDate();
         }
         _this.backgroundProcess();
