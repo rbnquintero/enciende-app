@@ -30,7 +30,8 @@ class EnvioNotificaciones extends Component {
     super(props);
     this.state = {
       isLoading: true,
-      notificacionEnviada:false
+      notificacionEnviada:false,
+      errorAlEnviar:false
     };
   }
 
@@ -51,36 +52,11 @@ class EnvioNotificaciones extends Component {
           nombre:"/topics/general"
         },
         {
-          descripcion:"Rally Narvar 2016",
+          descripcion:"Rally Narvarte 2016",
           nombre:"rally_1"
         }
       ];
-    this.setState({
-      isLoading: false,
-      topics: topics,
-    });
-    var rally = this.props.user.currentRally.grupo.rally;
-    var query = env.serverURL + '/rally/' + rally.idRally + '/grupos';
-    fetch(query)
-      .then(response => response.json())
-      .then(json => {
-        if(json.success == true) {
-          this.setState({
-            isLoading: false,
-            grupos: json.grupos,
-          });
-        } else {
-          console.log(json.error);
-          this.setState({
-            errorLoading: true
-          });
-        }
-      }).catch(error => {
-        console.log(error);
-        this.setState({
-          errorLoading: true
-        });
-      });
+    this.setState({isLoading: false,topics: topics});
   }
 
   enviarNotificacion(form) {
@@ -101,26 +77,20 @@ class EnvioNotificaciones extends Component {
         method:'POST',
         body:JSON.stringify(data),
         headers:{
-          'Authorization': 'key=AIzaSyCzMAHv3BudyDb5eXPziB6qmD5R4vr2oRk',
+          'Authorization': 'key='+env.gcmKey,
           'Content-Type': 'application/json'
         }
       }
     ).then(response => response.json()).then(json => {
       if(json.message_id) {
-        this.setState({
-          notificacionEnviada: true,
-        });
+        this.setState({notificacionEnviada: true,errorAlEnviar:false});
       } else {
         console.log(json.error);
-        this.setState({
-          errorLoading: true
-        });
+        this.setState({errorAlEnviar: true});
       }
     }).catch(error => {
       console.log(error);
-      this.setState({
-        errorLoading: true
-      });
+      this.setState({errorAlEnviar: true});
     });
   }
 
@@ -187,23 +157,32 @@ class EnvioNotificaciones extends Component {
             Notificacion enviada con éxito
           </Text>
         );
+      }else if(this.state.errorAlEnviar){
+        viewExito = (
+          <Text style={{ fontSize: 12, fontWeight: '200', marginTop: 20, color:'#DC143C' }}>
+            Hubo un error al enviar la noticación, intenta más tarde.
+          </Text>
+        );
       }
       view = (
       <ScrollView >
-        <Text style={{ fontSize: 17, fontWeight: '200', marginTop: 20}}>
-          Datos de la notificación a enviar
-        </Text>
-        {viewExito}
+        <View style={styles.container}>
+          <Text style={{ fontSize: 17, fontWeight: '200', marginTop: 20}}>
+            Datos de la notificación a enviar
+          </Text>
+          {viewExito}
+        </View>
         <View style={styles.container}>
           <Form
             ref="form"
             type={NotificacionForm}
             options={formOptions}
           />
+          <TouchableHighlight style={styles.button} onPress={() => this.enviarNotificacion()} underlayColor='#99d9f4'>
+            <Text style={styles.buttonText}>Enviar notificación</Text>
+          </TouchableHighlight>
         </View>
-        <TouchableHighlight style={styles.button} onPress={() => this.enviarNotificacion()} underlayColor='#99d9f4'>
-          <Text style={styles.buttonText}>Enviar notificación</Text>
-        </TouchableHighlight>
+
       </ScrollView>);
     }
 
@@ -226,7 +205,7 @@ class EnvioNotificaciones extends Component {
 const styles = StyleSheet.create({
   container: {
     justifyContent: 'center',
-    marginTop: 50,
+    marginTop: 0,
     padding: 20,
     backgroundColor: '#ffffff',
   },
@@ -238,7 +217,7 @@ const styles = StyleSheet.create({
   buttonText: {
     fontSize: 18,
     color: 'white',
-    alignSelf: 'center'
+    alignSelf: 'center',
   },
   button: {
     height: 36,
@@ -248,7 +227,8 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     marginBottom: 10,
     alignSelf: 'stretch',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    marginTop:10
   },
 });
 

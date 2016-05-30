@@ -207,20 +207,23 @@ class RegistroUsuarios extends Component {
       console.log(this.state.grupos);
 
       view = (
-      <ScrollView style={{marginHorizontal: 20}}>
-        <Text style={{ fontSize: 17, fontWeight: '200', marginTop: 20, }}>
-          Ingresa los datos del participante
-        </Text>
+      <ScrollView>
+        <View style={styles.container}>
+          <Text style={{ fontSize: 17, fontWeight: '200', marginTop: 20, }}>
+            Ingresa los datos del participante
+          </Text>
+        </View>
         <View style={styles.container}>
           <Form
             ref="form"
             type={Registro}
             options={formOptions}
           />
+          <TouchableHighlight style={styles.button} onPress={() => this.toRegisterUserPOST()} underlayColor='#99d9f4'>
+            <Text style={styles.buttonText}>Registrar participante</Text>
+          </TouchableHighlight>
         </View>
-        <TouchableHighlight style={styles.button} onPress={() => this.toRegisterUserPOST()} underlayColor='#99d9f4'>
-          <Text style={styles.buttonText}>Registrar participante</Text>
-        </TouchableHighlight>
+
       </ScrollView>);
     }
 
@@ -243,7 +246,7 @@ class RegistroUsuarios extends Component {
 const styles = StyleSheet.create({
   container: {
     justifyContent: 'center',
-    marginTop: 50,
+    marginTop: 0,
     padding: 20,
     backgroundColor: '#ffffff',
   },
@@ -265,7 +268,8 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     marginBottom: 10,
     alignSelf: 'stretch',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    marginTop:10
   }
 });
 

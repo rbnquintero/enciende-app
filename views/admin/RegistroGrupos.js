@@ -150,9 +150,9 @@ class RegistroGrupos extends Component {
             </Text>
             {textoError}
             {textoExito}
-            <View style={{paddingHorizontal: 5, marginTop: 20, backgroundColor: 'white', borderRadius: 5, }}>
+            <View style={{paddingHorizontal: 5, marginTop: 20, backgroundColor: 'white' }}>
               <TextInput placeholder='Nombre del equipo' value={this.state.grupo.nombre} onChange={this.handleChangeGrupo.bind(this, 'nombre')} autoCapitalize='words'
-                style={{height: 35}}/>
+                style={{height: 35, borderColor:'#cccccc',borderWidth: 1,borderRadius: 4, padding:7}}/>
             </View>
             <TouchableHighlight style={styles.button} onPress={() => this.registraGrupo()} underlayColor='#99d9f4'>
               <Text style={[styles.font, styles.buttonText]}>Registrar equipo</Text>
@@ -178,7 +178,7 @@ class RegistroGrupos extends Component {
       );
     }
     return (
-      <View style={{ flex: 1, backgroundColor: '#f2f2f2' }}>
+      <View style={{ flex: 1, backgroundColor: '#ffffff' }}>
         <Header
           title="Registro de Equipos"
           leftItem={{
