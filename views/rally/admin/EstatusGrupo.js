@@ -10,25 +10,25 @@ import React, {
   ScrollView,
   StyleSheet,
   TouchableHighlight,
+  TouchableWithoutFeedback,
   View
 } from 'react-native';
 
-var Header = require('../../../js/common/Header');
 var Header = require('../../../js/common/Header');
 var Actividad = require('../../../js/common/ActividadSegment');
 var Loader = require('../../helpers/Loader');
 var env = require('../../../env');
 var MapView = require('react-native-maps');
+var MapaEstatusGrupo = require('./MapaEstatusGrupo');
 
 
 /*  DATE */
 var moment = require('moment');
 var esLocale = require('moment/locale/es');
-var MapView = require('react-native-maps');
 
 
-var { width, height } = Dimensions.get('window');
 
+import LinearGradient from 'react-native-linear-gradient';
 /* REDUX */
 import type {State as User} from '../../../reducers/user';
 import type {State as Navigation} from '../../../reducers/navigation';
@@ -70,18 +70,6 @@ class EstatusGrupo extends Component {
         });
       });
   }
-  toFloat(str){
-    return parseFloat(str);
-  }
-  getPinColor(actividadGrupo){
-    if(actividadGrupo.estatus===0){
-      return '#DC143C';
-    }else if(actividadGrupo.estatus===100){
-      return '#00FF00';
-    }else{
-      return '#1E90FF';
-    }
-  }
   cargarUbicaciones() {
     var query = env.serverURL + '/location/lista/'+this.props.grupoId+'/100';
 
@@ -117,6 +105,17 @@ class EstatusGrupo extends Component {
         });
       });
   }
+
+  toMapaDetalle() {
+    this.props.navigator.push({
+      title: "Detalle de ruta",
+      name: 'Detalle de ruta',
+      component: MapaEstatusGrupo,
+      passProps: {actividades: this.state.actividades,locations:this.state.locations,
+        locationsNoEmpezadas:this.state.locationsNoEmpezadas,grupo:this.props.grupo}
+    });
+  }
+
   render() {
     var _this = this;
     if(!this.state.actividadesCargadas) {
@@ -137,84 +136,46 @@ class EstatusGrupo extends Component {
       locationsView = (<Loader caption="Cargando ubicaciones..."/>);
     }else{
       locationsView =(
-        <MapView
-          style={styles.map}
-          initialRegion={{
-            latitude: 19.4236302,
-            longitude: -99.1652748,
-            latitudeDelta: 0.07,
-            longitudeDelta: 0.07,
-          }}
-        >
-          <MapView.Polyline
-            coordinates={this.state.locations}
-            strokeColor="rgba(63, 191, 63,0.8)"
-            strokeWidth={3}
-            lineDashPattern={[5, 2, 3, 2]}
-          />
-          <MapView.Polyline
-            coordinates={this.state.locationsNoEmpezadas}
-            strokeColor="rgba(191, 63, 63,0.8)"
-            strokeWidth={3}
-            lineDashPattern={[5, 2, 3, 2]}
-          />
-          {this.state.actividades.map(function(result, id){
-            return (
-              <MapView.Marker
-                key={'marker'+id}
-                pinColor={_this.getPinColor(result)}
-                coordinate={{
-                  latitude: _this.toFloat(result.actividad.latitud),
-                  longitude: _this.toFloat(result.actividad.longitudad),
-                  animateDrop: true,
-                  draggable: false,
-                }}
-                title={result.actividad.nombre}
-                description={_this.getNombreEstatus(result.estatus)}
-              />
-            );
-          })}
-
-        </MapView>
-      );
+        <MapaEstatusGrupo locations={this.state.locations}
+          locationsNoEmpezadas={this.state.locationsNoEmpezadas}
+          actividades={this.state.actividades}/>
+        );
     }
 
 
     return (
-      <View style={{ flex: 1 }}>
+      <LinearGradient
+        locations={[0,1.0]}
+        colors={['rgb(157,14,214)', 'rgb(136,72,250)',]}
+        style={{ flex: 1,flexDirection: 'column'}}>
         <Header
           title={'Equipo '+this.props.grupo.nombre}
+          style={{ backgroundColor: 'rgba(0,0,0,0)', borderColor: 'rgba(255,255,255,0.15)', borderBottomWidth: 1 }}
           leftItem={{
             layout: 'icon',
             title: 'Close',
             icon: require('../../../js/common/BackButtonIcon'),
             onPress: this.props.navigator.pop,
           }}/>
+        <View style={{flex:1,flexDirection:'column'}}>
+          <View style={{ flex: 1,flexDirection: 'column'}}>
+            <ScrollView style={{flex:1}}>
+              {view}
+            </ScrollView>
+            <View style={{flex:1}}>
+              {locationsView}
+            </View>
+          </View>
+          <View style={{left: 0, right: 0, top: 0, bottom: 0, position: 'absolute'}}>
+            <View style={{flex: 1}}/>
+            <TouchableWithoutFeedback style={{flex: 1}} onPress={this.toMapaDetalle.bind(this)}>
+              <View style={{flex: 1}}/>
+            </TouchableWithoutFeedback>
+          </View>
+        </View>
 
-        <ScrollView >
-          {view}
-        </ScrollView>
-
-          {locationsView}
-
-      </View>
+      </LinearGradient>
     );
-  }
-
-  getNombreEstatus(estatus){
-     if(estatus===0){
-       return 'Bloqueada';
-     }else if(estatus===10){
-       return 'Pista mostrada';
-     }else if(estatus===20){
-       return 'Como llegar mostrado';
-     }else if(estatus===30){
-       return 'Haciendo actvidad';
-     }else if(estatus===40){
-       return 'Selfie tomada';
-     }else if(estatus===100){
-       return 'Terminada';
-     }
   }
 }
 
