@@ -12,6 +12,8 @@ import Drawer from 'react-native-drawer';
 import codePush from "react-native-code-push";
 var SideMenu = require('./views/common/SideMenu');
 
+var BackgroundProcess = require('./BackgroundProcess');
+
 var NoticiasNavigator = require('./views/common/NoticiasNavigator');
 var RallyNavigator = require('./views/rally/RallyNavigator');
 var Contacto = require('./views/rally/Contacto');
@@ -52,8 +54,8 @@ class AppNavigator extends Component {
     var bar = (<View/>);
     if(this.props.user.isLoggedIn && this.props.user.currentRally!=null) {
       bar = (
-        <TouchableOpacity onPress={() => this.goToRally()}>
-          <RallyBar />
+        <TouchableOpacity onPress={() => this.goToRally()} style={{position: 'absolute', bottom: 0, left: 0, right: 0}}>
+          <RallyBar/>
         </TouchableOpacity>
       );
     }
@@ -102,8 +104,8 @@ class AppNavigator extends Component {
            panCloseMask={0.2}
            closedDrawerOffset={-3}
            styles={{
-             drawer: {shadowColor: '#000000', shadowOpacity: 0.8, shadowRadius: 3},
-             main: {paddingLeft: 3},
+             drawer: {shadowColor: 'black', shadowOpacity: 0.8, shadowRadius: 3},
+             main: {paddingLeft: 3, backgroundColor: 'black'},
            }}
            tweenHandler={(ratio) => ({
              main: { opacity:(2-ratio)/2 }
@@ -111,6 +113,7 @@ class AppNavigator extends Component {
            >
            {component}
         </Drawer>
+        <BackgroundProcess/>
       </View>
     );
   }

@@ -3,6 +3,7 @@ import React, {
   TouchableOpacity,
   View,
   ScrollView,
+  StyleSheet,
   Alert,
   Image,
   Platform,
@@ -88,12 +89,12 @@ class SideMenu extends Component {
       if(this.props.user.currentRally != null && this.props.user.currentRally.rol !== 'PARTICIPANTE') {
         // Usuario es admin o staff
         staff = (
-          <View style={{ flexDirection: 'row', alignItems: 'center', borderTopWidth: 1, marginTop: 10, borderColor: 'gray', paddingHorizontal: 10, height: 35 }}>
-            <Text style={{ color: 'gray', fontSize: 13, fontWeight: '400' }}>Staff</Text>
+          <View style={ styles.seccionTextContainer }>
+            <Text style={ styles.seccionText }>Staff</Text>
           </View>);
 
         selected = false;
-        if(this.props.navigation.pantalla === 'ESTATUS') {
+        if(this.props.navigation.pantalla === 'estatus') {
           selected = true;
         }
         estatusGrupos = (
@@ -102,8 +103,8 @@ class SideMenu extends Component {
 
         if(this.props.user.currentRally.rol === 'ADMIN'){
           admin = (
-            <View style={{ flexDirection: 'row', alignItems: 'center', borderTopWidth: 1, marginTop: 10, borderColor: 'gray', paddingHorizontal: 10, height: 35 }}>
-              <Text style={{ color: 'gray', fontSize: 13, fontWeight: '400' }}>Admin</Text>
+            <View style={ styles.seccionTextContainer }>
+              <Text style={ styles.seccionText }>Admin</Text>
             </View>);
 
           selected = false;
@@ -153,7 +154,7 @@ class SideMenu extends Component {
     var userinfo = (
       <TouchableOpacity onPress={() => this.goToLogIn()}>
         <View
-          style={{ paddingTop: STATUS_BAR_HEIGHT, height: 140, backgroundColor: 'rgb(140,51,204)' }}>
+          style={{ paddingTop: STATUS_BAR_HEIGHT, height: 140, backgroundColor: 'rgb(29,30,37)' }}>
           <Image source={ require('image!profile')} style={{ resizeMode: Image.resizeMode.contain, height: 60, width: 60, margin: 10 }}/>
           <Text style={{ margin: 10, color: 'white', fontSize: 13, fontWeight: '400' }}>Inicia sesión</Text>
         </View>
@@ -165,17 +166,15 @@ class SideMenu extends Component {
       if (this.props.user.currentRally != null) {
         infoRally = (
           <View>
-            <Text style={{ color: 'white', marginTop: 5, fontSize: 11 }}>
+            <Text style={ styles.detailsText }>
               Rally {this.props.user.currentRally.grupo.rally.nombre}
             </Text>
-            <View style={{flexDirection: 'row'}}>
-              <Text style={{ paddingRight: 10, color: 'white', fontSize: 11 }}>
-                {this.props.user.currentRally.grupo.nombre}
-              </Text>
-              <Text style={{ color: 'white', fontSize: 11 }}>
-                Talla playera: {this.props.user.userData.tallaPlayera}
-              </Text>
-            </View>
+            <Text style={ styles.detailsText }>
+              Equipo: {this.props.user.currentRally.grupo.nombre}
+            </Text>
+            <Text style={ styles.detailsText }>
+              Playera: {this.props.user.userData.tallaPlayera}
+            </Text>
           </View>
         );
       }
@@ -183,11 +182,11 @@ class SideMenu extends Component {
       pictureUri = 'https://graph.facebook.com/v2.6/' + this.props.user.fbData.id + '/picture?height=200&access_token=' + this.props.user.token;
       userinfo = (
         <View
-          style={{ paddingTop: STATUS_BAR_HEIGHT, height: 140, backgroundColor: 'rgb(140,51,204)', flexDirection: 'row', alignItems: 'center' }}>
+          style={{ paddingTop: STATUS_BAR_HEIGHT, height: 140, backgroundColor: 'rgb(29,30,37)', flexDirection: 'row', alignItems: 'center' }}>
           <Image source={{ uri: pictureUri }}
-            style={{ resizeMode: Image.resizeMode.contain, height: 60, width: 60, margin: 10 }}/>
+            style={ styles.profilePic }/>
             <View>
-              <Text style={{ color: 'white', fontSize: 13, fontWeight: 'bold' }}>{this.props.user.userData.nombre}</Text>
+              <Text style={ styles.nameText }>{this.props.user.userData.nombre}</Text>
               {infoRally}
             </View>
         </View>
@@ -195,9 +194,9 @@ class SideMenu extends Component {
     }
 
     return (
-      <View style={{ flex: 1, backgroundColor: '#FFFFFF', }}>
+      <View style={{ flex: 1, backgroundColor: 'rgb(36,40,51)', }}>
         {userinfo}
-        <ScrollView style={{ marginVertical: 10 }}>
+        <ScrollView>
           {noticias}
           {rally}
           {staff}
@@ -206,8 +205,8 @@ class SideMenu extends Component {
           {registroparticipantes}
           {registrogrupos}
           {envioNotificaciones}
-          <View style={{ flexDirection: 'row', alignItems: 'center', borderTopWidth: 1, marginTop: 10, borderColor: 'gray', paddingHorizontal: 10, height: 35 }}>
-            <Text style={{ color: 'gray', fontSize: 13, fontWeight: '400' }}>Información</Text>
+          <View style={ styles.seccionTextContainer }>
+            <Text style={ styles.seccionText }>Información</Text>
           </View>
           {contacto}
           {cerrar}
@@ -216,6 +215,20 @@ class SideMenu extends Component {
     );
   }
 }
+
+const styles = StyleSheet.create({
+  profilePic: {
+    resizeMode: Image.resizeMode.contain, height: 60, width: 60, margin: 10, borderRadius: 30 },
+  nameText: {
+    color: 'rgb(240,242,245)', fontSize: 16, },
+  detailsText: {
+    color: 'rgb(156,158,162)', fontSize: 10 },
+  seccionText: {
+    color: 'rgb(156,158,162)', fontSize: 13, },
+  seccionTextContainer: {
+    flexDirection: 'row', alignItems: 'center', marginTop: 10, backgroundColor: 'rgb(29,30,37)',paddingHorizontal: 10, height: 20 }
+});
+
 function select(store) {
   return {
     user: store.user,
