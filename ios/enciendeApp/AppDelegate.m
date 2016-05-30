@@ -101,7 +101,7 @@ NSString *const SubscriptionTopic = @"/topics/general";
    */
 
   #ifdef DEBUG
-    jsCodeLocation = [NSURL URLWithString:@"http://localhost:8081/index.ios.bundle?platform=ios&dev=true"];
+    jsCodeLocation = [NSURL URLWithString:@"http://192.168.11.144:8081/index.ios.bundle?platform=ios&dev=true"];
   #else
     jsCodeLocation = [CodePush bundleURL];
   #endif

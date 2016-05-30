@@ -1,6 +1,7 @@
 import React, {
   Component,
   TouchableOpacity,
+  TouchableWithoutFeedback,
   RefreshControl,
   ScrollView,
   View
@@ -14,6 +15,7 @@ var ActividadDetalleInstrucciones = require('../../js/common/ActividadDetalleIns
 var ActividadDetalleComoLlegar = require('../../js/common/ActividadDetalleComoLlegar');
 var ActividadDetallePista = require('../../js/common/ActividadDetallePista');
 var ActividadDetalleMapa = require('../../js/common/ActividadDetalleMapa');
+var ActividadDetalleMapaDetalle = require('../../js/common/ActividadDetalleMapaDetalle');
 
 /* REDUX */
 import type {State as ActividadesUser} from '../../reducers/actividadesUser';
@@ -34,6 +36,15 @@ class ActividadDetalle extends Component {
     this.props.loadUserActividades(this.props.user.currentRally.grupo.idGrupo);
   }
 
+  toMapaDetalle() {
+    this.props.navigator.push({
+      title: "Mapa Detalle",
+      name: 'Mapa Detalle',
+      component: ActividadDetalleMapaDetalle,
+      passProps: {actividad: this.props.actividad}
+    });
+  }
+
   render() {
     var sentActividad = this.props.actividad;
     var actividad = null;
@@ -51,7 +62,7 @@ class ActividadDetalle extends Component {
     } else {
       contenido = (
         <View style={{ flex: 1 }}>
-          <ScrollView style={{ flex: 2, marginHorizontal: 15 }}
+          <ScrollView style={{ flex: 4, marginHorizontal: 15 }}
             refreshControl={
               <RefreshControl
                 refreshing={this.props.actividadesUser.isFetching}
@@ -66,6 +77,12 @@ class ActividadDetalle extends Component {
             <ActividadDetallePista actividad={actividad}/>
           </ScrollView>
           <ActividadDetalleMapa actividad={actividad}/>
+          <View style={{left: 0, right: 0, top: 0, bottom: 0, position: 'absolute'}}>
+            <View style={{flex: 4}}/>
+            <TouchableWithoutFeedback style={{flex: 1}} onPress={this.toMapaDetalle.bind(this)}>
+              <View style={{flex: 1}}/>
+            </TouchableWithoutFeedback>
+          </View>
         </View>
       );
     }
