@@ -20,28 +20,36 @@ function noticia(state: State = initialState, action): State {
     return {
       isFetching: true,
       error: null,
-      news: null,
+      news: state.news,
       pendingRendering: false,
     }
   } else if (action.type === 'NEWS_LOADING_ERROR') {
     return {
       isFetching: false,
       error: action.error,
-      news: null,
+      news: state.news,
       pendingRendering: false,
     }
   } else if (action.type === 'NEWS_LOADED') {
+    var news = action.news;
+    if(news == null) {
+      news = state.news;
+    }
     return {
       isFetching: false,
       error: null,
-      news: action.news,
+      news: news,
       pendingRendering: true,
     }
   } else if (action.type === 'NEWS_RENDERED') {
+    var news = action.news;
+    if(news == null) {
+      news = state.news;
+    }
     return {
       isFetching: false,
       error: null,
-      news: action.news,
+      news: news,
       pendingRendering: false,
     }
   }

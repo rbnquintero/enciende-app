@@ -32,8 +32,23 @@ type Props = {
 };
 
 class ActividadDetalle extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      map: null,
+    };
+  }
   refresh() {
     this.props.loadUserActividades(this.props.user.currentRally.grupo.idGrupo);
+  }
+
+  componentDidMount() {
+    var _this = this;
+    setTimeout(function(){
+      _this.setState({map: (
+        <ActividadDetalleMapa actividad={_this.props.actividad}/>
+      )});
+    }, 400);
   }
 
   toMapaDetalle() {
@@ -62,23 +77,23 @@ class ActividadDetalle extends Component {
     } else {
       contenido = (
         <View style={{ flex: 1 }}>
-          <ScrollView style={{ flex: 4, marginHorizontal: 15 }}
-            refreshControl={
-              <RefreshControl
-                refreshing={this.props.actividadesUser.isFetching}
-                onRefresh={this.refresh.bind(this)}
-                tintColor='rgb(140,51,204)'
-                progressBackgroundColor="#ffff00"
-              />
-            }>
-            <ActividadDetalleCalificacion actividad={actividad}/>
-            <ActividadDetalleInstrucciones actividad={actividad}/>
-            <ActividadDetalleComoLlegar actividad={actividad}/>
-            <ActividadDetallePista actividad={actividad}/>
-          </ScrollView>
-          <ActividadDetalleMapa actividad={actividad}/>
+          <View style={{flex: 4}}/>
+          {this.state.map}
           <View style={{left: 0, right: 0, top: 0, bottom: 0, position: 'absolute'}}>
-            <View style={{flex: 4}}/>
+            <ScrollView style={{ flex: 4, marginHorizontal: 15 }}
+              refreshControl={
+                <RefreshControl
+                  refreshing={this.props.actividadesUser.isFetching}
+                  onRefresh={this.refresh.bind(this)}
+                  tintColor='rgb(140,51,204)'
+                  progressBackgroundColor="#ffff00"
+                />
+              }>
+              <ActividadDetalleCalificacion actividad={actividad}/>
+              <ActividadDetalleInstrucciones actividad={actividad}/>
+              <ActividadDetalleComoLlegar actividad={actividad}/>
+              <ActividadDetallePista actividad={actividad}/>
+            </ScrollView>
             <TouchableWithoutFeedback style={{flex: 1}} onPress={this.toMapaDetalle.bind(this)}>
               <View style={{flex: 1}}/>
             </TouchableWithoutFeedback>
