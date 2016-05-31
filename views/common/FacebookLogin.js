@@ -75,7 +75,7 @@ class FacebookLogin extends Component {
             </Text>
             <View style={ styles.input }>
               <TextInput placeholder='ID' onChange={this._onInputTextChanged.bind(this)} autoCapitalize='characters'
-                style={{height: 30, width: 80}}/>
+                style={{height: 35, borderColor:'#cccccc',borderWidth: 1,borderRadius: 4, padding:7, width: 80}}/>
             </View>
             <TouchableHighlight style={ styles.button } onPress={() => this.props.registerUser(this.props.user, this.state.userCode)}
               underlayColor='#99d9f4'>
@@ -156,7 +156,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 30, color: 'white', backgroundColor: 'rgba(0,0,0,0)', textAlign: 'center'
   },
   input: {
-    backgroundColor: 'white', paddingHorizontal: 5, marginTop: 20, backgroundColor: 'white', borderRadius: 5,
+    paddingHorizontal: 5, marginTop: 20
   },
   botonFacebook: {
     flexDirection: 'row', alignItems: 'center', paddingTop: normalize(5)

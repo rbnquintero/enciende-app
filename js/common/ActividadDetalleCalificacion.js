@@ -121,10 +121,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row', flexWrap: 'wrap', marginVertical: 30,
   },
   desbloqueoInputContainer: {
-    backgroundColor: 'white', paddingHorizontal: 5, marginRight: 10, backgroundColor: 'white', borderRadius: 5, borderWidth: 1, borderColor: '#e6e6e6'
+    paddingHorizontal: 5, marginRight: 10
   },
   desbloqueoInput: {
-    height: 30, width: 80,
+    height: 35, borderColor:'#cccccc',borderWidth: 1,borderRadius: 4, padding:7,width:80
   },
   desbloqueoBotonContainer: {
     height: 30,
