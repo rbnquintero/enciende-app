@@ -34,6 +34,10 @@ function navigation(state: State = initialState, action): State {
     return {
       pantalla: 'registrogrupos',
     }
+  }else if (action.type === 'PANTALLA_ENVIO_NOTIFICACIONES') {
+    return {
+      pantalla: 'envioNotificaciones',
+    }
   }
 
   return state;
