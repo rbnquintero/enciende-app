@@ -50,7 +50,7 @@ function logOut() {
 }
 
 function logInError(error) {
-  localRepository.deleteAll();
+  //localRepository.deleteAll();
   return {
     type: LOG_IN_ERROR,
     error: error,

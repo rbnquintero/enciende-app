@@ -18,7 +18,7 @@ function staff(state: State = initialState, action): State {
     return {
       isFetching: true,
       error: null,
-      staff: null,
+      staff: state.staff,
     }
   } else if (action.type === 'STAFF_LOADING_ERROR') {
     return {

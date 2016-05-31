@@ -11,8 +11,23 @@ var ActividadDetalleMapa = require('./ActividadDetalleMapa');
 var Header = require('./Header');
 
 class ActividadDetalleMapaDetalle extends Component {
+  constructor(props) {
+    super(props);
+    this.state={
+      map: null,
+    }
+  }
+
+  componentDidMount() {
+    var _this = this;
+    setTimeout(function(){
+      _this.setState({map: (
+        <ActividadDetalleMapa actividad={_this.props.actividad}/>
+      )});
+    }, 400);
+  }
+
   openDirections() {
-    console.log(this.props.actividad.actividad);
     var latitud = this.props.actividad.actividad.latitud;
     var longitud = this.props.actividad.actividad.longitudad;
     var platform = 'google';
@@ -45,7 +60,7 @@ class ActividadDetalleMapaDetalle extends Component {
             title: 'IR',
             onPress: this.openDirections.bind(this),
           }}/>
-        <ActividadDetalleMapa actividad={this.props.actividad}/>
+        {this.state.map}
       </View>
     );
   }
