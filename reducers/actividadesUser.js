@@ -31,10 +31,14 @@ function actividadesUser(state: State = initialState, action): State {
       isPushing: false,
     }
   } else if (action.type === 'ACT_USER_LOADED') {
+    var actividades = action.actUser;
+    if(actividades == null) {
+      actividades = state.actividades;
+    }
     return {
       isFetching: false,
       error: null,
-      actividades: action.actUser,
+      actividades: actividades,
       isPushing: false,
     }
   } else if (action.type === 'ACT_PUSHING') {

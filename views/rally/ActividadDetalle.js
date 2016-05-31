@@ -32,8 +32,23 @@ type Props = {
 };
 
 class ActividadDetalle extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      map: null,
+    };
+  }
   refresh() {
     this.props.loadUserActividades(this.props.user.currentRally.grupo.idGrupo);
+  }
+
+  componentDidMount() {
+    var _this = this;
+    setTimeout(function(){
+      _this.setState({map: (
+        <ActividadDetalleMapa actividad={_this.props.actividad}/>
+      )});
+    }, 400);
   }
 
   toMapaDetalle() {
@@ -76,7 +91,7 @@ class ActividadDetalle extends Component {
             <ActividadDetalleComoLlegar actividad={actividad}/>
             <ActividadDetallePista actividad={actividad}/>
           </ScrollView>
-          <ActividadDetalleMapa actividad={actividad}/>
+          {this.state.map}
           <View style={{left: 0, right: 0, top: 0, bottom: 0, position: 'absolute'}}>
             <View style={{flex: 4}}/>
             <TouchableWithoutFeedback style={{flex: 1}} onPress={this.toMapaDetalle.bind(this)}>
