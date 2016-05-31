@@ -128,7 +128,7 @@ class SideMenu extends Component {
             selected = true;
           }
           var envioNotificaciones = (
-            <SideMenuItem titulo="Envío de Notificaciones" icon={require('image!icon_rgrupos')} selected={selected} action={() => {this.props.closeMenu(); this.props.toPantallaEnvioNotificaciones();}}/>
+            <SideMenuItem titulo="Envío de Notificaciones" icon={require('image!icon_notificaciones')} selected={selected} action={() => {this.props.closeMenu(); this.props.toPantallaEnvioNotificaciones();}}/>
           );
         }
       }
