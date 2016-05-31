@@ -10,6 +10,7 @@ import React, {
 
 /*  DATE */
 var moment = require('moment');
+var preciseDiff = require('moment-precise-range-plugin');
 var esLocale = require('moment/locale/es');
 
 /* REDUX */
@@ -65,7 +66,32 @@ class BackgroundProcess extends Component {
     var fecha = new Date(rally.fechaInicio);
     var now = moment();
     var fechaStr = moment(fecha).fromNow();
-    this.props.app.eventEmitter.emit('changedate', { fecha: fechaStr });
+
+    var timerRally;
+    if(now.isBefore(fecha)){
+      //Aun no inicia rally, calcular cuanto falta
+
+      timerRally = {
+        iniciado : false,
+        terminado : false,
+        timer : moment.preciseDiff(now,fecha,true)
+      };
+    }else if(moment(fecha).add(12,'hours').isBefore(now)){
+      //El rally está en progreso
+      timerRally = {
+        iniciado : true,
+        terminado : false
+      };
+    }else{
+      //El rally terminó
+      timerRally = {
+        iniciado : true,
+        terminado : true
+      };
+    }
+    this.props.app.eventEmitter.emit('changedate', { timerRally: timerRally });
+
+    // Iniciar/terminar envio de locations
     if(moment(fecha).isBefore(now) && !this.props.app.rallyOn) {
       if(moment().isBefore(moment(fecha).add(12, 'hours'))){
         var finaldate = moment(fecha).add(12, 'hours').format("YYYY-MM-DDTHH:mm:ss.SSSZ");

@@ -37,10 +37,10 @@ class RallyBar extends Component {
     _this = this;
     if (_this.props.app.eventEmitter != null) {
       _this.state.subscription = _this.props.app.eventEmitter.addListener('changedate', (args) => {
-        if(_this.state.fechaStr == null) {
+        if(_this.state.timerRally == null) {
           _this.appear();
         }
-        _this.setState({fechaStr: args.fecha});
+        _this.setState({timerRally: args.timerRally});
       });
     }
   }
@@ -55,14 +55,35 @@ class RallyBar extends Component {
       this.state.subscription.remove();
     }
   }
-
+  addCero(numero){
+    if(numero<10){
+      return '0'+numero;
+    }else{
+      return ''+numero;
+    }
+  }
   render() {
     var rally = this.props.user.currentRally.grupo.rally;
+    var rallyTexto = '';
+    var timerRally = this.state.timerRally;
+    if(timerRally){
+      if(!timerRally.iniciado){
+        rallyTexto = 'Iniciamos en '+
+          this.addCero(timerRally.timer.days) + ':' +
+          this.addCero(timerRally.timer.hours) + ':' +
+          this.addCero(timerRally.timer.minutes) + ':' +
+          this.addCero(timerRally.timer.seconds);
+      }else if(!timerRally.terminado){
+        rallyTexto = 'Rally ' + rally.nombre + ' en progreso';
+      }else{
+        rallyTexto = 'Rally ' + rally.nombre + ' ha terminado';
+      }
+    }
 
     return (
       <View style={[styles.timercontainer, this.state.viewStyle]}>
         <View style={styles.timercontainerContainer}>
-          <Text style={styles.timercontainerText}>Rally {rally.nombre} {this.state.fechaStr}</Text>
+          <Text style={styles.timercontainerText}>{rallyTexto} </Text>
         </View>
       </View>
     );

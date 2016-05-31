@@ -9,6 +9,7 @@
     "gandalf-react-native-gcm-push-notification": "^1.0.12",
     "gandalf-react-native-system-notification": "^0.1.105",
     "moment": "2.13.0",
+    "moment-precise-range-plugin": "^1.2.0",
     "react": "0.14.8",
     "react-native": "0.22.2",
     "react-native-code-push": "^1.10.6-beta",
