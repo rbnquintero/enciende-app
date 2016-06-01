@@ -30,8 +30,10 @@ static LocationHandler *DefaultManager = nil;
     locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters;
     locationManager.distanceFilter = 50.0f;
     locationManager.delegate = self;
-    if ([locationManager respondsToSelector:@selector(requestWhenInUseAuthorization)]) {
-        [locationManager requestWhenInUseAuthorization];
+    locationManager.allowsBackgroundLocationUpdates = YES;
+    locationManager.pausesLocationUpdatesAutomatically = NO;
+    if ([locationManager respondsToSelector:@selector(requestAlwaysAuthorization)]) {
+        [locationManager requestAlwaysAuthorization];
     }
 }
 

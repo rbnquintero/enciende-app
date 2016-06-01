@@ -39,6 +39,7 @@ class RegistroUsuarios extends Component {
         tallaPlayera: '',
         generoFem: true,
         grupo: 1,
+        token: this.props.user.token,
       },
       grupos: {},
       isLoading: true,

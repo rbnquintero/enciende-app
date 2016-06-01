@@ -11,6 +11,7 @@ var LocationReportingService = NativeModules.LocationReportingService;
 const LOAD_EVENT_EMITER = 'LOAD_EVENT_EMITER';
 const START_RALLY = 'START_RALLY';
 const END_RALLY = 'END_RALLY';
+const NOT_START_RALLY = 'NOT_START_RALLY';
 
 /*
  * action creators
@@ -34,6 +35,12 @@ function rallyEnded() {
   };
 }
 
+function rallyNotStart() {
+  return {
+    type: NOT_START_RALLY,
+  };
+}
+
 function startRally(group, user, finaldate) {
   return function(dispatch) {
     dispatch(rallyStarted());
@@ -48,4 +55,11 @@ function endRally() {
   }
 }
 
-module.exports = {loadEventEmiter, startRally, endRally, };
+function rallyNotStarted(){
+  return function(dispatch) {
+    dispatch(rallyNotStart());
+    LocationReportingService.stopReportingLocation();
+  }
+}
+
+module.exports = {loadEventEmiter, startRally, endRally, rallyNotStarted};

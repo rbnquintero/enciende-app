@@ -40,6 +40,7 @@ class RegistroUsuarioResultado extends Component {
     query+='&tallaPlayera=' + this.props.userToRegister.talla;
     query+='&grupoUsuarios[0].id.grupoIdGrupo=' + this.props.userToRegister.grupo;
     query+='&grupoUsuarios[0].rol=PARTICIPANTE';
+    query+='&token=' + this.props.userToRegister.token;
     console.log(query);
     fetch(query, { method: 'POST'
     }).then(response => response.json())

@@ -93,8 +93,8 @@ class RegistroGrupos extends Component {
       var query = env.serverURL + '/rally/grabarGrupos';
       query+='?nombre=' + this.state.grupo.nombre;
       query+='&rally.idRally=' + this.props.user.currentRally.grupo.rally.idRally;
-      query+='&token=' + this.props.user.user.token;
-
+      query+='&token=' + this.props.user.token;
+      
       fetch(query, { method: 'POST'
       }).then(response => response.json())
         .then(json => {

@@ -18,6 +18,27 @@ var MapView = require('react-native-maps');
 class MapaEstatusGrupo extends Component {
   constructor(props) {
     super(props);
+    this.state={
+      refrescar: true,
+    }
+  }
+
+  componentDidMount() {
+    this.refrescarProcess();
+  }
+
+  refrescarProcess() {
+    var _this = this;
+    setTimeout(function(){
+      if(_this.state.refrescar && typeof _this.props.refrescar == 'function') {
+        _this.props.refrescar();
+        _this.refrescarProcess();
+      }
+    }, 5000);
+  }
+
+  componentWillUnmount() {
+    this.state.refrescar = false;
   }
 
   render(){
@@ -28,7 +49,6 @@ class MapaEstatusGrupo extends Component {
     if(this.props.navigator){
       header =(
         <Header
-        
           title={'Ruta equipo '+this.props.grupo.nombre}
           leftItem={{
             layout: 'icon',

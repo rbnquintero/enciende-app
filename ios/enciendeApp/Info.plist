@@ -28,7 +28,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>91</string>
+	<string>93</string>
 	<key>CodePushDeploymentKey</key>
 	<string>pEysM1eXivVX4sgcHbHPT-mjiphZNy6WzQ7-W</string>
 	<key>FacebookAppID</key>
@@ -74,6 +74,8 @@
 	</array>
 	<key>UIBackgroundModes</key>
 	<array>
+		<string>fetch</string>
+		<string>location</string>
 		<string>remote-notification</string>
 	</array>
 	<key>UIRequiredDeviceCapabilities</key>
