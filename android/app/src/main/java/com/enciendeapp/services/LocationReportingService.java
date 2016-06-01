@@ -1,5 +1,6 @@
 package com.enciendeapp.services;
 
+import com.facebook.react.ReactActivity;
 import com.facebook.react.bridge.NativeModule;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContext;
@@ -49,6 +50,7 @@ public class LocationReportingService extends ReactContextBaseJavaModule impleme
   private GoogleApiClient mGoogleApiClient = null;
   private LocationListener locationListener;
   private LocationRequest mLocationRequest;
+  private SharedPreferences prefs;
   String locations = "";
 
   @Override
@@ -69,8 +71,10 @@ public class LocationReportingService extends ReactContextBaseJavaModule impleme
     logger.d(fechafinal.toString());
     grupoId = grupo;
     usuarioId = usuario;
+    if(prefs == null) {
+      prefs = getCurrentActivity().getSharedPreferences("com.enciendeapp", Context.MODE_PRIVATE);
+    }
     if(locations == null || locations == "") {
-      SharedPreferences prefs = getCurrentActivity().getSharedPreferences("com.enciendeapp", Context.MODE_PRIVATE);
       locations = prefs.getString("com.enciendeapp.locations", "");
       if(locations == null) {
         locations = "";
@@ -174,7 +178,10 @@ public class LocationReportingService extends ReactContextBaseJavaModule impleme
       }
       jsonString.append("]}");
       logger.d(jsonString.toString());
-      new SaveLocationTask().execute(jsonString.toString());
+      new SaveLocationTask(prefs).execute(jsonString.toString());
+
+      logger.e("this locations");
+      logger.e(prefs.getString("com.enciendeapp.locations", ""));
     } catch (Exception e) {
       logger.e(e);
     }
@@ -187,6 +194,11 @@ public class LocationReportingService extends ReactContextBaseJavaModule impleme
   }
 
   private class SaveLocationTask extends AsyncTask<String, Void, Boolean> {
+    SharedPreferences preferences;
+    public SaveLocationTask(SharedPreferences preferences) {
+      this.preferences = preferences;
+    }
+
     protected Boolean doInBackground(String... json) {
       try {
         URL url = new URL("http://app-enciende.rhcloud.com/location/guardar");
@@ -234,10 +246,15 @@ public class LocationReportingService extends ReactContextBaseJavaModule impleme
         if(result) {
           locations = "";
         }
-        SharedPreferences prefs = getCurrentActivity().getSharedPreferences("com.enciendeapp", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = prefs.edit();
-        editor.putString("com.enciendeapp.locations", locations);
-        editor.commit();
+        logger.d("#### locations");
+        logger.d(locations);
+        if(this.preferences != null) {
+          SharedPreferences.Editor editor = this.preferences.edit();
+          editor.putString("com.enciendeapp.locations", locations);
+          editor.commit();
+        } else {
+          logger.e("invalid preferences");
+        }
     }
   }
 

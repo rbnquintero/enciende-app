@@ -50,7 +50,7 @@ class AppNavigator extends Component {
   }
 
   render() {
-    codePush.sync({installMode: codePush.InstallMode.ON_NEXT_RESUME});
+    codePush.sync();
     var bar = (<View/>);
     if(this.props.user.isLoggedIn && this.props.user.currentRally!=null) {
       bar = (
