@@ -7,6 +7,7 @@ import React, {
   Image,
   Linking,
   ListView,
+  RefreshControl,
   ScrollView,
   StyleSheet,
   TouchableHighlight,
@@ -47,25 +48,32 @@ class EstatusGrupo extends Component {
     super(props);
     this.state = {
       actividadesCargadas: false,
-      actividades:null
+      actividades:null,
+      refreshing:false,
     };
   }
 
   componentDidMount() {
     this.cargarActividades();
   }
+
+  refrescar(){
+    this.setState({refreshing: true});
+    this.cargarActividades();
+  }
+
   cargarActividades() {
     var query = env.serverURL + '/rally/actividades/'+this.props.grupoId+"/";
 
     fetch(query, { method: 'GET'
     }).then(response => response.json())
       .then(json => {
-        this.setState({actividadesCargadas:true,actividades:json.actividades});
+        this.setState({actividadesCargadas:true,actividades:json.actividades, refreshing: false});
         this.cargarUbicaciones();
       }).catch(error => {
         console.log(error);
         this.setState({
-          errorLoading: true,isRegistering:false,isLoading: false,exito:false,
+          errorLoading: true,isRegistering:false,isLoading: false,exito:false, refreshing: false,
           messegeError:'Error al grabar el equipo, intenta más tarde'
         });
       });
@@ -96,7 +104,7 @@ class EstatusGrupo extends Component {
             locationsNoEmpezadas.push({latitude:parseFloat(this.state.actividades[i].actividad.latitud),longitude:parseFloat(this.state.actividades[i].actividad.longitudad)});
           }
         }
-        this.setState({locationsCargadas:true,locations:locations,locationsNoEmpezadas:locationsNoEmpezadas});
+        this.setState({locationsCargadas:true,locations:locations,locationsNoEmpezadas:locationsNoEmpezadas, refreshing: false});
       }).catch(error => {
         console.log(error);
         this.setState({
@@ -112,7 +120,7 @@ class EstatusGrupo extends Component {
       name: 'Detalle de ruta',
       component: MapaEstatusGrupo,
       passProps: {actividades: this.state.actividades,locations:this.state.locations,
-        locationsNoEmpezadas:this.state.locationsNoEmpezadas,grupo:this.props.grupo}
+        locationsNoEmpezadas:this.state.locationsNoEmpezadas,grupo:this.props.grupo,refrescar:()=>this.refrescar()}
     });
   }
 
@@ -159,15 +167,23 @@ class EstatusGrupo extends Component {
           }}/>
         <View style={{flex:1,flexDirection:'column'}}>
           <View style={{ flex: 1,flexDirection: 'column'}}>
-            <ScrollView style={{flex:1}}>
-              {view}
-            </ScrollView>
+            <View style={{flex: 4}}/>
             <View style={{flex:1}}>
               {locationsView}
             </View>
           </View>
           <View style={{left: 0, right: 0, top: 0, bottom: 0, position: 'absolute'}}>
-            <View style={{flex: 1}}/>
+            <ScrollView style={{flex:4}}
+              refreshControl={
+                <RefreshControl
+                  refreshing={this.state.refreshing}
+                  onRefresh={this.refrescar.bind(this)}
+                  tintColor='rgb(140,51,204)'
+                  progressBackgroundColor="#ffff00"
+                />
+              }>
+              {view}
+            </ScrollView>
             <TouchableWithoutFeedback style={{flex: 1}} onPress={this.toMapaDetalle.bind(this)}>
               <View style={{flex: 1}}/>
             </TouchableWithoutFeedback>

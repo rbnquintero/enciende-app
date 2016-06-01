@@ -87,7 +87,7 @@ android {
         applicationId "com.enciendeapp"
         minSdkVersion 16
         targetSdkVersion 22
-        versionCode 92
+        versionCode 93
         versionName "1.1.0"
         ndk {
             abiFilters "armeabi-v7a", "x86"
