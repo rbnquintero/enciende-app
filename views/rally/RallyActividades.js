@@ -65,8 +65,40 @@ class RallyActividades extends Component {
     var now = new Date();
     var fecha = new Date(rally.fechaInicio);
 
-    if(!this.props.app.rallyOn && now <= fecha) {
+    if( (!this.props.app.rallyOn && !this.props.app.rallyEnded) || now <= fecha) {
       actividades = (<Home/>);
+    } else if (this.props.app.rallyEnded) {
+      actividades = (
+        <View style={{ flex: 1 }}>
+          <View style={{borderBottomWidth: 1, borderColor: 'rgba(255,255,255,0.15)', paddingBottom: 21}}>
+            <Text style={{backgroundColor: 'rgba(0,0,0,0)', color: 'white', textAlign: 'center', marginTop: 15, fontSize: 19}}>
+              ¡El rally ha terminado!
+            </Text>
+            <Text style={{backgroundColor: 'rgba(0,0,0,0)', color: 'white', opacity: 0.7, textAlign: 'center', marginTop: 15, fontSize: 14}}>
+              Gracias por haber participado. Sin duda, será una bendición para todos.
+            </Text>
+            <Text style={{backgroundColor: 'rgba(0,0,0,0)', color: 'white', opacity: 0.7, textAlign: 'center', marginTop: 8, fontSize: 14}}>
+              Estas fueron las actividades en las que participó tu equipo.
+            </Text>
+          </View>
+          <ScrollView
+            refreshControl={
+              <RefreshControl
+                refreshing={this.props.actividadesUser.isFetching}
+                onRefresh={this.refresh.bind(this)}
+                tintColor='rgb(140,51,204)'
+                progressBackgroundColor="#ffff00"
+              />
+            }>
+            {this.props.actividadesUser.actividades.map(function(result, id){
+              return (
+                <TouchableOpacity key={id} onPress={() => _this.toActividadDetalle(result)}>
+                  <Actividad actividad={result}/>
+                </TouchableOpacity>
+              );
+            })}
+          </ScrollView>
+        </View>);
     } else {
       if(this.props.actividadesUser.actividades.length > 0) {
         actividades = (

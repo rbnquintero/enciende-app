@@ -222,7 +222,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white', paddingHorizontal: 5, marginRight: 10, backgroundColor: 'white', borderRadius: 5, borderWidth: 1, borderColor: '#e6e6e6'
   },
   desbloqueoInput: {
-    height: 30, width: 80,
+    height: 35, width: 80, borderColor:'#cccccc',borderWidth: 1,borderRadius: 4, padding:7
   },
   desbloqueoBotonContainer: {
     height: 30,

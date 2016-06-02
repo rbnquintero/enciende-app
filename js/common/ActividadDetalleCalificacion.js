@@ -78,15 +78,15 @@ class ActividadDetalleCalificacion extends Component {
             <TextInput placeholder='Código'
               value={this.state.desbloqCode}
               onChange={ (event) => this.setState({ desbloqCode: event.nativeEvent.text}) }
-              autoCapitalize='characters'
+              autoCapitalize='characters' underlineColorAndroid='rgba(0,0,0,0)'
               style={ styles.desbloqueoInput }/>
           </View>
           <View style={ styles.desbloqueoInputContainer }>
             <TextInput placeholder='Calificación'
               value={this.state.calificacion}
               onChange={ (event) => this.setState({ calificacion: event.nativeEvent.text}) }
-              autoCapitalize='characters'
-              style={ styles.desbloqueoInput }/>
+              autoCapitalize='characters' underlineColorAndroid='rgba(0,0,0,0)'
+              style={ [styles.desbloqueoInput, {width: 100}] }/>
           </View>
           {button}
         </View>
