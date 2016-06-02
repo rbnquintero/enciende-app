@@ -3,6 +3,8 @@ var Subscribable = require('Subscribable');
 
 import React, {
   Component,
+  NetInfo,
+  Platform,
   TouchableOpacity,
   Text,
   View
@@ -13,11 +15,14 @@ var moment = require('moment');
 var preciseDiff = require('moment-precise-range-plugin');
 var esLocale = require('moment/locale/es');
 
+var localRepository = require('./views/utils/localRepository');
+
 /* REDUX */
 import type {State as User} from './reducers/user';
 import type {State as App} from './reducers/app';
 var { loadEventEmiter, startRally, endRally, } = require('./actions');
 var { connect } = require('react-redux');
+var RNFS = require('react-native-fs');
 type Props = {
   user: User;
   app: App;
@@ -50,6 +55,23 @@ class BackgroundProcess extends Component {
   }
 
   backgroundProcess() {
+    this.setUploadFilesTimer();
+    this.setDateTimer();
+  }
+
+  setUploadFilesTimer(){
+    var _this = this;
+    setTimeout(function(){
+      if(_this.state.update){
+        if(_this.props.user.isLoggedIn && _this.props.user.currentRally != null){
+          _this.uploadFiles();
+        }
+        _this.backgroundProcess();
+      }
+    }, 30000);
+  }
+
+  setDateTimer(){
     var _this = this;
     setTimeout(function(){
       if(_this.state.update){
@@ -59,6 +81,86 @@ class BackgroundProcess extends Component {
         _this.backgroundProcess();
       }
     }, 1000);
+  }
+
+  uploadFiles(){
+    NetInfo.fetch().done((reach) => {
+      console.log(reach);
+      console.log(RNFS.DocumentDirectoryPath);
+      //Subir fotos solo por wifi
+      if("WIFI"==reach||"wifi"==reach){
+        console.log("Hay internet por wifi, buscar selfies");
+        var selfies = localRepository.getSelfiesASubir().then((selfies) => {
+          if(selfies!=null&&selfies.length>0){
+
+            var selfie = selfies[0];
+            console.log("Selfie encontrada");
+            console.log(selfie);
+            if(selfie.estatus=='sin-subir'){
+              console.log("Se va a subir selfie "+selfie.imageUri);
+              selfie.estatus='subiendo';
+              localRepository.saveSelfiesASubir(selfies);
+              var photo = {
+              	uri: selfie.imageUri,
+              	type: 'image/jpeg',
+              	name: 'abc.jpg',
+              };
+
+              var body = new FormData();
+              body.append('photo', photo);
+              body.append('idGrupo',selfie.actividad.id.idGrupo);
+              body.append('idActividad',selfie.actividad.id.idActividad);
+              body.append('token',selfie.token);
+              body.append('title', 'A beautiful photo!');
+
+              fetch('http://10.25.27.227:8080/servicios/rally/subir-selfie',{
+                method: 'post',
+                headers: {
+                  'Content-Type': 'multipart/form-data',
+                },
+                body: body
+                }).then(response => {
+                  if(response.ok){
+                    var selfies = localRepository.getSelfiesASubir().then((selfies) => {
+                      var selfie = selfies.shift();
+                      localRepository.saveSelfiesASubir(selfies);
+                      if(Platform.OS === 'ios'){
+                        var uri=selfie.imageUri.replace('file://', '');
+                        console.log("Archivo a borrar: "+uri);
+                        RNFS.unlink(uri)
+                          .spread((success, path) => {console.log('Archivo borrado con exito');})
+                          .catch((err) => {console.log(err.message);});
+                      }
+                    });
+                    console.log("image uploaded");
+                  }else{
+                    console.log("Error al subir la imagen");
+                    var selfies = localRepository.getSelfiesASubir().then((selfies) => {
+                      if(selfies!=null&&selfies.length>0){
+                        selfies[0].estatus='sin-subir';
+                        localRepository.saveSelfiesASubir(selfies);
+                      }
+                    });
+                  }
+                }).catch(err =>{
+                  console.log("Error al subir la imagen 2");
+                  var selfies = localRepository.getSelfiesASubir().then((selfies) => {
+                    if(selfies!=null&&selfies.length>0){
+                      selfies[0].estatus='sin-subir';
+                      localRepository.saveSelfiesASubir(selfies);
+                    }
+                  });
+                  console.log(err);
+                });
+            }
+          }else{
+            console.log("No se encontraron selfies");
+          }
+        });
+      }else{
+        console.log("No hay internet, no se buscan selfies a subir");
+      }
+    });
   }
 
   refreshDate() {
@@ -76,7 +178,7 @@ class BackgroundProcess extends Component {
         terminado : false,
         timer : moment.preciseDiff(now,fecha,true)
       };
-    }else if(moment(fecha).add(12,'hours').isBefore(now)){
+    }else if(moment(fecha).add(12,'hours').isAfter(now)){
       //El rally está en progreso
       timerRally = {
         iniciado : true,
