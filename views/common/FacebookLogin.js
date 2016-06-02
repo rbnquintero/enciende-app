@@ -5,8 +5,10 @@ import React, {
   Image,
   StyleSheet,
   AsyncStorage,
+  Platform,
   View
 } from 'react-native';
+var KeyboardSpacer = require('react-native-keyboard-spacer');
 var {Text, normalize} = require('../../js/common/Text');
 var FitImage = require('../../js/common/FitImage');
 var Header = require('../../js/common/Header');
@@ -44,6 +46,8 @@ class FacebookLogin extends Component {
   }
 
   render() {
+    var registerButton;
+
     var loginSection;
     if(!this.props.user.isLoggedIn && !this.props.user.isFetching) {
       // Pantalla de log in con facebook
@@ -75,17 +79,19 @@ class FacebookLogin extends Component {
             </Text>
             <View style={ styles.input }>
               <TextInput placeholder='ID' onChange={this._onInputTextChanged.bind(this)} autoCapitalize='characters'
-                style={{height: 30, width: 80}}/>
+                underlineColorAndroid='rgba(0,0,0,0)' style={{height: 35, width: 80, borderColor:'#cccccc',borderWidth: 1,borderRadius: 4, padding:7}}/>
             </View>
-            <TouchableHighlight style={ styles.button } onPress={() => this.props.registerUser(this.props.user, this.state.userCode)}
-              underlayColor='#99d9f4'>
-              <View style={{flexDirection: 'row'}}>
-                <Text style={[ styles.buttonText, { fontSize: normalize(18), fontWeight: '800' } ]}>
-                  REGISTRAR
-                </Text>
-              </View>
-            </TouchableHighlight>
           </View>
+        );
+        registerButton = (
+          <TouchableHighlight style={ styles.button } onPress={() => this.props.registerUser(this.props.user, this.state.userCode)}
+            underlayColor='#99d9f4'>
+            <View style={{flexDirection: 'row'}}>
+              <Text style={[ styles.buttonText, { fontSize: normalize(18), fontWeight: '800' } ]}>
+                REGISTRAR
+              </Text>
+            </View>
+          </TouchableHighlight>
         );
       } else {
         // El usuario ya inició sesión
@@ -103,6 +109,11 @@ class FacebookLogin extends Component {
           <Loader/>
         </View>
       );
+    }
+
+    var keyboardSpacer = null;
+    if(Platform.OS === 'ios') {
+      keyboardSpacer = (<KeyboardSpacer/>);
     }
 
     return (
@@ -129,6 +140,8 @@ class FacebookLogin extends Component {
                 <View style={{flex: 4}}>
                   {loginSection}
                 </View>
+                {keyboardSpacer}
+                {registerButton}
               </View>
             }
           />
@@ -156,7 +169,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 30, color: 'white', backgroundColor: 'rgba(0,0,0,0)', textAlign: 'center'
   },
   input: {
-    backgroundColor: 'white', paddingHorizontal: 5, marginTop: 20, backgroundColor: 'white', borderRadius: 5,
+    backgroundColor: 'white', marginTop: 20, backgroundColor: 'white', borderRadius: 5,
   },
   botonFacebook: {
     flexDirection: 'row', alignItems: 'center', paddingTop: normalize(5)

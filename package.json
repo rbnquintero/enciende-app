@@ -16,6 +16,7 @@
     "react-native-drawer": "2.0.0",
     "react-native-fbsdk": "^0.1.0",
     "react-native-image-picker": "^0.18.15",
+    "react-native-keyboard-spacer": "^0.2.0",
     "react-native-linear-gradient": "brentvatne/react-native-linear-gradient",
     "react-native-maps": "^0.3.2",
     "react-native-router-flux": "^3.22.23",
