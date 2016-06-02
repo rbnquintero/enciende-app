@@ -76,7 +76,7 @@ class ActividadDetallePista extends Component {
             <TextInput placeholder='Código'
               value={this.state.desbloqCode}
               onChange={ (event) => this.setState({ desbloqCode: event.nativeEvent.text}) }
-              autoCapitalize='characters'
+              autoCapitalize='characters' underlineColorAndroid='rgba(0,0,0,0)'
               style={ styles.desbloqueoInput }/>
           </View>
           {button}
@@ -112,7 +112,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white', paddingHorizontal: 5, marginRight: 10, backgroundColor: 'white', borderRadius: 5, borderWidth: 1, borderColor: '#e6e6e6'
   },
   desbloqueoInput: {
-    height: 30, width: 80,
+    height: 35, width: 80, borderColor:'#cccccc',borderWidth: 1,borderRadius: 4, padding:7
   },
   desbloqueoBotonContainer: {
     height: 30,
