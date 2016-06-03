@@ -67,7 +67,7 @@ class BackgroundProcess extends Component {
         if(_this.props.user.isLoggedIn && _this.props.user.currentRally != null){
           _this.uploadFiles();
         }
-        _this.backgroundProcess();
+        _this.setUploadFilesTimer();
       }
     }, 30000);
   }
@@ -79,7 +79,7 @@ class BackgroundProcess extends Component {
         if(_this.props.user.isLoggedIn && _this.props.user.currentRally != null){
           _this.refreshDate();
         }
-        _this.backgroundProcess();
+        _this.setDateTimer();
       }
     }, 1000);
   }
@@ -197,8 +197,10 @@ class BackgroundProcess extends Component {
     // Iniciar/terminar envio de locations
     if(moment(now).isAfter(fecha)) {
       if(moment().isBefore(moment(fecha).add(12, 'hours'))){
-        var finaldate = moment(fecha).add(12, 'hours').format("YYYY-MM-DDTHH:mm:ss.SSSZ");
-        this.props.startRally(this.props.user.currentRally.grupo.idGrupo, this.props.user.userData.idUsuario, finaldate);
+        if(!this.props.app.rallyOn){
+          var finaldate = moment(fecha).add(12, 'hours').format("YYYY-MM-DDTHH:mm:ss.SSSZ");
+          this.props.startRally(this.props.user.currentRally.grupo.idGrupo, this.props.user.userData.idUsuario, finaldate);
+        }
       } else if(this.props.app.rallyOn || !this.state.startCheck) {
         this.state.startCheck = true;
         this.props.endRally();

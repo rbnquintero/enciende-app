@@ -1,7 +1,8 @@
 'use strict'
 
 import React, {
-  NativeModules
+  NativeModules,
+  Platform,
 } from 'react-native';
 
 var LocationReportingService = NativeModules.LocationReportingService;
@@ -44,7 +45,11 @@ function rallyNotStart() {
 function startRally(group, user, finaldate) {
   return function(dispatch) {
     dispatch(rallyStarted());
-    LocationReportingService.beginReportingLocation(group, user, finaldate);
+    if(Platform.OS==='ios') {
+      LocationReportingService.beginReportingLocation(group, user, finaldate);
+    } else {
+      LocationReportingService.beginReportingLocation(group, user, finaldate, 120000);
+    }
   }
 }
 
