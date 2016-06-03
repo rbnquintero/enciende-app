@@ -114,7 +114,7 @@ class BackgroundProcess extends Component {
               body.append('token',selfie.token);
               body.append('title', 'A beautiful photo!');
 
-              fetch('http://10.25.27.227:8080/servicios/rally/subir-selfie',{
+              fetch(env.serverURL+'/rally/subir-selfie',{
                 method: 'post',
                 headers: {
                   'Content-Type': 'multipart/form-data',
