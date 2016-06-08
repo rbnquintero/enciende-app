@@ -87,8 +87,8 @@ android {
         applicationId "com.enciendeapp"
         minSdkVersion 16
         targetSdkVersion 22
-        versionCode 93
-        versionName "1.1.0"
+        versionCode 103
+        versionName "1.1.1"
         ndk {
             abiFilters "armeabi-v7a", "x86"
         }
@@ -149,4 +149,7 @@ dependencies {
     compile "com.android.support:appcompat-v7:23.0.1"
     compile project(':react-native-image-picker')
     compile project(':react-native-linear-gradient')
+    compile project(':react-native-fs')
+    compile project(':Orientation')
+    compile project(':react-native-image-zoom')
 }

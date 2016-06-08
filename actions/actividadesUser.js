@@ -92,6 +92,20 @@ function fetchActUser(actividades, grupoId) {
 function validateActivity(info) {
   return function(dispatch) {
     dispatch(actPushing());
+
+    if(info.imageUri){
+      //Se tomó selfie, agregar a lista a subir
+      var selfies = localRepository.getSelfiesASubir().then((selfies) => {
+        if(selfies==null){
+          selfies = [];
+        }
+        var selfie = {estatus:'sin-subir',imageUri:info.imageUri,actividad:info.actividad,token:info.code};
+        selfies.push(selfie);
+        localRepository.saveSelfiesASubir(selfies);
+      });
+
+    }
+
     var valid = false;
     if(info.action != null && info.action != 'instrucciones') {
       for (let s of info.staff) {

@@ -60,12 +60,14 @@ class ActividadDetalleInstrucciones extends Component {
     };
   }
 
-  submitSelfie() {
+  submitSelfie(imageUri) {
     var info = {};
     info['actividades']=this.props.actividadesUser.actividades;
     info['staff']=this.props.staff.staff;
     info['action']='instrucciones';
     info['code']=env.validtoken;
+    info['imageUri']=imageUri;
+    info['actividad']=this.props.actividad;
     this.props.validateActivity(info);
   }
 
@@ -146,7 +148,7 @@ class ActividadDetalleInstrucciones extends Component {
       quality: 0.5, // 0 to 1, photos only
       angle: 0, // android only, photos only
       allowsEditing: false, // Built in functionality to resize/reposition the image after selection
-      noData: false, // photos only - disables the base64 `data` field from being generated (greatly improves performance on large photos)
+      noData: true, // photos only - disables the base64 `data` field from being generated (greatly improves performance on large photos)
       storageOptions: { // if this key is provided, the image will get saved in the documents directory on ios, and the pictures directory on android (rather than a temporary directory)
         skipBackup: true, // ios only - image will NOT be backed up to icloud
         path: 'images' // ios only - will save image at /Documents/images rather than the root
@@ -172,7 +174,6 @@ class ActividadDetalleInstrucciones extends Component {
       }
       else {
         // You can display the image using either data:
-        const source = {uri: 'data:image/jpeg;base64,' + response.data, isStatic: true};
         _this.props.actPushing();
         var imageuri = response.uri;
         shareLinkContent.photos[0].imageUrl=imageuri;
@@ -182,6 +183,8 @@ class ActividadDetalleInstrucciones extends Component {
           function(canShow) {
             if (canShow) {
               return ShareDialog.show(shareLinkContent);
+            }else{
+              console.log("No se pudo compartir");
             }
           }
         ).then(
@@ -189,10 +192,11 @@ class ActividadDetalleInstrucciones extends Component {
             if (result.isCancelled) {
               console.log('Share cancelled');
             } else {
-              _this.submitSelfie();
+              _this.submitSelfie(imageuri);
             }
           },
           function(error) {
+            console.log("Error al compartir "+error);
             alert('Share fail with error: ' + error);
           }
         );

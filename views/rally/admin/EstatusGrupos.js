@@ -78,7 +78,7 @@ class EstatusGrupos extends Component {
                         {'Equipo: '+result.grupo.nombre}
                       </Text>
                       <Text style={styles.text}>
-                        {' Actvidad '+result.orden+': '+result.actividad.nombre+". Estatus: "+_this.getNombreEstatus(result.estatus)}
+                        {' Actvidad '+result.orden+': '+result.actividad.nombre}
                       </Text>
                       <Text style={styles.text}>
                         {" Estatus: "+_this.getNombreEstatus(result.estatus)}

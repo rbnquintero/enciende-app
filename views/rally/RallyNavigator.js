@@ -84,7 +84,7 @@ class RallyNavigator extends Component {
 
   renderScene(route, navigator) {
     return (
-      <View style={{flex: 1, backgroundColor: '#FFFFFF'}}>
+      <View style={{flex: 1, backgroundColor: '#f2f2f2'}}>
         <route.component
           navigator={navigator}
           {...route.passProps}

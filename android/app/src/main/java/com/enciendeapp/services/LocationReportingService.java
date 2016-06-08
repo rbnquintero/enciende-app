@@ -42,6 +42,7 @@ public class LocationReportingService extends ReactContextBaseJavaModule impleme
     super(reactContext);
   }
 
+  private Integer time = 0;
   private String grupoId = "";
   private String usuarioId = "";
   private Date fechafinal;
@@ -59,7 +60,8 @@ public class LocationReportingService extends ReactContextBaseJavaModule impleme
   }
 
   @ReactMethod
-  public void beginReportingLocation(String grupo, String usuario, String fechafinalStr) {
+  public void beginReportingLocation(String grupo, String usuario, String fechafinalStr, Integer time) {
+    this.time = time;
     String pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSZ";
     format = new SimpleDateFormat(pattern);
     try {
@@ -117,8 +119,8 @@ public class LocationReportingService extends ReactContextBaseJavaModule impleme
 
   protected void createLocationRequest() {
   	mLocationRequest = new LocationRequest();
-  	mLocationRequest.setInterval(240000);
-  	mLocationRequest.setFastestInterval(120000);
+  	mLocationRequest.setInterval(time + 60000);
+  	mLocationRequest.setFastestInterval(time);
   	mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
   }
 

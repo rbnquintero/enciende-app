@@ -7,6 +7,7 @@ const key_current_rally = "key_current_rally";
 const key_saved_news = "key_saved_news";
 const key_saved_staff = "key_saved_staff";
 const key_saved_activities_user = "key_saved_activities_user";
+const key_selfies_to_upload = "key_selfies_to_upload";
 
 var localRepository = {
   /** PERFIL **/
@@ -54,6 +55,13 @@ var localRepository = {
   saveStaff : function(staff) {
     return store.save(key_saved_staff, staff);
   },
+  /** SELFIES A SUBIR **/
+  getSelfiesASubir : function(){
+    return store.get(key_selfies_to_upload);
+  },
+  saveSelfiesASubir : function(selfies){
+    return store.save(key_selfies_to_upload,selfies);
+  }
 };
 
 module.exports = localRepository;

@@ -44,7 +44,7 @@ class RallyHome extends Component {
     var _this = this;
     if (_this.props.app.eventEmitter != null) {
       _this.state.subscription = _this.props.app.eventEmitter.addListener('changedate', (args) => {
-        _this.setState({fecha: args.fecha});
+        _this.setState({timerRally: args.timerRally});
       });
     }
   }
@@ -54,9 +54,30 @@ class RallyHome extends Component {
       this.state.subscription.remove();
     }
   }
-
+  addCero(numero){
+    if(numero<10){
+      return '0'+numero;
+    }else{
+      return ''+numero;
+    }
+  }
   render() {
     var rally = this.props.user.currentRally.grupo.rally;
+    var rallyTexto = '';
+    var timerRally = this.state.timerRally;
+    if(timerRally){
+      if(!timerRally.iniciado){
+        rallyTexto = 'Iniciamos en '+
+          this.addCero(timerRally.timer.days) + ':' +
+          this.addCero(timerRally.timer.hours) + ':' +
+          this.addCero(timerRally.timer.minutes) + ':' +
+          this.addCero(timerRally.timer.seconds);
+      }else if(!timerRally.terminado){
+        rallyTexto = 'Rally ' + rally.nombre + ' en progreso';
+      }else{
+        rallyTexto = 'Rally ' + rally.nombre + ' ha terminado';
+      }
+    }
     return (
       <View style={ styles.container }>
         <FitImage source={ require('image!going') }
@@ -64,10 +85,10 @@ class RallyHome extends Component {
           <View style={ styles.textContainerContainer }>
             <View style={ styles.textContainer }>
               <Text style={ styles.subtitulo }>
-                ¡Prepárate para el Rally Enciende de este año!
+                ¡Prepárate para el Rally {rally.nombre}!
               </Text>
               <Text style={ styles.texto }>
-                El rally {rally.nombre} comienza {this.state.fecha}
+                {rallyTexto}
               </Text>
             </View>
           </View>
