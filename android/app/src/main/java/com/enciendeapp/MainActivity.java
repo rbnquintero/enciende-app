@@ -1,6 +1,9 @@
 package com.enciendeapp;
 
 import android.content.Intent;     // <--- import
+import android.content.res.Configuration; // <--- import
+import com.github.yamill.orientation.OrientationPackage;
+import com.image.zoom.ReactImageZoom;
 import android.os.Bundle;
 import com.facebook.react.ReactActivity;
 import io.neson.react.notification.NotificationPackage;
@@ -57,6 +60,8 @@ public class MainActivity extends ReactActivity {
             new GcmPackage(),
             new NotificationPackage(this),
             new AirPackage(),
+            new OrientationPackage(this),
+            new ReactImageZoom(),
             new ImagePickerPackage(),
             new FBSDKPackage(mCallbackManager),
             new LocationReportingServicePackage(),
@@ -64,6 +69,14 @@ public class MainActivity extends ReactActivity {
             new RNFSPackage(),
             new CodePush("XcSFY3U6ZUNo0ANxutOKPzhuos8oNy6WzQ7-W", this, BuildConfig.DEBUG)
         );
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        Intent intent = new Intent("onConfigurationChanged");
+        intent.putExtra("newConfig", newConfig);
+        this.sendBroadcast(intent);
     }
 
     @Override

@@ -12,8 +12,18 @@ var moment = require('moment');
 var esLocale = require('moment/locale/es');
 
 var Header = require('../../js/common/HeaderHome');
+var NoticiaDetalleImagen = require('./NoticiaDetalleImagen');
 
 class NoticiaDetalle extends Component {
+  toDetalleImagen() {
+    this.props.navigator.push({
+      title: "Noticia",
+      name: 'NoticiaDetalleImagen',
+      component: NoticiaDetalleImagen,
+      passProps: {noticia: this.props.noticia},
+      fromBottom: true,
+    });
+  }
 
   render() {
     var noticia = this.props.noticia;
@@ -34,11 +44,14 @@ class NoticiaDetalle extends Component {
           <Text style={styles.newscontainerResumen}>{noticia.resumen}</Text>
           <Text style={styles.newscontainerDate}>{fechaStr}</Text>
           <View style={styles.bar}/>
-          <View style={styles.imagenContainer}>
-            <Image style={ styles.imagen } source={{ uri: noticia.urlImagen }} />
-          </View>
+          <TouchableHighlight onPress={() => this.toDetalleImagen()}>
+            <View style={styles.imagenContainer}>
+              <Image style={ styles.imagen } source={{ uri: noticia.urlImagen }} />
+            </View>
+          </TouchableHighlight>
 
           <Text style={styles.newscontainerTexto}>{noticia.noticia}</Text>
+          <View style={{height:35}}/>
         </ScrollView>
       </View>
     );
@@ -78,11 +91,11 @@ const styles = StyleSheet.create({
   },
   imagen: {
     height: 150,
-    resizeMode: Image.resizeMode.cover,
+    resizeMode: Image.resizeMode.contain,
     flex: 1,
   },
   newscontainerTexto: {
-    marginTop: 25,
+    marginVertical: 25,
     fontSize: 13,
     fontWeight: '300'
   },
