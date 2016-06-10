@@ -47,9 +47,11 @@ class EstatusGrupo extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      actividadesCargadas: false,
-      actividades:null,
-      refreshing:false,
+      actividades: null,
+      locations: null,
+      refreshing: false,
+      errorLoadingAct: false,
+      errorLoadingLoc: false,
     };
   }
 
@@ -57,31 +59,32 @@ class EstatusGrupo extends Component {
     this.cargarActividades();
   }
 
-  refrescar(){
-    this.setState({refreshing: true});
-    this.cargarActividades();
-  }
-
   cargarActividades() {
+    this.setState({refreshing: true});
     var query = env.serverURL + '/rally/actividades/'+this.props.grupoId+"/";
 
-    fetch(query, { method: 'GET'
+    env.timeout(20000, fetch(query, { method: 'GET'
     }).then(response => response.json())
       .then(json => {
-        this.setState({actividadesCargadas:true,actividades:json.actividades, refreshing: false});
+        this.setState({actividadesCargadas:true,actividades:json.actividades, refreshing: false, errorLoadingAct: false});
         this.cargarUbicaciones();
       }).catch(error => {
         console.log(error);
         this.setState({
-          errorLoading: true,isRegistering:false,isLoading: false,exito:false, refreshing: false,
-          messegeError:'Error al grabar el equipo, intenta más tarde'
+          errorLoadingAct: true, refreshing: false,
+        });
+      })).catch(error => {
+        console.log(error);
+        this.setState({
+          errorLoadingAct: true, refreshing: false,
         });
       });
   }
+
   cargarUbicaciones() {
     var query = env.serverURL + '/location/lista/'+this.props.grupoId+'/100';
 
-    fetch(query, { method: 'GET'
+    env.timeout(20000, fetch(query, { method: 'GET'
     }).then(response => response.json())
       .then(json => {
         var locations =[];
@@ -99,17 +102,19 @@ class EstatusGrupo extends Component {
         }
         for(i=0;i<this.state.actividades.length;i++){
           if(this.state.actividades[i].estatus!=0 && this.state.actividades[i].estatus!=100){
-            console.log(this.state.actividades[i].actividad.latitud);
-            console.log(this.state.actividades[i].actividad.longitudad);
             locationsNoEmpezadas.push({latitude:parseFloat(this.state.actividades[i].actividad.latitud),longitude:parseFloat(this.state.actividades[i].actividad.longitudad)});
           }
         }
-        this.setState({locationsCargadas:true,locations:locations,locationsNoEmpezadas:locationsNoEmpezadas, refreshing: false});
+        this.setState({locations:locations,locationsNoEmpezadas:locationsNoEmpezadas, refreshing: false, errorLoadingLoc: false});
       }).catch(error => {
         console.log(error);
         this.setState({
-          errorLoading: true,isRegistering:false,isLoading: false,exito:false,
-          messegeError:'Error al grabar el equipo, intenta más tarde'
+          errorLoadingLoc: true, refreshing: false,
+        });
+      })).catch(error => {
+        console.log(error);
+        this.setState({
+          errorLoadingLoc: true, refreshing: false,
         });
       });
   }
@@ -120,14 +125,28 @@ class EstatusGrupo extends Component {
       name: 'Detalle de ruta',
       component: MapaEstatusGrupo,
       passProps: {actividades: this.state.actividades,locations:this.state.locations,
-        locationsNoEmpezadas:this.state.locationsNoEmpezadas,grupo:this.props.grupo,refrescar:()=>this.refrescar()}
+        locationsNoEmpezadas:this.state.locationsNoEmpezadas,grupo:this.props.grupo,refrescar:()=>this.cargarActividades()}
     });
   }
 
   render() {
+    console.log(this.state.actividades);
     var _this = this;
-    if(!this.state.actividadesCargadas) {
-      view = (<Loader caption="Cargando actividades..."/>);
+    if(this.state.actividades == null && !this.state.errorLoadingAct) {
+      view = (<Loader caption="Cargando actividades..." captionStyle={{color: 'white', backgroundColor: 'rgba(0,0,0,0)'}}/>);
+    } else if (this.state.actividades == null && this.state.errorLoadingAct) {
+      view = (
+        <View style={{flex: 1, alignItems: 'center', flexDirection: 'row'}}>
+          <TouchableOpacity style={{flex: 1}} onPress={() => {
+            this.cargarActividades();
+          }} >
+            <View style={{flex:1, alignItems: 'center', backgroundColor: 'rgba(0,0,0,0)'}}>
+              <Text style={{ textAlign: 'center', flex: 1, color: 'white' }}>Ocurrió un error al cargar los grupos.</Text>
+              <Text style={{ textAlign: 'center', flex: 1, color: 'white' }}>Haz click aquí para reintentar.</Text>
+            </View>
+          </TouchableOpacity>
+        </View>
+      );
     }else{
       view =(
         <View>
@@ -140,8 +159,34 @@ class EstatusGrupo extends Component {
       );
     }
     var locationsView;
-    if(!this.state.locationsCargadas){
-      locationsView = (<Loader caption="Cargando ubicaciones..."/>);
+    if(this.state.locations == null && !this.state.errorLoadingLoc && !this.state.errorLoadingAct) {
+      locationsView = (<Loader caption="Cargando ubicaciones..." captionStyle={{color: 'white', backgroundColor: 'rgba(0,0,0,0)'}}/>);
+    } else if (this.state.locations == null && this.state.errorLoadingLoc) {
+      view = (
+        <View style={{flex: 1, alignItems: 'center', flexDirection: 'row'}}>
+          <TouchableOpacity style={{flex: 1}} onPress={() => {
+            this.cargarUbicaciones();
+          }} >
+            <View style={{flex:1, alignItems: 'center', borderWidth: 'black', backgroundColor: 'rgba(0,0,0,0)'}}>
+              <Text style={{ textAlign: 'center', flex: 1, color: 'white' }}>Ocurrió un error al cargar los grupos.</Text>
+              <Text style={{ textAlign: 'center', flex: 1, color: 'white' }}>Haz click aquí para reintentar.</Text>
+            </View>
+          </TouchableOpacity>
+        </View>
+      );
+    } else if (this.state.locations == null && this.state.errorLoadingAct) {
+      view = (
+        <View style={{flex: 1, alignItems: 'center', flexDirection: 'row'}}>
+          <TouchableOpacity style={{flex: 1}} onPress={() => {
+            this.cargarActividades();
+          }} >
+            <View style={{flex:1, alignItems: 'center', backgroundColor: 'rgba(0,0,0,0)'}}>
+              <Text style={{ textAlign: 'center', flex: 1, color: 'white' }}>Ocurrió un error al cargar los grupos.</Text>
+              <Text style={{ textAlign: 'center', flex: 1, color: 'white' }}>Haz click aquí para reintentar.</Text>
+            </View>
+          </TouchableOpacity>
+        </View>
+      );
     }else{
       locationsView =(
         <MapaEstatusGrupo locations={this.state.locations}
@@ -177,9 +222,8 @@ class EstatusGrupo extends Component {
               refreshControl={
                 <RefreshControl
                   refreshing={this.state.refreshing}
-                  onRefresh={this.refrescar.bind(this)}
-                  tintColor='rgb(140,51,204)'
-                  progressBackgroundColor="#ffff00"
+                  onRefresh={this.cargarActividades.bind(this)}
+                  tintColor='rgba(255,255,255,0.7)'
                 />
               }>
               {view}

@@ -14,6 +14,7 @@ import React, {
 var Loader = require('../helpers/Loader');
 var env = require('../../env');
 var RegistroUsuarioResultado = require('./RegistroUsuarioResultado');
+var ListaUsuariosPorEquipo = require('./ListaUsuariosPorEquipo');
 var Header = require('../../js/common/HeaderHome');
 
 import BackPress from '../../js/common/BackPress';
@@ -94,7 +95,7 @@ class RegistroGrupos extends Component {
       query+='?nombre=' + this.state.grupo.nombre;
       query+='&rally.idRally=' + this.props.user.currentRally.grupo.rally.idRally;
       query+='&token=' + this.props.user.token;
-      
+
       fetch(query, { method: 'POST'
       }).then(response => response.json())
         .then(json => {
@@ -119,7 +120,19 @@ class RegistroGrupos extends Component {
       }
   }
 
+  verGrupo(equipo) {
+    this.props.navigator.push({
+      title: "ListaUsuariosPorEquipo",
+      name: 'ListaUsuariosPorEquipo',
+      component: ListaUsuariosPorEquipo,
+      passProps: {grupo: equipo}
+    });
+  }
+
   render() {
+
+    console.log(this.props);
+    var _this = this;
     var view = null;
     if(this.state.isLoading) {
       view = (<Loader caption="Cargando equipos"/>);
@@ -165,11 +178,13 @@ class RegistroGrupos extends Component {
             <ScrollView>
               {this.state.grupos.map(function(result, id){
                 return (
-                  <View key={id} style={{marginBottom: 7}}>
-                    <Text style={[styles.font, {fontSize: 17, fontWeight: '200'}]}>
-                      {result.nombre}
-                    </Text>
-                  </View>
+                  <TouchableOpacity key={id} onPress={() => _this.verGrupo(result)}>
+                    <View style={{marginBottom: 7}}>
+                      <Text style={[styles.font, {fontSize: 17, fontWeight: '200'}]}>
+                        {result.nombre}
+                      </Text>
+                    </View>
+                  </TouchableOpacity>
                 );
               })}
             </ScrollView>
@@ -185,7 +200,7 @@ class RegistroGrupos extends Component {
             layout: 'icon',
             title: 'Menu',
             icon: require('../../js/common/img/hamburger.png'),
-            onPress: this.props.openDrawer,
+            onPress: this.props.navigator.props.openDrawer,
           }}/>
         {view}
       </View>

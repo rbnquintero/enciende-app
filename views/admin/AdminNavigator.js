@@ -1,38 +1,30 @@
 import React, {
   Component,
+  View,
   Navigator,
-  Platform,
-  View
 } from 'react-native';
 
-var Home = require('./Home');
+var RegistroGrupos = require('./RegistroGrupos');
 
 /* REDUX */
 import type {State as User} from '../../reducers/user';
 import BackPress from '../../js/common/BackPress';
 
 var { connect } = require('react-redux');
-var {
-  fetchProfile,
-  logOut,
-} = require('../../actions');
 type Props = {
   user: User;
-  updateProfile: () => void;
-  logOut: () => void;
 };
 
-class NoticiasNavigator extends Component {
-  props: Props;
-
+var _this;
+class AdminNavigator extends Component {
   constructor(props) {
     super(props);
-    //this.props.logOut();
-    if (!this.props.user.isLoggedIn || !this.props.user.isRegistered || !this.props.user.currentRally== null) {
-      this.props.updateProfile();
-    }
-  }
 
+    if (!this.props.user.isLoggedIn || !this.props.user.isRegistered || !this.props.user.currentRally== null) {
+      this.props.updateProfile(null, this.props.user.currentRally.grupo.grupoId);
+    }
+    _this = this;
+  }
   componentDidMount() {
       this.backPress = new BackPress(this.navigation,this.props.drawer);
   }
@@ -40,7 +32,6 @@ class NoticiasNavigator extends Component {
   componentWillUnmount() {
     this.backPress.removeListener();
   }
-
   sceneConfig(route, routeStack) {
     if(route.fromBottom!=null){
       if(Platform.OS === 'ios') {
@@ -52,28 +43,34 @@ class NoticiasNavigator extends Component {
       return Navigator.SceneConfigs.PushFromRight;
     }
   }
-  routeMapper(route, navigator) {
-    return (
-      <View style={{flex: 1, backgroundColor: 'white'}}>
-        <route.component
-          navigator={navigator}
-          {...route.passProps}/>
-      </View>
-    );
-  }
 
   render() {
+    if(!this.props.user.isLoggedIn || !this.props.user.isRegistered || this.props.user.currentRally == null) {
+      return null;
+    }console.log(this.props);
+
     return (
       <Navigator
         style={{ flex:1 }}
         ref={view => this.navigation = view}
         configureScene={ this.sceneConfig }
-        initialRoute={{ name:'Inicio', title:'Inicio', component: Home }}
-        renderScene={ this.routeMapper }
-        openDrawer={this.props.openDrawer}/>
+        initialRoute={{ name:'Inicio', title:'Inicio', component: RegistroGrupos, }}
+        renderScene={this.renderScene}
+        openDrawer={this.props.openDrawer}
+      />
     );
   }
 
+  renderScene(route, navigator) {
+    return (
+      <View style={{flex: 1, backgroundColor: 'white'}}>
+        <route.component
+          navigator={navigator}
+          {...route.passProps}
+        />
+      </View>
+    );
+  }
 }
 
 function select(store) {
@@ -84,9 +81,8 @@ function select(store) {
 
 function actions(dispatch) {
   return {
-    updateProfile: () => dispatch(fetchProfile()),
-    logOut: () => dispatch(logOut()),
+
   };
 }
 
-module.exports = connect(select, actions)(NoticiasNavigator);
+module.exports = connect(select, actions)(AdminNavigator);

@@ -1,6 +1,7 @@
 import React, {
   Component,
   TouchableHighlight,
+  TouchableOpacity,
   Image,
   StyleSheet,
   NativeModules,
@@ -42,19 +43,9 @@ class Home extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      dataSource: null,
       loadedNews: false,
     };
     this.props.loadNews();
-    /*var finaldate = moment(new Date()).add(1, 'minutes').format("YYYY-MM-DDTHH:mm:ss.SSSZ");
-    LocationReportingService.beginReportingLocation("3", "7", finaldate);
-    /*LocationReportingService.getLocations((error, locations) => {
-      if (error) {
-        console.error(error);
-      } else {
-        console.log(locations);
-      }
-    });*/
   }
 
   _rowPressed(noticia) {
@@ -66,54 +57,49 @@ class Home extends Component {
     });
   }
 
-  renderRow(rowData, sectionID, rowID) {
-    return (
-      <TouchableHighlight onPress={() => this._rowPressed(rowData)}>
-        <Card data={rowData} />
-      </TouchableHighlight>
-    );
-  }
-
-  componentDidUpdate() {
-    if(!this.props.news.isLoading && this.props.news.pendingRendering) {
-      var dataSource = new ListView.DataSource({
-        rowHasChanged: (r1, r2) => r1.id !== r2.id
-      });
-      this.setState({
-        dataSource: dataSource.cloneWithRows(this.props.news.news)
-      });
-      this.props.newsRendered();
-    }
-  }
-
   render() {
+    var _this = this;
+    var rallyBar = null;
+    if(this.props.user.isLoggedIn && this.props.user.currentRally!=null) {
+      rallyBar = (
+        <View style={{height:35, backgroundColor: 'rgba(0,0,0,0)'}}/>
+      );
+    }
+
     var list;
-    if(this.state.dataSource != null) {
+    if(this.props.news.news != null) {
       list = (
-        <ListView
-          dataSource={this.state.dataSource}
-          renderRow={this.renderRow.bind(this)}
+        <ScrollView
+          style={{backgroundColor: 'rgba(0,0,0,0.5)'}}
           refreshControl={
             <RefreshControl
               refreshing={this.props.news.isFetching}
               onRefresh={this.props.fetchAll}
-              tintColor='rgb(140,51,204)'
-              progressBackgroundColor="#ffff00"
+              tintColor='rgba(255,255,255,0.7)'
             />
-          }/>
+          }>
+          {this.props.news.news.map(function(result, id){
+            return (
+              <TouchableHighlight key={id} onPress={() => _this._rowPressed(result)}>
+                <Card data={result} />
+              </TouchableHighlight>
+            );
+          })}
+          {rallyBar}
+        </ScrollView>
       );
     } else {
       if(!this.props.news.isFetching && this.props.news.error != null) {
         list = (
           <View style={{flex: 1, alignItems: 'center', flexDirection: 'row'}}>
-            <TouchableHighlight style={{flex: 1}} onPress={() => {
+            <TouchableOpacity style={{flex: 1}} onPress={() => {
               this.props.loadNews();
             }} >
               <View style={{flex:1, alignItems: 'center'}}>
                 <Text style={{ textAlign: 'center', flex: 1 }}>Ocurrió un error al cargar las noticias.</Text>
                 <Text style={{ textAlign: 'center', flex: 1 }}>Haz click aquí para reintentar.</Text>
               </View>
-            </TouchableHighlight>
+            </TouchableOpacity>
           </View>
         );
       } else {

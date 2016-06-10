@@ -21,7 +21,7 @@ class Loader extends Component {
               style={styles.spinnerr}
               hidden='true'
               size='large'/>
-              <Text style={{ fontSize: 17, fontWeight: '200', marginTop: 10 }}>
+              <Text style={[ {fontSize: 17, fontWeight: '200', marginTop: 10}, this.props.captionStyle ]}>
                 {this.props.caption}
               </Text>
             </View>
@@ -32,7 +32,7 @@ class Loader extends Component {
         <View style={styles.spinnerContainerAndroid}>
           <View style={styles.spinnerContainer}>
             <ProgressBarAndroid/>
-            <Text style={{ fontSize: 17, fontWeight: '200', marginTop: 10 }}>
+            <Text style={[ {fontSize: 17, fontWeight: '200', marginTop: 10}, this.props.captionStyle ]}>
               {this.props.caption}
             </Text>
           </View>
