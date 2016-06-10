@@ -7,12 +7,12 @@
     },
     {
       "idiom" : "universal",
-      "filename" : "actok@2x.png",
+      "filename" : "actok-1.png",
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
-      "filename" : "actok@3x.png",
+      "filename" : "actok-2.png",
       "scale" : "3x"
     }
   ],

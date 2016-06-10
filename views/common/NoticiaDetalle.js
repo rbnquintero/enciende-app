@@ -1,9 +1,10 @@
 import React, {
   Component,
-  TouchableHighlight,
+  TouchableOpacity,
   Image,
   ScrollView,
   StyleSheet,
+  Dimensions,
   View
 } from 'react-native';
 var {Text} = require('../../js/common/Text');
@@ -26,6 +27,8 @@ class NoticiaDetalle extends Component {
   }
 
   render() {
+    var width = Dimensions.get('window').height;
+    var height = width / 3;
     var noticia = this.props.noticia;
     var fecha = new Date(noticia.fechaNoticia);
     var fechaStr = moment(fecha).locale("es", esLocale).format('LL');
@@ -44,11 +47,11 @@ class NoticiaDetalle extends Component {
           <Text style={styles.newscontainerResumen}>{noticia.resumen}</Text>
           <Text style={styles.newscontainerDate}>{fechaStr}</Text>
           <View style={styles.bar}/>
-          <TouchableHighlight onPress={() => this.toDetalleImagen()}>
+          <TouchableOpacity onPress={() => this.toDetalleImagen()}>
             <View style={styles.imagenContainer}>
-              <Image style={ styles.imagen } source={{ uri: noticia.urlImagen }} />
+              <Image style={ [styles.imagen, { height: height, width: width }] } source={{ uri: noticia.urlImagen }} />
             </View>
-          </TouchableHighlight>
+          </TouchableOpacity>
 
           <Text style={styles.newscontainerTexto}>{noticia.noticia}</Text>
           <View style={{height:35}}/>
@@ -87,10 +90,9 @@ const styles = StyleSheet.create({
   imagenContainer: {
     flexDirection: 'row',
     alignItems: 'stretch',
-    backgroundColor: 'black',
+    backgroundColor: 'rgba(0,0,0,0)',
   },
   imagen: {
-    height: 150,
     resizeMode: Image.resizeMode.contain,
     flex: 1,
   },

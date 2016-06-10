@@ -54,7 +54,7 @@ class NoticiasNavigator extends Component {
   }
   routeMapper(route, navigator) {
     return (
-      <View style={{flex: 1, backgroundColor: '#f2f2f2'}}>
+      <View style={{flex: 1, backgroundColor: 'white'}}>
         <route.component
           navigator={navigator}
           {...route.passProps}/>

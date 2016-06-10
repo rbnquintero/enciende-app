@@ -5,6 +5,7 @@ import React, {
   Image,
   Linking,
   ListView,
+  RefreshControl,
   ScrollView,
   StyleSheet,
   TouchableHighlight,
@@ -38,7 +39,8 @@ class EstatusGrupos extends Component {
     super(props);
     this.state = {
       gruposCargados: false,
-      grupos:null
+      grupos:null,
+      refreshing: false,
     };
   }
 
@@ -47,28 +49,61 @@ class EstatusGrupos extends Component {
   }
 
   cargarGrupos() {
-    var query = env.serverURL + '/rally/'+this.props.user.currentRally.grupo.rally.idRally+'/getUltimaActividadByGrupo';
+    if(this.state.actividades =! null) {
+      this.setState({
+        errorLoading: false, refreshing: true,
+      });
+    }
 
-    fetch(query, { method: 'GET'
-    }).then(response => response.json())
+    var query = env.serverURL + '/rally/'+this.props.user.currentRally.grupo.rally.idRally+'/getUltimaActividadByGrupo';
+    console.log(query);
+    env.timeout(20000,
+    fetch(query, { method: 'GET'})
+      .then(response => response.json())
       .then(json => {
-        this.setState({gruposCargados:true,actividades:json.actividades});
+        this.setState({gruposCargados:true,actividades:json.actividades, errorLoading: false, refreshing: false});
       }).catch(error => {
         console.log(error);
         this.setState({
-          errorLoading: true,isRegistering:false,isLoading: false,exito:false,
+          errorLoading: true, refreshing: false,
+          messegeError:'Error al grabar el equipo, intenta más tarde'
+        });
+      })).catch(error => {
+        console.log(error);
+        this.setState({
+          errorLoading: true, refreshing: false,
           messegeError:'Error al grabar el equipo, intenta más tarde'
         });
       });
   }
-  render() {
 
-    if(!this.state.gruposCargados) {
+  render() {
+    if(!this.state.gruposCargados && !this.state.errorLoading) {
       view = (<Loader caption="Cargando equipos..."/>);
+    } else if (this.state.errorLoading) {
+      view = (
+        <View style={{flex: 1, alignItems: 'center', flexDirection: 'row'}}>
+          <TouchableOpacity style={{flex: 1}} onPress={() => {
+            this.cargarGrupos();
+          }} >
+            <View style={{flex:1, alignItems: 'center'}}>
+              <Text style={{ textAlign: 'center', flex: 1 }}>Ocurrió un error al cargar los grupos.</Text>
+              <Text style={{ textAlign: 'center', flex: 1 }}>Haz click aquí para reintentar.</Text>
+            </View>
+          </TouchableOpacity>
+        </View>
+      );
     }else{
       var _this = this;
       view =(
-        <ScrollView>
+        <ScrollView
+          refreshControl={
+            <RefreshControl
+              refreshing={this.state.refreshing}
+              onRefresh={this.cargarGrupos.bind(this)}
+              tintColor='rgba(255,255,255,0.7)'
+            />
+          }>
           {this.state.actividades.map(function(result, id){
             return (
               <View key={id}>

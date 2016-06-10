@@ -86,8 +86,7 @@ class RallyActividades extends Component {
               <RefreshControl
                 refreshing={this.props.actividadesUser.isFetching}
                 onRefresh={this.refresh.bind(this)}
-                tintColor='rgb(140,51,204)'
-                progressBackgroundColor="#ffff00"
+                tintColor='white'
               />
             }>
             {this.props.actividadesUser.actividades.map(function(result, id){
@@ -107,8 +106,7 @@ class RallyActividades extends Component {
               <RefreshControl
                 refreshing={this.props.actividadesUser.isFetching}
                 onRefresh={this.refresh.bind(this)}
-                tintColor='rgb(140,51,204)'
-                progressBackgroundColor="#ffff00"
+                tintColor='rgba(255,255,255,0.7)'
               />
             }>
             {this.props.actividadesUser.actividades.map(function(result, id){
