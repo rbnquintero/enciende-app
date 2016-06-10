@@ -120,18 +120,18 @@ class RegistroGrupos extends Component {
       }
   }
 
-  verGrupo(equipos) {
-    console.log(equipos);
-    /*
+  verGrupo(equipo) {
     this.props.navigator.push({
       title: "ListaUsuariosPorEquipo",
       name: 'ListaUsuariosPorEquipo',
       component: ListaUsuariosPorEquipo,
-      passProps: {grupo: result}
-    });*/
+      passProps: {grupo: equipo}
+    });
   }
 
   render() {
+
+    console.log(this.props);
     var _this = this;
     var view = null;
     if(this.state.isLoading) {
@@ -200,7 +200,7 @@ class RegistroGrupos extends Component {
             layout: 'icon',
             title: 'Menu',
             icon: require('../../js/common/img/hamburger.png'),
-            onPress: this.props.openDrawer,
+            onPress: this.props.navigator.props.openDrawer,
           }}/>
         {view}
       </View>
