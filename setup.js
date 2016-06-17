@@ -24,6 +24,8 @@ var logger = createLogger({
 
 let store = createStore(enciendeReducers, applyMiddleware(thunkMiddleware, logger));
 
+console.disableYellowBox = true;
+
 class Setup extends Component {
   render() {
     return (
