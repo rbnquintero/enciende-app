@@ -19,7 +19,7 @@ const {
 const shareLinkContent = {
   contentType: 'photo',
   commonParameters:{
-    hashtag:"#enciendemx",
+    hashtag:"#EnciendeCDMX",
   },
   photos: [
     {
@@ -197,7 +197,8 @@ class ActividadDetalleInstrucciones extends Component {
           },
           function(error) {
             console.log("Error al compartir "+error);
-            alert('Share fail with error: ' + error);
+            console.log("Error al compartir "+imageuri);
+            _this.submitSelfie(imageuri);
           }
         );
       }

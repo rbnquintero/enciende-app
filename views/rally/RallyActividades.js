@@ -68,19 +68,9 @@ class RallyActividades extends Component {
     if( (!this.props.app.rallyOn && !this.props.app.rallyEnded) || now <= fecha) {
       actividades = (<Home/>);
     } else if (this.props.app.rallyEnded) {
-      actividades = (
-        <View style={{ flex: 1 }}>
-          <View style={{borderBottomWidth: 1, borderColor: 'rgba(255,255,255,0.15)', paddingBottom: 21}}>
-            <Text style={{backgroundColor: 'rgba(0,0,0,0)', color: 'white', textAlign: 'center', marginTop: 15, fontSize: 19}}>
-              ¡El rally ha terminado!
-            </Text>
-            <Text style={{backgroundColor: 'rgba(0,0,0,0)', color: 'white', opacity: 0.7, textAlign: 'center', marginTop: 15, fontSize: 14}}>
-              Gracias por haber participado. Sin duda, será una bendición para todos.
-            </Text>
-            <Text style={{backgroundColor: 'rgba(0,0,0,0)', color: 'white', opacity: 0.7, textAlign: 'center', marginTop: 8, fontSize: 14}}>
-              Estas fueron las actividades en las que participó tu equipo.
-            </Text>
-          </View>
+      var listado = (<Loader caption="Cargando equipos..."/>);
+      if(this.props.actividadesUser.actividades != null) {
+        listado = (
           <ScrollView
             refreshControl={
               <RefreshControl
@@ -97,6 +87,27 @@ class RallyActividades extends Component {
               );
             })}
           </ScrollView>
+        );
+      } else {
+        <Text style={{ textAlign: 'center' }}>
+          No se encontraron actividades
+        </Text>
+      }
+
+      actividades = (
+        <View style={{ flex: 1 }}>
+          <View style={{borderBottomWidth: 1, borderColor: 'rgba(255,255,255,0.15)', paddingBottom: 21}}>
+            <Text style={{backgroundColor: 'rgba(0,0,0,0)', color: 'white', textAlign: 'center', marginTop: 15, fontSize: 19}}>
+              ¡El rally ha terminado!
+            </Text>
+            <Text style={{backgroundColor: 'rgba(0,0,0,0)', color: 'white', opacity: 0.7, textAlign: 'center', marginTop: 15, fontSize: 14}}>
+              Gracias por haber participado. Sin duda, será una bendición para todos.
+            </Text>
+            <Text style={{backgroundColor: 'rgba(0,0,0,0)', color: 'white', opacity: 0.7, textAlign: 'center', marginTop: 8, fontSize: 14}}>
+              Estas fueron las actividades en las que participó tu equipo.
+            </Text>
+          </View>
+          {listado}
         </View>);
     } else {
       if(this.props.actividadesUser.actividades.length > 0) {

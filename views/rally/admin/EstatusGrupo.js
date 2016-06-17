@@ -60,13 +60,15 @@ class EstatusGrupo extends Component {
   }
 
   cargarActividades() {
-    this.setState({refreshing: true});
+    if(this.state.actividades != null) {
+      this.setState({refreshing: true});
+    }
     var query = env.serverURL + '/rally/actividades/'+this.props.grupoId+"/";
 
     env.timeout(20000, fetch(query, { method: 'GET'
     }).then(response => response.json())
       .then(json => {
-        this.setState({actividadesCargadas:true,actividades:json.actividades, refreshing: false, errorLoadingAct: false});
+        this.setState({actividades:json.actividades, refreshing: false, errorLoadingAct: false});
         this.cargarUbicaciones();
       }).catch(error => {
         console.log(error);
@@ -130,7 +132,6 @@ class EstatusGrupo extends Component {
   }
 
   render() {
-    console.log(this.state.actividades);
     var _this = this;
     if(this.state.actividades == null && !this.state.errorLoadingAct) {
       view = (<Loader caption="Cargando actividades..." captionStyle={{color: 'white', backgroundColor: 'rgba(0,0,0,0)'}}/>);
@@ -228,7 +229,7 @@ class EstatusGrupo extends Component {
               }>
               {view}
             </ScrollView>
-            <TouchableWithoutFeedback style={{flex: 1}} onPress={this.toMapaDetalle.bind(this)}>
+            <TouchableWithoutFeedback style={{flex: 1}} onPress={this.toMapaDetalle.bind(this)} refresh={this.cargarActividades.bind(this)}>
               <View style={{flex: 1}}/>
             </TouchableWithoutFeedback>
           </View>

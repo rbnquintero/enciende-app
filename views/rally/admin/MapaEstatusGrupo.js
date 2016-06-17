@@ -20,7 +20,8 @@ class MapaEstatusGrupo extends Component {
     super(props);
     this.state={
       refrescar: true,
-    }
+    };
+    console.log(this);
   }
 
   componentDidMount() {
