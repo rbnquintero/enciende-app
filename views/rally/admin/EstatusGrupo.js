@@ -103,7 +103,7 @@ class EstatusGrupo extends Component {
           });
         }
         for(i=0;i<this.state.actividades.length;i++){
-          if(this.state.actividades[i].estatus!=0 && this.state.actividades[i].estatus!=100){
+          if(this.state.actividades[i].estatus!=100){
             locationsNoEmpezadas.push({latitude:parseFloat(this.state.actividades[i].actividad.latitud),longitude:parseFloat(this.state.actividades[i].actividad.longitudad)});
           }
         }
