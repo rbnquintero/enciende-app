@@ -19,6 +19,7 @@ var localRepository = {
     store.delete(key_current_rally);
     store.delete(key_saved_staff);
     store.delete(key_saved_activities_user);
+    store.delete(key_selfies_to_upload);
   },
   saveProfileToStorage : function(profile) {
     return store.save(key_profile_info, profile);

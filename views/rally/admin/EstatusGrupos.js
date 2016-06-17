@@ -38,9 +38,9 @@ class EstatusGrupos extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      gruposCargados: false,
-      grupos:null,
+      actividades: null,
       refreshing: false,
+      errorLoading: false,
     };
   }
 
@@ -49,14 +49,9 @@ class EstatusGrupos extends Component {
   }
 
   cargarGrupos() {
-    if(this.state.actividades =! null) {
-      this.setState({
-        errorLoading: false, refreshing: true,
-      });
-    }
+    this.setState({refreshing: true});
 
     var query = env.serverURL + '/rally/'+this.props.user.currentRally.grupo.rally.idRally+'/getUltimaActividadByGrupo';
-    console.log(query);
     env.timeout(20000,
     fetch(query, { method: 'GET'})
       .then(response => response.json())
@@ -93,14 +88,14 @@ class EstatusGrupos extends Component {
           </TouchableOpacity>
         </View>
       );
-    }else{
+    } else {
       var _this = this;
       view =(
         <ScrollView
           refreshControl={
             <RefreshControl
-              refreshing={this.state.refreshing}
-              onRefresh={this.cargarGrupos.bind(this)}
+              refreshing={_this.state.refreshing}
+              onRefresh={_this.cargarGrupos.bind(this)}
               tintColor='rgba(255,255,255,0.7)'
             />
           }>

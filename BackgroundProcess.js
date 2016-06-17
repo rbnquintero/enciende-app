@@ -12,6 +12,7 @@ import React, {
 
 /*  DATE */
 var moment = require('moment');
+var env = require('./env');
 var preciseDiff = require('moment-precise-range-plugin');
 var esLocale = require('moment/locale/es');
 

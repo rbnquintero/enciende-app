@@ -44,7 +44,7 @@ class RegistroGrupos extends Component {
     this.loadGrupos();
   }
   componentDidMount() {
-      this.backPress = new BackPress(this.props.appnavigator,this.props.drawer);
+      this.backPress = new BackPress(this.navigator,this.props.drawer);
   }
 
   componentWillUnmount() {
