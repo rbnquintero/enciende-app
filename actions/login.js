@@ -69,7 +69,6 @@ function logIn() {
             function(token) {
               var user = {token:token.accessToken};
               dispatch(loadFbData(user, true));
-              dispatch(staffActions.loadStaff(user));
             }
           ).catch(error => {
             console.log(error.stack);
@@ -195,6 +194,7 @@ function loadCurrentRally(user, fromStorage) {
             dispatch(loadFbData(user, true));
           } else {
             dispatch(updateProfileFinish(user));
+            dispatch(staffActions.loadStaff(user));
           }
         } else {
           var rally = _calculateDefaultRally(user.userData);
@@ -218,6 +218,7 @@ function loadCurrentRally(user, fromStorage) {
         dispatch(loadFbData(user, true));
       } else {
         dispatch(updateProfileFinish(user));
+        dispatch(staffActions.loadStaff(user));
       }
     }
   }

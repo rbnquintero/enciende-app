@@ -39,6 +39,8 @@ function loadStaff(user) {
 
     return localRepository.getSavedStaff().then((staff) => {
       if(staff != null) {
+        console.log("Staff cargado");
+        console.log(staff);
         dispatch(staffLoaded(staff));
       }
       dispatch(fetchStaff(user, false));
@@ -56,6 +58,7 @@ function fetchStaff(user, showLoading) {
     if(showLoading) {
       dispatch(staffLoading());
     }
+    console.log("Cargado staff para rally "+rally);
 
     var query = env.serverURL + '/rally/' + rally + '/staff';
     return fetch(query)
@@ -63,6 +66,7 @@ function fetchStaff(user, showLoading) {
       .then(json => {
         if(json.success == true){
           localRepository.saveStaff(json.grupos);
+          console.log(json.grupos);
           dispatch(staffLoaded(json.grupos));
         } else {
           dispatch(staffLoadingError('servicio no disponible'));
