@@ -11,6 +11,7 @@ const ACT_USER_LOADED = 'ACT_USER_LOADED';
 const ACT_USER_LOADING_ERROR = 'ACT_USER_LOADING_ERROR';
 const ACT_PUSHING = 'ACT_PUSHING';
 const ACT_PUSHING_DONE = 'ACT_PUSHING_DONE';
+const ACT_STATUS_ACTUALIZADAS = 'ACT_STATUS_ACTUALIZADAS';
 
 /*
  * action creators
@@ -46,6 +47,13 @@ function actUserLoaded(actUser) {
     type: ACT_USER_LOADED,
     actUser: actUser,
   };
+}
+
+function actStatusActualizadas(status) {
+  return {
+    type: ACT_STATUS_ACTUALIZADAS,
+    status: status,
+  }
 }
 
 function loadActUser(grupoId) {
@@ -172,7 +180,10 @@ function validateActivity(info) {
           var actividades = json.actividades;
           dispatch(actPushingDone(actividades));
         }
+        console.log("actividades actualizadas");
+        dispatch(actStatusActualizadas(true));
       }).catch(error => {
+        dispatch(actStatusActualizadas(false));
         dispatch(actPushingDone(info.actividades))
       });
     }

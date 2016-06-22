@@ -44,6 +44,7 @@ function logInStart() {
 
 function logOut() {
   localRepository.deleteAll();
+  GCMServices.unsubscribeTopicAll();
   return {
     type: LOG_OUT,
   };
@@ -123,7 +124,6 @@ function fetchProfile() {
   return function(dispatch) {
     dispatch(updateProfileStart());
     return localRepository.getProfileFromStorage().then((profile) => {
-      GCMServices.subscribeTopic('general');
       if(profile != null) {
         if(profile.userData != null) {
           dispatch(loadCurrentRally(profile, true));
@@ -188,7 +188,8 @@ function loadCurrentRally(user, fromStorage) {
       return localRepository.getCurrentRally().then((rally) => {
         if(rally != null) {
           user['currentRally'] = rally;
-          GCMServices.subscribeTopic('rally_' + rally.idRally);
+          GCMServices.subscribeTopic('equipo_' + rally.grupo.idGrupo);
+          GCMServices.subscribeTopic('rally_' + rally.grupo.rally.idRally);
           if(fromStorage) {
             dispatch(updateProfileFinish(user));
             dispatch(loadFbData(user, true));
@@ -200,7 +201,8 @@ function loadCurrentRally(user, fromStorage) {
           var rally = _calculateDefaultRally(user.userData);
           user['currentRally'] = rally;
           localRepository.saveCurrentRally(rally);
-          GCMServices.subscribeTopic('rally_' + rally.idRally);
+          GCMServices.subscribeTopic('equipo_' + rally.grupo.idGrupo);
+          GCMServices.subscribeTopic('rally_' + rally.grupo.rally.idRally);
           if(fromStorage) {
             dispatch(updateProfileFinish(user));
             dispatch(loadFbData(user, true));
@@ -213,7 +215,8 @@ function loadCurrentRally(user, fromStorage) {
       var rally = _calculateDefaultRally(user.userData);
       user['currentRally'] = rally;
       localRepository.saveCurrentRally(rally);
-      GCMServices.subscribeTopic('rally_' + rally.idRally);
+      GCMServices.subscribeTopic('equipo_' + rally.grupo.idGrupo);
+      GCMServices.subscribeTopic('rally_' + rally.grupo.rally.idRally);
       if(fromStorage) {
         dispatch(loadFbData(user, true));
       } else {

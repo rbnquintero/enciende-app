@@ -3,6 +3,7 @@ import React, {
   Image,
   StyleSheet,
   TextInput,
+  NetInfo,
   TouchableOpacity,
   View
 } from 'react-native';
@@ -10,6 +11,7 @@ var {Text} = require('./Text');
 
 var Loader = require('../../views/helpers/LoaderSmall');
 var env = require('../../env');
+var connectivity = require('connectivity')
 
 const FBSDK = require('react-native-fbsdk');
 const {
@@ -170,6 +172,7 @@ class ActividadDetalleInstrucciones extends Component {
         console.log('User cancelled image picker');
       }
       else if (response.error) {
+        _this.props.actPushingDone();
         console.log('ImagePickerManager Error: ', response.error);
       }
       else {
@@ -179,28 +182,39 @@ class ActividadDetalleInstrucciones extends Component {
         shareLinkContent.photos[0].imageUrl=imageuri;
         console.log(shareLinkContent);
 
-        ShareDialog.canShow(shareLinkContent).then(
-          function(canShow) {
-            if (canShow) {
-              return ShareDialog.show(shareLinkContent);
-            }else{
-              console.log("No se pudo compartir");
-            }
-          }
-        ).then(
-          function(result) {
-            if (result.isCancelled) {
-              console.log('Share cancelled');
-            } else {
-              _this.submitSelfie(imageuri);
-            }
-          },
-          function(error) {
-            console.log("Error al compartir "+error);
-            console.log("Error al compartir "+imageuri);
+        NetInfo.fetch().done((reach) => {
+          console.log(reach);
+          //Subir fotos solo por wifi
+          if("WIFI"==reach||"wifi"==reach||"CELL"==reach||"cell"==reach||"MOBILE"==reach||"mobile"==reach){
+            console.log('connected to the internet!')
+            ShareDialog.canShow(shareLinkContent).then(
+              function(canShow) {
+                if (canShow) {
+                  return ShareDialog.show(shareLinkContent);
+                }else{
+                  console.log("No se pudo compartir");
+                  _this.submitSelfie(imageuri);
+                }
+              }
+            ).then(
+              function(result) {
+                if (result.isCancelled) {
+                  console.log('Share cancelled');
+                } else {
+                  _this.submitSelfie(imageuri);
+                }
+              },
+              function(error) {
+                console.log("Error al compartir "+error);
+                console.log("Error al compartir "+imageuri);
+                _this.submitSelfie(imageuri);
+              }
+            );
+          } else {
+            console.log("no hay internet");
             _this.submitSelfie(imageuri);
           }
-        );
+        });
       }
     });
   }

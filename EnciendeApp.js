@@ -8,12 +8,14 @@ import React, {
   View
 } from 'react-native';
 import codePush from "react-native-code-push";
+var GCMServices = require('./views/utils/GCMServices');
 
 var AppNavigator = require('./AppNavigator');
 
 class EnciendeApp extends Component {
   constructor(props) {
     super(props);
+    GCMServices.subscribeTopic('general');
   }
 
   componentDidMount() {

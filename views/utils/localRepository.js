@@ -8,6 +8,7 @@ const key_saved_news = "key_saved_news";
 const key_saved_staff = "key_saved_staff";
 const key_saved_activities_user = "key_saved_activities_user";
 const key_selfies_to_upload = "key_selfies_to_upload";
+const key_subscribed_topics_gcm = "key_subscribed_topics_gcm";
 
 var localRepository = {
   /** PERFIL **/
@@ -56,13 +57,22 @@ var localRepository = {
   saveStaff : function(staff) {
     return store.save(key_saved_staff, staff);
   },
+
   /** SELFIES A SUBIR **/
   getSelfiesASubir : function(){
     return store.get(key_selfies_to_upload);
   },
   saveSelfiesASubir : function(selfies){
     return store.save(key_selfies_to_upload,selfies);
-  }
+  },
+
+  /** SUBSCRIBED TOPICS **/
+  getSubscribedTopics : function(){
+    return store.get(key_subscribed_topics_gcm);
+  },
+  saveSubscribedTopics : function(topics){
+    return store.save(key_subscribed_topics_gcm,topics);
+  },
 };
 
 module.exports = localRepository;
