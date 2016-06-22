@@ -69,7 +69,7 @@ NSString *const SubscriptionTopic = @"/topics/general";
     if (registrationToken != nil) {
       weakSelf.registrationToken = registrationToken;
       NSLog(@"Registration Token: %@", registrationToken);
-      [weakSelf subscribeToTopic];
+      [weakSelf subscribeToMainTopic];
       NSDictionary *userInfo = @{@"registrationToken":registrationToken};
       [[NSNotificationCenter defaultCenter] postNotificationName:weakSelf.registrationKey
                                                           object:nil
@@ -143,7 +143,7 @@ NSString *const SubscriptionTopic = @"/topics/general";
       _connectedToGCM = true;
       NSLog(@"Connected to GCM");
       // [START_EXCLUDE]
-      [self subscribeToTopic];
+      [self subscribeToMainTopic];
       // [END_EXCLUDE]
     }
   }];
@@ -157,7 +157,7 @@ NSString *const SubscriptionTopic = @"/topics/general";
 }
 
 /*****GCM*******/
-- (void)subscribeToTopic {
+- (void)subscribeToMainTopic {
   // If the app has a registration token and is connected to GCM, proceed to subscribe to the
   // topic
   if (_registrationToken && _connectedToGCM) {
@@ -207,7 +207,7 @@ NSString *const SubscriptionTopic = @"/topics/general";
   }
 }
 
-- (void)unsubscribeToTopic: (NSString *) topic {
+- (void)unsubscribeFromTopic: (NSString *) topic {
   // If the app has a registration token and is connected to GCM, proceed to subscribe to the
   // topic
   if (_registrationToken && _connectedToGCM) {

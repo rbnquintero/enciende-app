@@ -11,8 +11,8 @@
 
 @protocol GCMDelegate <NSObject>
 @required
--(void)subscribeTopic:(NSString*)topic;
--(void)unsubscribeTopic:(NSString*)topic;
+-(void)subscribeToTopic:(NSString*)topic;
+-(void)unsubscribeFromTopic:(NSString*)topic;
 @end
 
 @interface GCMReactModule : NSObject <RCTBridgeModule>

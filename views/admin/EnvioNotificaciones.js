@@ -31,7 +31,8 @@ class EnvioNotificaciones extends Component {
     this.state = {
       isLoading: true,
       notificacionEnviada:false,
-      errorAlEnviar:false
+      errorAlEnviar:false,
+      errorLoading: false,
     };
   }
 
@@ -50,13 +51,38 @@ class EnvioNotificaciones extends Component {
         {
           descripcion:"A todos",
           nombre:"/topics/general"
-        },
-        {
-          descripcion:"Rally Narvarte 2016",
-          nombre:"rally_1"
         }
       ];
+
+    var rally = this.props.user.currentRally.grupo.rally;
+    var query = env.serverURL + '/rally/topics/' + rally.idRally;
+    fetch(query)
+      .then(response => response.json())
+      .then(json => {
+        if(json.success == true) {
+          console.log(json);
+          for (var i = 0; i < json.topics.length; i++) {
+              topics.push(json.topics[i]);
+          }
+          console.log(topics);
+          this.setState({isLoading: false,topics: topics});
+        } else {
+          console.log(json.error);
+          this.setState({
+            errorLoading: true
+          });
+        }
+      }).catch(error => {
+        console.log(error);
+        this.setState({
+          errorLoading: true
+        });
+      });
     this.setState({isLoading: false,topics: topics});
+  }
+
+  setLoadingTrue() {
+    this.setState({isLoading: true,errorAlEnviar:false});
   }
 
   enviarNotificacion(form) {
@@ -67,11 +93,14 @@ class EnvioNotificaciones extends Component {
         title:form.titulo,
         body:form.mensaje,
         sound:'default',
+        color: "#9D0ED6",
+        icon: "sysicon",
         vibrate:'true'
       },
       priority:'high',
       to:form.aQuien
     };
+    this.setLoadingTrue();
     fetch(query,
       {
         method:'POST',
@@ -83,7 +112,7 @@ class EnvioNotificaciones extends Component {
       }
     ).then(response => response.json()).then(json => {
       if(json.message_id) {
-        this.setState({notificacionEnviada: true,errorAlEnviar:false});
+        this.setState({isLoading: false, notificacionEnviada: true,errorAlEnviar:false});
       } else {
         console.log(json.error);
         this.setState({errorAlEnviar: true});

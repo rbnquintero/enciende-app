@@ -72,5 +72,33 @@ curl -X POST -H "Authorization: key=AIzaSyCzMAHv3BudyDb5eXPziB6qmD5R4vr2oRk" -H 
       "body": "Hello from the server side!",
     }
   },
-  "to" : "/topics/general"
+  "to" : "news"
+}' 'https://gcm-http.googleapis.com/gcm/send'
+
+curl -X POST -H "Authorization: key=AIzaSyA_8vsYD2a7IJQtOU5lgG-2mQPfBodToNU" -H "Content-Type: application/json" -d '
+{
+    "data": {
+        "my_custom_key" : "my_custom_value",
+        "other_key" : true
+     },
+     "notification": {
+       "title": "Hello GCM",
+       "body": "Hello from the server side!",
+     },
+    "to" : "/topics/news"
+}' 'http://fcm.googleapis.com/fcm/send'
+
+###########BUENO
+curl -X POST -H "Authorization: key=AIzaSyCzMAHv3BudyDb5eXPziB6qmD5R4vr2oRk" -H "Content-Type: application/json" -d '
+{
+ "notification": {
+     "title": "test-prd",
+     "body": "my message. my message. my message. my message. my message. my message. my message. my message. my message. my message. my message. ",
+     "sound": "default",
+     "color": "#9D0ED6",
+     "icon": "sysicon",
+     "vibrate": "true",
+ },
+ "priority": "high",
+ "to" : "/topics/equipo_7"
 }' 'https://gcm-http.googleapis.com/gcm/send'

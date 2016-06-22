@@ -6,6 +6,7 @@ export type State = {
   error: ?string;
   actividades: ?Object;
   isPushing: boolean;
+  actualizadas: boolean;
 };
 
 const initialState = {
@@ -13,6 +14,7 @@ const initialState = {
   error: null,
   actividades: [],
   isPushing: false,
+  actualizadas: true,
 };
 
 function actividadesUser(state: State = initialState, action): State {
@@ -22,6 +24,7 @@ function actividadesUser(state: State = initialState, action): State {
       error: null,
       actividades: state.actividades,
       isPushing: false,
+      actualizadas: state.actualizadas,
     }
   } else if (action.type === 'ACT_USER_LOADING_ERROR') {
     return {
@@ -29,6 +32,7 @@ function actividadesUser(state: State = initialState, action): State {
       error: action.error,
       actividades: state.actividades,
       isPushing: false,
+      actualizadas: state.actualizadas,
     }
   } else if (action.type === 'ACT_USER_LOADED') {
     var actividades = action.actUser;
@@ -40,6 +44,7 @@ function actividadesUser(state: State = initialState, action): State {
       error: null,
       actividades: actividades,
       isPushing: false,
+      actualizadas: state.actualizadas,
     }
   } else if (action.type === 'ACT_PUSHING') {
     return {
@@ -47,6 +52,7 @@ function actividadesUser(state: State = initialState, action): State {
       error: null,
       actividades: state.actividades,
       isPushing: true,
+      actualizadas: state.actualizadas,
     }
   } else if (action.type === 'ACT_PUSHING_DONE') {
     var actividades = action.actUser;
@@ -58,6 +64,15 @@ function actividadesUser(state: State = initialState, action): State {
       error: null,
       actividades: actividades,
       isPushing: false,
+      actualizadas: state.actualizadas,
+    }
+  } else if (action.type === 'ACT_STATUS_ACTUALIZADAS') {
+    return {
+      isFetching: state.isFetching,
+      error: state.error,
+      actividades: state.actividades,
+      isPushing: state.isPushing,
+      actualizadas: action.status,
     }
   }
 

@@ -20,17 +20,20 @@ var localRepository = require('./views/utils/localRepository');
 
 /* REDUX */
 import type {State as User} from './reducers/user';
+import type {State as ActividadesUser} from './reducers/actividadesUser';
 import type {State as App} from './reducers/app';
-var { loadEventEmiter, startRally, endRally, rallyNotStarted, } = require('./actions');
+var { loadEventEmiter, startRally, endRally, rallyNotStarted, loadActUser, } = require('./actions');
 var { connect } = require('react-redux');
 var RNFS = require('react-native-fs');
 type Props = {
   user: User;
   app: App;
+  actividadesUser: ActividadesUser;
   loadEventEmiter: () => void;
   startRally: () => void;
   endRally: () => void;
   rallyNotStarted: () => void;
+  loadUserActividades: () => void;
 };
 
 class BackgroundProcess extends Component {
@@ -59,6 +62,7 @@ class BackgroundProcess extends Component {
   backgroundProcess() {
     this.setUploadFilesTimer();
     this.setDateTimer();
+    this.setActividadesRefreshTimer();
   }
 
   setUploadFilesTimer(){
@@ -71,6 +75,18 @@ class BackgroundProcess extends Component {
         _this.setUploadFilesTimer();
       }
     }, 30000);
+  }
+
+  setActividadesRefreshTimer(){
+    var _this = this;
+    setTimeout(function(){
+      if(_this.state.update){
+        if(_this.props.user.isLoggedIn && _this.props.user.currentRally != null){
+          _this.refreshUserActividades();
+        }
+        _this.setActividadesRefreshTimer();
+      }
+    }, 10000);
   }
 
   setDateTimer(){
@@ -165,6 +181,23 @@ class BackgroundProcess extends Component {
     });
   }
 
+  refreshUserActividades() {
+    var _this = this;
+    //Actualizar actividades si hace falta
+    if(!this.props.actividadesUser.actualizadas) {
+      console.log("Actividades desactualizadas, si hay internet se actualizarán")
+      NetInfo.fetch().done((reach) => {
+        console.log(reach);
+
+        //Actualizar actividades si hay internet
+        if("WIFI"==reach||"wifi"==reach||"CELL"==reach||"cell"==reach||"MOBILE"==reach||"mobile"==reach){
+          console.log("Actividades desactualizadas, se actualizarán");
+          _this.props.loadUserActividades(_this.props.user.currentRally.grupo.idGrupo);
+        }
+      });
+    }
+  }
+
   refreshDate() {
     var rally = this.props.user.currentRally.grupo.rally;
     var fecha = new Date(rally.fechaInicio);
@@ -221,6 +254,7 @@ function select(store) {
   return {
     user: store.user,
     app: store.app,
+    actividadesUser: store.actividadesUser,
   };
 }
 
@@ -230,6 +264,7 @@ function actions(dispatch) {
     startRally: (grupo, userId, finaldate) => dispatch(startRally(grupo.toString(), userId.toString(), finaldate)),
     endRally: () => dispatch(endRally()),
     rallyNotStarted: () => dispatch(rallyNotStarted()),
+    loadUserActividades: (grupoId) => dispatch(loadActUser(grupoId)),
   };
 }
 
