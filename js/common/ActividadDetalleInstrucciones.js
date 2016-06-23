@@ -38,6 +38,7 @@ var ImagePickerManager = require('NativeModules').ImagePickerManager;
 import type {State as User} from '../../reducers/user';
 import type {State as ActividadesUser} from '../../reducers/actividadesUser';
 import type {State as Staff} from '../../reducers/staff';
+import type {State as App} from '../../reducers/app';
 var { connect } = require('react-redux');
 var {
   validateActivity,
@@ -48,6 +49,7 @@ type Props = {
   user: User;
   actividadesUser: ActividadesUser;
   staff: Staff;
+  app: App;
   validateActivity: () => void;
   actPushing: () => void;
   actPushingDone: () => void;
@@ -99,7 +101,7 @@ class ActividadDetalleInstrucciones extends Component {
     }*/
 
     var desbloq = null;
-    if(this.props.actividad.estatus == 30) {
+    if(this.props.actividad.estatus == 30  && this.props.app.rallyOn) {
       desbloq = (
         <View>
           <Text style={ styles.texto }>
@@ -255,6 +257,7 @@ function select(store) {
     user: store.user,
     actividadesUser: store.actividadesUser,
     staff: store.staff,
+    app: store.app,
   };
 }
 

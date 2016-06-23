@@ -7,6 +7,7 @@ import React, {
   View
 } from 'react-native';
 var {Text} = require('../../js/common/Text');
+var dismissKeyboard = require('dismissKeyboard');
 
 var Header = require('../../js/common/Header');
 var ActividadDetalleLocked = require('../../js/common/ActividadDetalleLocked');
@@ -69,6 +70,15 @@ class ActividadDetalle extends Component {
       }
     }
 
+    var mapa = null;
+    if(this.props.actividad.estatus > 10) {
+      mapa = (
+        <TouchableWithoutFeedback style={{flex: 1}} onPress={this.toMapaDetalle.bind(this)}>
+          <View style={{flex: 1}}/>
+        </TouchableWithoutFeedback>
+      );
+    }
+
     var contenido = null;
     if (actividad.estatus === 0) {
       contenido = (
@@ -94,9 +104,7 @@ class ActividadDetalle extends Component {
               <ActividadDetalleComoLlegar actividad={actividad}/>
               <ActividadDetallePista actividad={actividad}/>
             </ScrollView>
-            <TouchableWithoutFeedback style={{flex: 1}} onPress={this.toMapaDetalle.bind(this)}>
-              <View style={{flex: 1}}/>
-            </TouchableWithoutFeedback>
+            {mapa}
           </View>
         </View>
       );
