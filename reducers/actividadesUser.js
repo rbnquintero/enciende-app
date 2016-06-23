@@ -74,6 +74,8 @@ function actividadesUser(state: State = initialState, action): State {
       isPushing: state.isPushing,
       actualizadas: action.status,
     }
+  } else if (action.type === 'ACT_INIT') {
+    return initialState;
   }
 
   return state;

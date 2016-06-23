@@ -16,7 +16,7 @@ class ActivitySegment extends Component {
         source={require('image!actbloq')}/>
     );
     var desc = 'Actividad bloqueada';
-    if(this.props.actividad.estatus != 0 && this.props.actividad.estatus != 100) {
+    if(this.props.actividad.estatus != 0 && this.props.actividad.estatus != 100 && this.props.actividad.estatus != null) {
       titleStyle = null;
       image = (
         <Image

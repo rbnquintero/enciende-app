@@ -15,6 +15,8 @@ const {
 var env = require('../env');
 
 var staffActions = require('./staff');
+var actividadesUser = require('./actividadesUser');
+var appActions = require('./appActions');
 /*
  * action types
  */
@@ -42,11 +44,22 @@ function logInStart() {
   };
 }
 
+function logOutAction() {
+  return {
+    type: LOG_OUT,
+  };
+}
+
 function logOut() {
   localRepository.deleteAll();
   GCMServices.unsubscribeTopicAll();
-  return {
-    type: LOG_OUT,
+
+  return function(dispatch) {
+    // Se resetean todos los reducers
+    dispatch(staffActions.staffInit());
+    dispatch(appActions.endRally());
+    dispatch(actividadesUser.actInit());
+    dispatch(logOutAction());
   };
 }
 

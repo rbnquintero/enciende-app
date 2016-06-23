@@ -12,10 +12,17 @@ const ACT_USER_LOADING_ERROR = 'ACT_USER_LOADING_ERROR';
 const ACT_PUSHING = 'ACT_PUSHING';
 const ACT_PUSHING_DONE = 'ACT_PUSHING_DONE';
 const ACT_STATUS_ACTUALIZADAS = 'ACT_STATUS_ACTUALIZADAS';
+const ACT_INIT = 'ACT_INIT';
 
 /*
  * action creators
  */
+function actInit() {
+  return {
+    type: ACT_INIT,
+  };
+}
+
 function actUserLoading() {
   return {
     type: ACT_USER_LOADING,
@@ -191,4 +198,4 @@ function validateActivity(info) {
   }
 }
 
-module.exports = {loadActUser, fetchActUser, actUserLoading, actUserLoaded, actUserLoadingError, actPushing, actPushingDone, validateActivity};
+module.exports = {actInit, loadActUser, fetchActUser, actUserLoading, actUserLoaded, actUserLoadingError, actPushing, actPushingDone, validateActivity};
