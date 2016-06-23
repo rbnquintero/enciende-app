@@ -32,6 +32,8 @@ function staff(state: State = initialState, action): State {
       error: null,
       staff: action.staff,
     }
+  } else if (action.type === 'STAFF_INIT') {
+    return initialState;
   }
 
   return state;

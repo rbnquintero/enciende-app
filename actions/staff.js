@@ -9,6 +9,7 @@ var env = require('../env');
 const STAFF_LOADING = 'STAFF_LOADING';
 const STAFF_LOADED = 'STAFF_LOADED';
 const STAFF_LOADING_ERROR = 'STAFF_LOADING_ERROR';
+const STAFF_INIT = 'STAFF_INIT';
 
 /*
  * action creators
@@ -30,6 +31,12 @@ function staffLoaded(staff) {
   return {
     type: STAFF_LOADED,
     staff: staff,
+  };
+}
+
+function staffInit() {
+  return {
+    type: STAFF_INIT,
   };
 }
 
@@ -78,4 +85,4 @@ function fetchStaff(user, showLoading) {
   }
 }
 
-module.exports = {loadStaff, fetchStaff, staffLoading, staffLoadingError, staffLoaded};
+module.exports = {staffInit, loadStaff, fetchStaff, staffLoading, staffLoadingError, staffLoaded};
