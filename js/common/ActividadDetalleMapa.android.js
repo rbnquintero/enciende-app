@@ -16,10 +16,6 @@ class ActividadDetalleMapa extends Component {
   }
 
   render() {
-    if (this.props.actividad.horaInstrucciones == null) {
-      return null;
-    }
-
     var lat = parseFloat(this.props.actividad.actividad.latitud);
     var lon = parseFloat(this.props.actividad.actividad.longitudad);
 

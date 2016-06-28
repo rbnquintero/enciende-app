@@ -14,7 +14,7 @@ class ActividadDetalleLocked extends Component {
         <View style={ styles.container }>
           <Image
             style={ styles.imagen }
-            source={require('../../js/common/img/lock.png')}/>
+            source={require('image!actbloq')}/>
           <Text style={ styles.texto }>
             Aún no has desbloqueado esta actividad
           </Text>
@@ -29,10 +29,10 @@ const styles = StyleSheet.create({
     flex: 1, alignItems: 'center',
   },
   imagen: {
-    resizeMode: Image.resizeMode.contain, width: 30, height: 30,
+    resizeMode: Image.resizeMode.contain, width: 50, height: 50,
   },
   texto: {
-    flex: 1, textAlign: 'center', color: 'gray', fontWeight: '200', fontSize: 17, marginTop: 20,
+    flex: 1, fontSize: 17, marginTop: 5, color: 'rgb(156,158,162)',
   },
 });
 

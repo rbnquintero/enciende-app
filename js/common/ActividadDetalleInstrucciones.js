@@ -101,6 +101,7 @@ class ActividadDetalleInstrucciones extends Component {
     }*/
 
     var desbloq = null;
+    var okIcon = null;
     if(this.props.actividad.estatus == 30  && this.props.app.rallyOn) {
       desbloq = (
         <View>
@@ -114,6 +115,13 @@ class ActividadDetalleInstrucciones extends Component {
         </View>
       );
     } else {
+      if(this.props.actividad.estatus > 30) {
+        okIcon = (
+          <Image
+            style={{ resizeMode: Image.resizeMode.contain, width: 15, height: 15, marginTop: 13 }}
+            source={require('image!ok')}/>
+        );
+      }
       desbloq = (
         <View>
           <Text style={ styles.texto }>
@@ -125,10 +133,13 @@ class ActividadDetalleInstrucciones extends Component {
     }
 
     return (
-      <View>
-        <Text style={ styles.titulo }>
-          Instrucciones
-        </Text>
+      <View style={ styles.container }>
+        <View style={{ flexDirection: 'row' }}>
+          <Text style={ styles.titulo }>
+            Instrucciones
+          </Text>
+          {okIcon}
+        </View>
         {desbloq}
       </View>
     );
@@ -226,11 +237,14 @@ class ActividadDetalleInstrucciones extends Component {
 }
 
 const styles = StyleSheet.create({
+  container: {
+    borderBottomWidth: 1, borderColor: 'rgba(156,158,162,0.3)', paddingBottom: 10
+  },
   titulo: {
-    flex: 1, fontWeight: '200', fontSize: 25, marginTop: 15,
+    flex: 1, fontSize: 17, marginTop: 10, color: 'rgb(240,242,245)',
   },
   texto: {
-    flex: 1, color: 'gray', fontWeight: '200', fontSize: 17, marginTop: 5,
+    flex: 1, fontSize: 15, marginTop: 5, color: 'rgb(156,158,162)',
   },
   desbloqueoContainer: {
     flexDirection: 'row', flexWrap: 'wrap', marginVertical: 30,

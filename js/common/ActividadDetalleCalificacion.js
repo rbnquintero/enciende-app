@@ -10,6 +10,7 @@ import React, {
 var {Text} = require('./Text');
 var t = require('tcomb-form-native');
 var dismissKeyboard = require('dismissKeyboard');
+var _ = require('lodash');
 
 var Loader = require('../../views/helpers/LoaderSmall');
 
@@ -75,6 +76,15 @@ class ActividadDetalleCalificacion extends Component {
       codigo: t.String,
       calificacion: t.String,
     });
+    const stylesheet = _.cloneDeep(t.form.Form.stylesheet);
+    stylesheet.textbox.normal.color = 'rgb(240,242,245)';
+    stylesheet.textbox.error.color = 'rgb(240,242,245)';
+    stylesheet.controlLabel.normal.color = 'rgb(240,242,245)';
+    stylesheet.controlLabel.normal.fontSize = 17;
+    stylesheet.controlLabel.error.color = 'rgb(240,242,245)';
+    stylesheet.controlLabel.error.fontSize = 17;
+    stylesheet.errorBlock.color = 'rgb(240,242,245)';
+    stylesheet.errorBlock.fontSize = 13;
     var formOptions = {
       fields:{
         codigo:{
@@ -82,6 +92,7 @@ class ActividadDetalleCalificacion extends Component {
           placeholder: 'JK123',
           label: 'Código',
           error: 'Inserta un código válido',
+          stylesheet: stylesheet,
           onFocus: this.focusInput.bind(this)
         },
         calificacion:{
@@ -90,6 +101,7 @@ class ActividadDetalleCalificacion extends Component {
           placeholder: '87',
           label: 'Calificación',
           error: 'Inserta una calificación válida',
+          stylesheet: stylesheet,
           onFocus: this.focusInput.bind(this)
         }
       }
@@ -118,6 +130,7 @@ class ActividadDetalleCalificacion extends Component {
     }
 
     var desbloq = null;
+    var calif = null;
     if(this.props.actividad.estatus == 40 && this.props.app.rallyOn) {
       desbloq = (
         <View style={ styles.desbloqueoContainer }>
@@ -131,18 +144,23 @@ class ActividadDetalleCalificacion extends Component {
         </View>
       );
     } else if(this.props.actividad.estatus == 100) {
-      desbloq = (
-        <Text style={ styles.texto }>
-          Calificación: {this.props.actividad.calificacion}
-        </Text>
+      calif = (
+        <View style={ styles.calificacionContainer }>
+          <Text style={ styles.calificacion }>
+            {this.props.actividad.calificacion}
+          </Text>
+        </View>
       );
     }
 
     return (
       <View>
-        <Text style={ styles.titulo }>
-          Calificación
-        </Text>
+        <View style={{ flexDirection: 'row' }}>
+          <Text style={ styles.titulo }>
+            Calificación
+          </Text>
+          {calif}
+        </View>
         {desbloq}
       </View>
     );
@@ -151,10 +169,16 @@ class ActividadDetalleCalificacion extends Component {
 
 const styles = StyleSheet.create({
   titulo: {
-    flex: 1, fontWeight: '200', fontSize: 25, marginTop: 15,
+    flex: 1, fontSize: 17, marginTop: 10, color: 'rgb(240,242,245)',
   },
   texto: {
-    flex: 1, color: 'gray', fontWeight: '200', fontSize: 17, marginTop: 5,
+    flex: 1, fontSize: 15, marginTop: 5, textAlign: 'center', color: 'rgb(156,158,162)',
+  },
+  calificacionContainer: {
+    alignItems: 'center', height: 80, width: 80, backgroundColor: 'rgb(29,30,37)', marginTop: 15, borderWidth: 2, borderColor: 'yellow', borderRadius: 5, marginBottom: 40
+  },
+  calificacion: {
+    color: 'white', fontSize: 40, paddingTop: 10, textAlign: 'center', alignSelf: 'center',
   },
   desbloqueoContainer: {
     flexWrap: 'wrap', marginVertical: 30,

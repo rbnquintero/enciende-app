@@ -10,6 +10,7 @@ import React, {
 var {Text} = require('./Text');
 var t = require('tcomb-form-native');
 var dismissKeyboard = require('dismissKeyboard');
+var _ = require('lodash');
 
 var Loader = require('../../views/helpers/LoaderSmall');
 
@@ -74,6 +75,15 @@ class ActividadDetalleComoLlegar extends Component {
     var PistaForm = t.struct({
       codigo: t.String,
     });
+    const stylesheet = _.cloneDeep(t.form.Form.stylesheet);
+    stylesheet.textbox.normal.color = 'rgb(240,242,245)';
+    stylesheet.textbox.error.color = 'rgb(240,242,245)';
+    stylesheet.controlLabel.normal.color = 'rgb(240,242,245)';
+    stylesheet.controlLabel.normal.fontSize = 17;
+    stylesheet.controlLabel.error.color = 'rgb(240,242,245)';
+    stylesheet.controlLabel.error.fontSize = 17;
+    stylesheet.errorBlock.color = 'rgb(240,242,245)';
+    stylesheet.errorBlock.fontSize = 13;
     var formOptions = {
       fields:{
         codigo:{
@@ -81,6 +91,7 @@ class ActividadDetalleComoLlegar extends Component {
           placeholder: 'JK123',
           label: 'Código',
           error: 'Inserta un código válido',
+          stylesheet: stylesheet,
           onFocus: this.focusInput.bind(this)
         }
       }
@@ -109,6 +120,7 @@ class ActividadDetalleComoLlegar extends Component {
     }
 
     var desbloq = null;
+    var okIcon = null;
     if(this.props.actividad.estatus == 20 && this.props.app.rallyOn) {
       desbloq = (
         <View style={ styles.desbloqueoContainer }>
@@ -121,13 +133,24 @@ class ActividadDetalleComoLlegar extends Component {
           {button}
         </View>
       );
+    } else {
+      if(this.props.actividad.estatus > 20) {
+        okIcon = (
+          <Image
+            style={{ resizeMode: Image.resizeMode.contain, width: 15, height: 15, marginTop: 13 }}
+            source={require('image!ok')}/>
+        );
+      }
     }
 
     return (
-      <View>
-        <Text style={ styles.titulo }>
-          Cómo llegar
-        </Text>
+      <View style={ styles.container }>
+        <View style={{ flexDirection: 'row' }}>
+          <Text style={ styles.titulo }>
+            Como llegar
+          </Text>
+          {okIcon}
+        </View>
         <Text style={ styles.texto }>
           {this.props.actividad.actividad.comoLlegar}
         </Text>
@@ -138,11 +161,14 @@ class ActividadDetalleComoLlegar extends Component {
 }
 
 const styles = StyleSheet.create({
+  container: {
+    borderBottomWidth: 1, borderColor: 'rgba(156,158,162,0.3)', paddingBottom: 10
+  },
   titulo: {
-    flex: 1, fontWeight: '200', fontSize: 25, marginTop: 15,
+    flex: 1, fontSize: 17, marginTop: 10, color: 'rgb(240,242,245)',
   },
   texto: {
-    flex: 1, color: 'gray', fontWeight: '200', fontSize: 17, marginTop: 5,
+    flex: 1, fontSize: 15, marginTop: 5, color: 'rgb(156,158,162)',
   },
   desbloqueoContainer: {
     flexWrap: 'wrap', marginVertical: 30,

@@ -70,14 +70,19 @@ class ActividadDetalle extends Component {
       }
     }
 
+    var mapaTouchArea = null;
     var mapa = null;
     if(this.props.actividad.estatus > 10) {
-      mapa = (
+      mapaTouchArea = (
         <TouchableWithoutFeedback style={{flex: 1}} onPress={this.toMapaDetalle.bind(this)}>
           <View style={{flex: 1}}/>
         </TouchableWithoutFeedback>
       );
+      mapa = this.state.map;
     }
+    console.log(this.props.actividad.estatus);
+    console.log(mapa);
+    console.log(this.state);
 
     var contenido = null;
     if (actividad.estatus === 0) {
@@ -88,14 +93,14 @@ class ActividadDetalle extends Component {
       contenido = (
         <View style={{ flex: 1 }}>
           <View style={{flex: 4}}/>
-          {this.state.map}
+          {mapa}
           <View style={{left: 0, right: 0, top: 0, bottom: 0, position: 'absolute'}}>
             <ScrollView style={{ flex: 4, marginHorizontal: 15 }}
               refreshControl={
                 <RefreshControl
                   refreshing={this.props.actividadesUser.isFetching}
                   onRefresh={this.refresh.bind(this)}
-                  tintColor='rgb(140,51,204)'
+                  tintColor='rgb(240,242,245)'
                   progressBackgroundColor="#ffff00"
                 />
               }>
@@ -104,14 +109,14 @@ class ActividadDetalle extends Component {
               <ActividadDetalleComoLlegar actividad={actividad}/>
               <ActividadDetallePista actividad={actividad}/>
             </ScrollView>
-            {mapa}
+            {mapaTouchArea}
           </View>
         </View>
       );
     }
 
     return (
-      <View style={{ flex: 1}}>
+      <View style={{ flex: 1, backgroundColor: 'rgb(36,40,51)' }}>
         <Header
           title={actividad.actividad.nombre}
           leftItem={{
