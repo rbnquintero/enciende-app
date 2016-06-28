@@ -75,7 +75,8 @@ class FacebookLogin extends Component {
         loginSection = (
           <View style={[ styles.centerAlign ]}>
             <Text style={[ styles.texto, { fontSize: normalize(16) }]}>
-              Ahora ingresa el código que te fue asignado cuando te inscribiste al rally.
+              Ahora ingresa el código que te fue asignado por correo electrónico cuando te inscribiste al rally.
+              Si no tienes código, contáctanos para asignarte uno.
             </Text>
             <View style={ styles.input }>
               <TextInput placeholder='ID' onChange={this._onInputTextChanged.bind(this)} autoCapitalize='characters'
@@ -111,11 +112,6 @@ class FacebookLogin extends Component {
       );
     }
 
-    var keyboardSpacer = null;
-    if(Platform.OS === 'ios') {
-      keyboardSpacer = (<KeyboardSpacer/>);
-    }
-
     return (
       <View style={ styles.mainContainer}>
         <View style={ styles.container }>
@@ -140,7 +136,7 @@ class FacebookLogin extends Component {
                 <View style={{flex: 4}}>
                   {loginSection}
                 </View>
-                {keyboardSpacer}
+                <KeyboardSpacer/>
                 {registerButton}
               </View>
             }

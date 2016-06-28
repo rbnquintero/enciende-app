@@ -23,9 +23,9 @@ class ActivitySegment extends Component {
           style={{ resizeMode: Image.resizeMode.contain, width: 30, height: 30 }}
           source={require('image!actworking')}/>
       );
-      if(this.props.actividad.horaDesbloqueada != null) {
+      if(this.props.actividad.estatus == 30) {
         desc = this.props.actividad.actividad.instrucciones;
-      } else if (this.props.actividad.horaInstrucciones) {
+      } else if (this.props.actividad.estatus == 20) {
         desc = 'Como llegar: ' + this.props.actividad.actividad.comoLlegar;
       } else {
         desc = 'Pista: ' + this.props.actividad.actividad.pistaLugar;

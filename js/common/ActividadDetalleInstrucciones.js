@@ -38,6 +38,7 @@ var ImagePickerManager = require('NativeModules').ImagePickerManager;
 import type {State as User} from '../../reducers/user';
 import type {State as ActividadesUser} from '../../reducers/actividadesUser';
 import type {State as Staff} from '../../reducers/staff';
+import type {State as App} from '../../reducers/app';
 var { connect } = require('react-redux');
 var {
   validateActivity,
@@ -48,6 +49,7 @@ type Props = {
   user: User;
   actividadesUser: ActividadesUser;
   staff: Staff;
+  app: App;
   validateActivity: () => void;
   actPushing: () => void;
   actPushingDone: () => void;
@@ -99,7 +101,8 @@ class ActividadDetalleInstrucciones extends Component {
     }*/
 
     var desbloq = null;
-    if(this.props.actividad.estatus == 30) {
+    var okIcon = null;
+    if(this.props.actividad.estatus == 30  && this.props.app.rallyOn) {
       desbloq = (
         <View>
           <Text style={ styles.texto }>
@@ -112,6 +115,13 @@ class ActividadDetalleInstrucciones extends Component {
         </View>
       );
     } else {
+      if(this.props.actividad.estatus > 30) {
+        okIcon = (
+          <Image
+            style={{ resizeMode: Image.resizeMode.contain, width: 15, height: 15, marginTop: 13 }}
+            source={require('image!ok')}/>
+        );
+      }
       desbloq = (
         <View>
           <Text style={ styles.texto }>
@@ -123,10 +133,13 @@ class ActividadDetalleInstrucciones extends Component {
     }
 
     return (
-      <View>
-        <Text style={ styles.titulo }>
-          Instrucciones
-        </Text>
+      <View style={ styles.container }>
+        <View style={{ flexDirection: 'row' }}>
+          <Text style={ styles.titulo }>
+            Instrucciones
+          </Text>
+          {okIcon}
+        </View>
         {desbloq}
       </View>
     );
@@ -224,11 +237,14 @@ class ActividadDetalleInstrucciones extends Component {
 }
 
 const styles = StyleSheet.create({
+  container: {
+    borderBottomWidth: 1, borderColor: 'rgba(156,158,162,0.3)', paddingBottom: 10
+  },
   titulo: {
-    flex: 1, fontWeight: '200', fontSize: 25, marginTop: 15,
+    flex: 1, fontSize: 17, marginTop: 10, color: 'rgb(240,242,245)',
   },
   texto: {
-    flex: 1, color: 'gray', fontWeight: '200', fontSize: 17, marginTop: 5,
+    flex: 1, fontSize: 15, marginTop: 5, color: 'rgb(156,158,162)',
   },
   desbloqueoContainer: {
     flexDirection: 'row', flexWrap: 'wrap', marginVertical: 30,
@@ -255,6 +271,7 @@ function select(store) {
     user: store.user,
     actividadesUser: store.actividadesUser,
     staff: store.staff,
+    app: store.app,
   };
 }
 

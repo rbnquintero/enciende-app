@@ -60,11 +60,9 @@ class EnvioNotificaciones extends Component {
       .then(response => response.json())
       .then(json => {
         if(json.success == true) {
-          console.log(json);
           for (var i = 0; i < json.topics.length; i++) {
               topics.push(json.topics[i]);
           }
-          console.log(topics);
           this.setState({isLoading: false,topics: topics});
         } else {
           console.log(json.error);

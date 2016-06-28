@@ -104,7 +104,7 @@ function fetchActUser(actividades, grupoId) {
   }
 }
 
-function validateActivity(info) {
+function validateActivity(info, callback) {
   return function(dispatch) {
     dispatch(actPushing());
 
@@ -139,11 +139,11 @@ function validateActivity(info) {
           if(a.estatus != 0 && a.estatus != 100) {
             if(a.horaInstrucciones == null && a.estatus == 10 && info.action === 'pista') {
               a.estatus = 20;
-              a.horaInstrucciones = new Date();
+              a.horaDesbloqueada = new Date();
             } else
             if(a.horaDesbloqueada == null && a.estatus == 20 && info.action === 'llegar') {
               a.estatus = 30;
-              a.horaDesbloqueada = new Date();
+              a.horaInstrucciones = new Date();
             } else
             if(a.horaTerminada == null && a.estatus == 30 && info.action === 'instrucciones') {
               a.estatus = 40;
@@ -160,6 +160,9 @@ function validateActivity(info) {
             next = false;
             a.estatus = 10;
           }
+        }
+        if(callback != null && typeof callback === "function") {
+          callback(true, "Success");
         }
       }
 
@@ -193,6 +196,10 @@ function validateActivity(info) {
         dispatch(actStatusActualizadas(false));
         dispatch(actPushingDone(info.actividades))
       });
+    } else {
+      if(callback != null && typeof callback === "function") {
+        callback(false, "Código inválido");
+      }
     }
     dispatch(actPushingDone(info.actividades));
   }

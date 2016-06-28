@@ -43,13 +43,7 @@ class RegistroGrupos extends Component {
 
     this.loadGrupos();
   }
-  componentDidMount() {
-      this.backPress = new BackPress(this.navigator,this.props.drawer);
-  }
 
-  componentWillUnmount() {
-    this.backPress.removeListener();
-  }
   loadGrupos() {
     var rally = this.props.user.currentRally.grupo.rally;
     var query = env.serverURL + '/rally/' + rally.idRally + '/grupos';
