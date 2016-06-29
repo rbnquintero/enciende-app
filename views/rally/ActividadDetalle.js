@@ -43,15 +43,6 @@ class ActividadDetalle extends Component {
     this.props.loadUserActividades(this.props.user.currentRally.grupo.idGrupo);
   }
 
-  componentDidMount() {
-    var _this = this;
-    setTimeout(function(){
-      _this.setState({map: (
-        <ActividadDetalleMapa actividad={_this.props.actividad}/>
-      )});
-    }, 400);
-  }
-
   toMapaDetalle() {
     this.props.navigator.push({
       title: "Mapa Detalle",
@@ -78,7 +69,6 @@ class ActividadDetalle extends Component {
           <View style={{flex: 1}}/>
         </TouchableWithoutFeedback>
       );
-      mapa = this.state.map;
     }
     console.log(this.props.actividad.estatus);
     console.log(mapa);
@@ -93,7 +83,7 @@ class ActividadDetalle extends Component {
       contenido = (
         <View style={{ flex: 1 }}>
           <View style={{flex: 4}}/>
-          {mapa}
+          <ActividadDetalleMapa actividad={actividad}/>
           <View style={{left: 0, right: 0, top: 0, bottom: 0, position: 'absolute'}}>
             <ScrollView style={{ flex: 4, marginHorizontal: 15 }}
               refreshControl={
