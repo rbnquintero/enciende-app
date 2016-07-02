@@ -80,24 +80,6 @@ class RegistroUsuarios extends Component {
       });
   }
 
-  handleChangeUser(input, event) {
-    var user = this.state.user;
-    user[input] = event.nativeEvent.text;
-    this.setState({ user: user });
-  }
-
-  handleChangeGender(event) {
-    var user = this.state.user;
-    user.generoFem = event.nativeEvent.value;
-    this.setState({ user: user });
-  }
-
-  handleChangeGroup(value) {
-    var user = this.state.user;
-    user.grupo = value;
-    this.setState({ user: user });
-  }
-
   toRegisterUserPOST() {
     var value = this.refs.form.getValue();
     if (value) {
@@ -133,6 +115,11 @@ class RegistroUsuarios extends Component {
         H: 'Hombre',
         M: 'Mujer'
       });
+      var Rol = t.enums({
+        PARTICIPANTE: 'Participante',
+        STAFF: 'Staff',
+        ADMIN: 'Admin',
+      });
       var gruposMap = {};
 
 
@@ -152,6 +139,16 @@ class RegistroUsuarios extends Component {
               autoCapitalize: 'none'
             },
             genero:{
+              template: (data) => (
+                  <AccordionPicker
+                      defaultValue={data.options.find((o) => o.value === data.value)}
+                      onChange={data.onChange}
+                      options={data.options}
+                      data={data}
+                  />
+              )
+            },
+            rol:{
               template: (data) => (
                   <AccordionPicker
                       defaultValue={data.options.find((o) => o.value === data.value)}
@@ -201,7 +198,8 @@ class RegistroUsuarios extends Component {
         nombre: t.String,              // a required string
         correo: t.String,  // an optional string
         talla: Talla,               // a required number
-        genero: Genero  ,
+        genero: Genero,
+        rol: Rol,
         grupo: Grupo      // a boolean
       });
 
